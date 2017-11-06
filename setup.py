@@ -8,7 +8,7 @@ setup(name='pysiology',
       author_email='gack94@gmail.com',
       license='Apache2',
       packages=['pysiology'],      
-    install_requires=[
+      install_requires=[
           'numpy',
           'peakutils',
           'scipy'
