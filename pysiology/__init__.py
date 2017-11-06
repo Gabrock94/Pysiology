@@ -1,1 +1,1 @@
-import heartrate
+from . import heartrate
