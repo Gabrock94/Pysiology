@@ -26,7 +26,7 @@ def getBPM(npeaks,nsample, samplerate):
     
 def getSDNN(peaks,samplerate):
     """ This functions evaluate the standard deviation of intervals between heartbeats
-        SDNN = (1/N-1) * sum of (rrx - rrmean)^2 for x in range 1,N
+        SDNN = sqrt((1/N-1) * sum(i=1 --> N)(rri - rrmean)^2
         
         Input: peaks of the ECG signal,samplerate of the signal
         Output: standard deviations of Intervals between heartbeats
@@ -39,7 +39,7 @@ def getSDNN(peaks,samplerate):
     
 def getSDSD(peaks,samplerate):
     """ This functions evaluate the the standard deviation of successive differences between adjacent R-R intervals
-        TODO: add formula
+        SDSD: sqrt((1 / (N - 1)) * sum(i=1 --> N)(RR i - mean(RR))**2)
         
         Input: peaks of the ECG signal,samplerate of the signal
         Output: the standard deviation of successive differences between adjacent R-R intervals:
@@ -57,7 +57,7 @@ def getSDSD(peaks,samplerate):
     
 def getRMSSD(peaks,samplerate):
     """ This functions evaluate the root mean square of successive differences between adjacent R-R intervals
-        TODO: add formula
+        RMSSD = sqrt((1 / (N - 1)) * sum(i=1 --> N)(RRdiff i - mean(RRdiff))**2)
         
         Input: peaks of the ECG signal,samplerate of the signal
         Output: the root mean square of successive differences between adjacent R-R intervals
@@ -109,7 +109,7 @@ def getPNN20(peaks,samplerate):
     pNN20 = float(len(NN20)) / float(len(differences))
     return(pNN20)
  
- #Define the filter
+#Define the filters
 def butter_lowpass(cutoff, fs, order=5):
     nyq = 0.5 * fs #Nyquist frequeny is half the sampling frequency
     normal_cutoff = cutoff / nyq 
@@ -133,15 +133,19 @@ def butter_highpass_filter(data, cutoff, fs, order):
     return(y)
     
 #http://www.paulvangent.com/2016/03/15/analyzing-a-discrete-heart-rate-signal-using-python-part-1/
-def analyzeECG(rawECGSignal,samplerate, ibi=True,bpm=True,sdnn = True,sdsd = True, rmssd = True,pnn50 = True, pnn20 = True):
+def analyzeECG(rawECGSignal,samplerate,highpass = 0.5, lowpass=2.5 ibi=True,bpm=True,sdnn = True,sdsd = True, rmssd = True,pnn50 = True, pnn20 = True):
     """ This function analyze a discreate heart rate signal
-        Input: ecg signal as list
+        Input: 
+            rawECGSignal = ecg signal as list
+            samplerate = sample rate of the signal
+            
         Output: BPM
     """ 
     #First we get the peaks
-    filteredECGSignal = butter_lowpass_filter(rawECGSignal, 2.5, 100.0, 5)#filter the signal with a cutoff at 2.5Hz and a 5th order Butterworth filter
-    filteredECGSignal = butter_highpass_filter(rawECGSignal, 0.5, 100.0, 5)#filter the signal with a cutoff at 2.5Hz and a 5th order Butterworth filter
-    peaks = peakutils.indexes(rawECGSignal,min_dist=500)
+    filteredECGSignal = butter_lowpass_filter(rawECGSignal, lowpass, samplerate, 5)#filter the signal with a cutoff at 2.5Hz and a 5th order Butterworth filter
+    filteredECGSignal = butter_highpass_filter(filteredECGSignal, highpass, samplerate, 5)#filter the signal with a cutoff at 2.5Hz and a 5th order Butterworth filter
+    min_dist = int(samplerate / 2) #Minimum distance between peaks is set to be 500ms
+    peaks = peakutils.indexes(filteredECGSignal,min_dist=min_dist)
     resultsdict = {}
     if(ibi):
         resultsdict["ibi"] =  getIBI(peaks,samplerate)
@@ -160,3 +164,13 @@ def analyzeECG(rawECGSignal,samplerate, ibi=True,bpm=True,sdnn = True,sdsd = Tru
     if(pnn50 and pnn20):
         resultsdict["pnn50pnn20"] = resultsdict["pnn50"] / resultsdict["pnn20"]
     return resultsdict
+
+###############################################################################
+#                                                                             #
+#                                  DEBUG                                      #
+#                                                                             #
+###############################################################################
+""" For debug purposes"""
+
+if(__name__=='__main__'):
+    pass
