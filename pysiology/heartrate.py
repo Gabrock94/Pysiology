@@ -133,7 +133,7 @@ def butter_highpass_filter(data, cutoff, fs, order):
     return(y)
     
 #http://www.paulvangent.com/2016/03/15/analyzing-a-discrete-heart-rate-signal-using-python-part-1/
-def analyzeECG(rawECGSignal,samplerate,highpass = 0.5, lowpass=2.5 ibi=True,bpm=True,sdnn = True,sdsd = True, rmssd = True,pnn50 = True, pnn20 = True):
+def analyzeECG(rawECGSignal,samplerate,highpass = 0.5, lowpass=2.5, ibi=True,bpm=True,sdnn = True,sdsd = True, rmssd = True,pnn50 = True, pnn20 = True):
     """ This function analyze a discreate heart rate signal
         Input: 
             rawECGSignal = ecg signal as list
