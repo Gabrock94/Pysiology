@@ -193,13 +193,96 @@ def getZC(rawEMGSignal, threshold):
                 ZC += 1
     return(ZC)
     
+def getMYOP(rawEMGSignal, threshold):
+    """ The myopulse percentage rate (MYOP) is an average value of myopulse output.
+        It is defined as one absolute value of the EMG signal exceed a pre-defined thershold value. 
+        MYOP = (1/N) * sum(|f(xi)|) for i = 1 --> N
+        f(x) = {
+                1 if x >= threshold
+                0 otherwise
+        }
+        Input:
+            rawEMGSignal = EMG signal as list
+            threshold = threshold to avoid fluctuations caused by noise and low voltage fluctuations
+        Output:
+            Myopulse percentage rate
+    """
+    N = len(rawEMGSignal)
+    MYOP = len([1 for x in rawEMGSignal if abs(x) >= threshold]) / N
+    return(MYOP)
+    
+def getWAMP(rawEMGSignal, threshold):
+    """ Wilson or Willison amplitude is a measure of frequency information.
+        It is a number of time resulting from difference between the EMG signal of two adjoining segments, that exceed a threshold
+        WAMP = sum( f(|x[i] - x[i+1]|)) for n = 1 --> n-1
+        f(x){
+            1 if x >= threshold
+            0 otherwise
+        }
+        Input:
+            rawEMGSignal = EMG signal as list
+            threshold = threshold to avoid fluctuations caused by noise and low voltage fluctuations
+        Output:
+            Wilson Amplitude value
+    """
+    N = len(rawEMGSignal)
+    WAMP = 0
+    for i in range(0,N-1):
+        x = rawEMGSignal[i] - rawEMGSignal[i+1]
+        if(x >= threshold):
+            WAMP += 1
+    return(WAMP)
+    
+def getSSC(rawEMGSignal,threshold):
+    """ Number of times the slope of the EMG signal changes sign.
+        SSC = sum(f( (x[i] - x[i-1]) X (x[i] - x[i+1]))) for i = 2 --> n-1
+        f(x){
+            1 if x >= threshold
+            0 otherwise
+        }
+           
+        Input: raw EMG Signal
+        Output: number of Slope Changes
+    """
+    
+    N = len(rawEMGSignal)
+    SSC = 0
+    for i in range(1,N-1):
+        a,b,c = [rawEMGSignal[i-1],rawEMGSignal[i],rawEMGSignal[i+1]]
+        if(a + b + c >= threshold *3 ): #computed only if the 3 values are above the threshold
+            if(a < b > c or a > b < c ): #if there's change in the slope
+                SSC += 1
+    return(SSC)
+def getMAVSLPk(rawEMGSignal, nseg):
+    """ Mean Absolute value slope is a modified versions of MAV feature.
+        The MAVs of adiacent segments are determinated. 
+        MAVSLPk = MAV[k+1] - MAV[k]; k = 1,..,k+1
+        
+        Input: raw EMG signal as list
+                nseg = number of segments to evaluate
+                
+        Output: 
+             list of MAVs
+    """
+    N = len(rawEMGSignal)
+    lenK = int(N / nseg) #length of each segment to compute
+    MAVSLPk = []
+    for s in range(0,N,lenK):
+        MAVSLPk.append(getMAV(rawEMGSignal[s:s+lenK]))
+    return(MAVSLPk)    
     
     
-def analyzeEMG(rawEMGSignal, samplerate,lowpass=50,highpass=20):
+def analyzeEMG(rawEMGSignal, samplerate,lowpass=50,highpass=20,threshold = 50,nseg=3,segoverlap=30):
+    
     """ This functions acts as entrypoint for the EMG Analysis.
         Input:
             rawEMGSignal = raw signal as list
             samplerate = samplerate of the signal
+            lowpass = lowpass cutoff in Hz
+            highpass = highpass cutoff in Hz
+            threshold for the evaluation of ZC,MYOP,WAMP,SSC
+            nseg = number of segments for MAVSLPk, MHW,MTW
+            segoverlap = Overlapping of the segments in percentage for MHW,MTW
         Output:
     """ 
     resultsdict = {}
@@ -222,8 +305,11 @@ def analyzeEMG(rawEMGSignal, samplerate,lowpass=50,highpass=20):
     resultsdict["WL"] = getWL(filteredEMGSignal)
     resultsdict["AAC"] = getAAC(filteredEMGSignal)
     resultsdict["DASDV"] = getDASDV(filteredEMGSignal)
-    resultsdict["ZC"] = getZC(filteredEMGSignal,0)
-    
+    resultsdict["ZC"] = getZC(filteredEMGSignal,threshold)
+    resultsdict["MYOP"] = getMYOP(filteredEMGSignal,threshold)
+    resultsdict["WAMP"] = getWAMP(filteredEMGSignal,threshold)
+    resultsdict["SSC"] = getSSC(filteredEMGSignal,threshold)
+    resultsdict["MAVSLPk"] = getMAVSLPk(filteredEMGSignal,nseg)
     return(filteredEMGSignal, resultsdict)
     
 def phasicGSRFilter(rawGSRSignal,samplerate):
