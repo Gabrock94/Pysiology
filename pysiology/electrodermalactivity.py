@@ -140,9 +140,10 @@ def butter_highpass_filter(data, cutoff, fs, order):
 
 if(__name__=='__main__'):
     import pickle
+    import os
     plt.clf()
     fakesignal = []
-    with open('/home/giulio/Scrivania/convertedEDA.pkl',"rb") as f:  # Python 3: open(..., 'rb')
+    with open(os.getcwd().replace('/pysiology/pysiology','/pysiology') + '/data/convertedEDA.pkl',"rb") as f:  # Python 3: open(..., 'rb')
         fakesignal = pickle.load(f) #load a fake signal
         analyzedGSR, peaks = analyzeGSR(fakesignal,1000) #analyze it
         
