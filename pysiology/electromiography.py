@@ -1,7 +1,8 @@
 import peakutils #peak detection
 import numpy as np #to handle datas
 import math #to handle mathematical stuff (example power of 2)
-from scipy.signal import butter, lfilter, welch  #for signal filtering
+import scipy
+from scipy.signal import butter, lfilter, welch, square  #for signal filtering
 import matplotlib.pyplot as plt
 
 
@@ -126,7 +127,17 @@ def getRMS(rawEMGSignal):
     RMS = np.sqrt((1/N) * np.sum([x**2 for x in rawEMGSignal]))
     
     return(RMS)   
+def getLOG(rawEMGSignal):
+    """ LOG is a feature that provides an estimate of the muscle contraction force
+        LOG = e^((1/N) * sum(|xi|)) for x i = 1 --> N
+        
+        Input: raw EMG Signal
+        Output = LOG    
+    """
+    LOG = math.exp( (1/len(rawEMGSignal)) * sum([abs(x) for x in rawEMGSignal]))    
     
+    return(LOG)
+
 def getWL(rawEMGSignal):
     """ Get the waveform length of the signal
         WL = sum(|x(i+1) - xi|) for i = 1 --> N-1
@@ -167,6 +178,42 @@ def getDASDV(rawEMGSignal):
         temp.append((rawEMGSignal[i+1] - rawEMGSignal[i])**2)
     DASDV = (1 / (N - 1)) * sum(temp)
     return(DASDV)
+
+def getAFB(rawEMGSignal,samplerate, windowSize=32, cutoff=250, plot=False):
+    """ Get the amplitude at first Burst.
+        Reference: Du, S., & Vuskovic, M. (2004, November). Temporal vs. spectral approach to feature extraction from prehensile EMG signals. In Information Reuse and Integration, 2004. IRI 2004. Proceedings of the 2004 IEEE International Conference on (pp. 344-350). IEEE.
+        Input: rawEMGSignal as list
+               samplerate of the signal in Hz (sample / s)
+               windowSize = window size in ms
+        Output: amplitude at first burst
+    """
+    squaredSignal = square(rawEMGSignal) #squaring the signal
+    windowSample = int((windowSize * 1000) / samplerate) #get the number of samples for each window
+    w = np.hamming(windowSample)
+    #From: http://scipy-cookbook.readthedocs.io/items/SignalSmooth.html
+    filteredSignal = np.convolve(w/w.sum(),squaredSignal,mode='valid')
+    peak = peakutils.indexes(filteredSignal)[0]
+    AFB = filteredSignal[peak]
+    if(plot):
+        plt.figure("AFB")
+        plt.clf()
+        plt.subplot(2,2,1)
+        plt.title("Raw EMG Signal")
+        plt.plot(rawEMGSignal)
+        plt.subplot(2,2,2)
+        plt.title("Squared Signal")
+        plt.plot(squaredSignal)
+        plt.subplot(2,2,3)
+        plt.title("Hamming Window")
+        plt.plot(w)
+        plt.subplot(2,2,4)
+        plt.title("AFB")
+        plt.plot(filteredSignal)
+        plt.scatter(peak,AFB,color="red")
+    
+    
+    return(AFB)
+              
     
 def getZC(rawEMGSignal, threshold):
     """ How many times does the signal crosses the 0 (+-threshold)
@@ -275,6 +322,13 @@ def getMAVSLPk(rawEMGSignal, nseg):
     return(MAVSLPk)    
 
 
+#TODO: HERE 
+#def getMHWk(rawEMGSignal,samplerate,windowLen=32,overlap=30):
+#    """ Evaluate the multiple hamming window, that capture the change of energy with respect to time by various multiple windowing functions 
+#        Overlap is suggested to be 30% in: Du, S., & Vuskovic, M. (2004, November). Temporal vs. spectral approach to feature extraction from prehensile EMG signals. In Information Reuse and Integration, 2004. IRI 2004. Proceedings of the 2004 IEEE International Conference on (pp. 344-350). IEEE.
+#    """
+#    
+#    return(MHWk)
 ###############################################################################
 #                                                                             #
 #                       FREQUENCY DOMAIN FEATURES                             #
@@ -429,26 +483,26 @@ def getVCF(SM0,SM1,SM2):
 #                                                                             #
 ###############################################################################  
 
-def phasicGSRFilter(rawGSRSignal,samplerate):
+def phasicFilter(rawEMGSignal,samplerate):
     """ Apply a phasic filter to the signal, with +-4 seconds from each sample
         Input:
-            rawGSRSignal = gsr signal as list
+            rawEMGSignal = emg signal as list
             samplerate = samplerate of the signal    
         Output:
             phasic filtered signal            
     """
-    
+    print("Applying phasic Filter")
     phasicSignal = []    
-    for sample in range(0,len(rawGSRSignal)):
+    for sample in range(0,len(rawEMGSignal)):
         smin = sample - 4 * samplerate #min sample index
         smax = sample + 4 * samplerate #max sample index
         #is smin is < 0 or smax > signal length, fix it to the closest real sample
         if(smin < 0): 
             smin = sample
-        if(smax > len(rawGSRSignal)):
+        if(smax > len(rawEMGSignal)):
             smax = sample
         #substract the mean of the segment
-        newsample = rawGSRSignal[sample] - np.mean(rawGSRSignal[smin:smax])
+        newsample = rawEMGSignal[sample] - np.mean(rawEMGSignal[smin:smax])
         #move to th
         phasicSignal.append(newsample)
     return(phasicSignal)
@@ -515,7 +569,7 @@ def analyzeEMG(rawEMGSignal, samplerate,lowpass=50,highpass=20,threshold = 50,ns
     #Preprocessing
     filteredEMGSignal = butter_lowpass_filter(rawEMGSignal, lowpass, samplerate, 2)#filter the signal with a cutoff at 1Hz and a 2th order Butterworth filter
     filteredEMGSignal = butter_highpass_filter(filteredEMGSignal, highpass, samplerate, 2)#filter the signal with a cutoff at 0.05Hz and a 2th order Butterworth filter
-    
+    filteredEGMSignal = phasicFilter(filteredEMGSignal, samplerate)
     #Time Domain Analysis
     resultsdict["TimeDomain"]["IEMG"] = getIEMG(filteredEMGSignal)
     resultsdict["TimeDomain"]["MAV"] = getMAV(filteredEMGSignal)
@@ -526,10 +580,12 @@ def analyzeEMG(rawEMGSignal, samplerate,lowpass=50,highpass=20,threshold = 50,ns
     resultsdict["TimeDomain"]["TM3"] = getTM(filteredEMGSignal,3)
     resultsdict["TimeDomain"]["TM4"] = getTM(filteredEMGSignal,4)
     resultsdict["TimeDomain"]["TM5"] = getTM(filteredEMGSignal,5)
+    resultsdict["TimeDomain"]["LOG"] = getLOG(filteredEMGSignal)
     resultsdict["TimeDomain"]["RMS"] = getRMS(filteredEMGSignal)
     resultsdict["TimeDomain"]["WL"] = getWL(filteredEMGSignal)
     resultsdict["TimeDomain"]["AAC"] = getAAC(filteredEMGSignal)
     resultsdict["TimeDomain"]["DASDV"] = getDASDV(filteredEMGSignal)
+    resultsdict["TimeDomain"]["AFB"] = getAFB(filteredEMGSignal,1000,plot=True)
     resultsdict["TimeDomain"]["ZC"] = getZC(filteredEMGSignal,threshold)
     resultsdict["TimeDomain"]["MYOP"] = getMYOP(filteredEMGSignal,threshold)
     resultsdict["TimeDomain"]["WAMP"] = getWAMP(filteredEMGSignal,threshold)
@@ -562,10 +618,14 @@ def analyzeEMG(rawEMGSignal, samplerate,lowpass=50,highpass=20,threshold = 50,ns
 """ For debug purposes. This runs only if this file is loaded directly and not imported """
 
 if(__name__=='__main__'):
+    import os
     import pickle
     import pprint
+    basepath = os.path.dirname(os.path.realpath(__file__)) #This get the basepath of the script
+    datafolder = "/".join(basepath.split("/")[:-1])+"/data/"
+    
     fakesignal = []
-    with open('/home/giulio/Scrivania/convertedEMG.pkl',"rb") as f:  # Python 3: open(..., 'rb')
+    with open(datafolder+"convertedEMG.pkl","rb") as f:  # Python 3: open(..., 'rb')
         events = [30000] #set a fake event
         tmin = 0 #start from the beginning of the events
         tmax = 5 #end from the beginning of the events
