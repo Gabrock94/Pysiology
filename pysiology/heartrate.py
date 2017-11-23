@@ -2,6 +2,7 @@ import peakutils #peak detection for IBI / BPM
 import numpy as np #to handle datas
 import math #to handle mathematical stuff (example power of 2)
 from scipy.signal import butter, lfilter  #for signal filtering
+import scipy
 
 def getIBI(peaks,samplerate):
     """ This function returns the IBI of a discrete heart signal
@@ -108,7 +109,42 @@ def getPNN20(peaks,samplerate):
     NN20 = [x for x in differences if x > 20]
     pNN20 = float(len(NN20)) / float(len(differences))
     return(pNN20)
- 
+
+def getPSD(rawECGSignal, samplerate):
+#    frequencies, psd = scipy.welch(rawECGSignal, fs=samplerate,scaling="spectrum")
+    frequencies, psd = scipy.signal.periodogram(rawECGSignal, fs=samplerate, scaling="spectrum")
+    return([psd,frequencies]) 
+    
+def getFrequencies(rawECGSignal, samplerate, llc=0.04, ulc=0.15, lhc=0.15,uhc=0.4, lvlc = 0.0033 , hvlc = 0.04 ):
+    """This functions returns the power of low Frequencies, high frequencies and very low frequencies.
+       Default Values have been taken from: Blood, J. D., Wu, J., Chaplin, T. M., Hommer, R., Vazquez, L., Rutherford, H. J., ... & Crowley, M. J. (2015). The variable heart: high frequency and very low frequency correlates of depressive symptoms in children and adolescents. Journal of affective disorders, 186, 119-126.
+       Input:
+           rawECGSignal = raw ECG signal as list
+           samplerate = sample rate in Hz
+           llc, ulc = low frequency lower and upper cutoff
+           lhc, uhc = high frequency lower and upper cutoff
+           vllc, vluc = very low frequency lower and upper cutoff
+      Output:
+          PSD power of the low, high and very low frequencies
+    """
+    frequencyAnalysis = {}
+    rawEMGPowerSpectrum, frequencies = getPSD(rawECGSignal,samplerate)
+    plt.plot(frequencies, rawEMGPowerSpectrum)
+    frequencies = list(frequencies)
+    print(frequencies)
+    #First we check for the closest value into the frequency list to the cutoff frequencies
+    llc = min(frequencies, key=lambda x:abs(x-llc))
+    ulc = min(frequencies, key=lambda x:abs(x-ulc))
+    lhc = min(frequencies, key=lambda x:abs(x-lhc))
+    uhc = min(frequencies, key=lambda x:abs(x-uhc))
+    hvlc = min(frequencies, key=lambda x:abs(x-hvlc))
+    lvlc = min(frequencies, key=lambda x:abs(x-lvlc))
+    frequencyAnalysis["LF"] = sum([P for P in rawEMGPowerSpectrum[frequencies.index(llc):frequencies.index(ulc)]])
+    frequencyAnalysis["HF"] = sum([P for P in rawEMGPowerSpectrum[frequencies.index(lhc):frequencies.index(uhc)]])
+    frequencyAnalysis["VLF"] = sum([P for P in rawEMGPowerSpectrum[frequencies.index(lvlc):frequencies.index(hvlc)]])
+    
+    return(frequencyAnalysis)
+    
 #Define the filters
 def butter_lowpass(cutoff, fs, order=5):
     nyq = 0.5 * fs #Nyquist frequeny is half the sampling frequency
@@ -147,23 +183,17 @@ def analyzeECG(rawECGSignal,samplerate,highpass = 0.5, lowpass=2.5, ibi=True,bpm
     min_dist = int(samplerate / 2) #Minimum distance between peaks is set to be 500ms
     peaks = peakutils.indexes(filteredECGSignal,min_dist=min_dist)
     resultsdict = {}
-    if(ibi):
-        resultsdict["ibi"] =  getIBI(peaks,samplerate)
-    if(bpm):
-        resultsdict["bpm"] =  getBPM(len(peaks),len(rawECGSignal),samplerate)
-    if(sdnn):
-        resultsdict["sdnn"] =  getSDNN(peaks,samplerate)
-    if(sdsd):
-        resultsdict["sdsd"] =  getSDSD(peaks,samplerate)
-    if(rmssd):
-        resultsdict["rmssd"] =  getRMSSD(peaks,samplerate)
-    if(pnn50):
-        resultsdict["pnn50"] =  getPNN50(peaks,samplerate)
-    if(pnn20):
-        resultsdict["pnn20"] =  getPNN20(peaks,samplerate)
-    if(pnn50 and pnn20):
-        resultsdict["pnn50pnn20"] = resultsdict["pnn50"] / resultsdict["pnn20"]
-    return resultsdict
+    resultsdict["ibi"] =  getIBI(peaks,samplerate)
+    resultsdict["bpm"] =  getBPM(len(peaks),len(rawECGSignal),samplerate)
+    resultsdict["sdnn"] =  getSDNN(peaks,samplerate)
+    resultsdict["sdsd"] =  getSDSD(peaks,samplerate)
+    resultsdict["rmssd"] =  getRMSSD(peaks,samplerate)
+    resultsdict["pnn50"] =  getPNN50(peaks,samplerate)
+    resultsdict["pnn20"] =  getPNN20(peaks,samplerate)
+    resultsdict["pnn50pnn20"] = resultsdict["pnn50"] / resultsdict["pnn20"]
+    resultsdict["frequencyAnalysis"] = getFrequencies(rawECGSignal,samplerate ) #unfiltered Signal
+    resultsdict["frequencyAnalysisFiltered"] = getFrequencies(filteredECGSignal,samplerate ) #unfiltered Signal
+    return(resultsdict)
 
 ###############################################################################
 #                                                                             #
@@ -173,4 +203,23 @@ def analyzeECG(rawECGSignal,samplerate,highpass = 0.5, lowpass=2.5, ibi=True,bpm
 """ For debug purposes"""
 
 if(__name__=='__main__'):
-    pass
+    import os
+    import pickle
+    import pprint
+    import matplotlib.pyplot as plt
+    basepath = os.path.dirname(os.path.realpath(__file__)) #This get the basepath of the script
+    datafolder = "/".join(basepath.split("/")[:-1])+"/data/"
+    
+    fakesignal = []
+    with open(datafolder+"convertedECG.pkl","rb") as f:  # Python 3: open(..., 'rb')
+        events = [30000] #set a list of fake fake events
+        tmin = 0 #start from the beginning of the events
+        tmax = 8 #end from the beginning of the events
+        fakesignal = pickle.load(f) #load a fake signal
+        samplerate = 1000 #samplerate of the fake signal
+        for event in events: #for each event
+            smin = tmin*samplerate + event
+            smax = tmax*samplerate + event
+            eventSignal = fakesignal[smin:smax]
+            analyzedECG = analyzeECG(eventSignal,samplerate) #analyze it
+            pprint.pprint(analyzedECG) #print the results of the analysis

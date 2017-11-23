@@ -209,9 +209,7 @@ def getAFB(rawEMGSignal,samplerate, windowSize=32, cutoff=250, plot=False):
         plt.subplot(2,2,4)
         plt.title("AFB")
         plt.plot(filteredSignal)
-        plt.scatter(peak,AFB,color="red")
-    
-    
+        plt.scatter(peak,AFB,color="red")  
     return(AFB)
               
     
@@ -322,13 +320,29 @@ def getMAVSLPk(rawEMGSignal, nseg):
     return(MAVSLPk)    
 
 
-#TODO: HERE 
-#def getMHWk(rawEMGSignal,samplerate,windowLen=32,overlap=30):
-#    """ Evaluate the multiple hamming window, that capture the change of energy with respect to time by various multiple windowing functions 
-#        Overlap is suggested to be 30% in: Du, S., & Vuskovic, M. (2004, November). Temporal vs. spectral approach to feature extraction from prehensile EMG signals. In Information Reuse and Integration, 2004. IRI 2004. Proceedings of the 2004 IEEE International Conference on (pp. 344-350). IEEE.
-#    """
-#    
-#    return(MHWk)
+def getHIST(rawEMGSignal,nseg=9,zc = True, wamp = True,threshold=50):
+    """ Histograms is an extension version of ZC and WAMP features. 
+        Input:
+            raw EMG Signal as list
+            nseg = number of segment to analyze
+            zc = evaluate zero Crossing
+            wamp = evaluate Willison Amplitude
+            
+        Output:
+            get zc/wamp for each segment
+    """
+    segmentLength = int(len(rawEMGSignal) / nseg)
+    HIST = {}
+    for seg in range(0,nseg):
+        HIST[seg+1] = {}
+        thisSegment = rawEMGSignal[seg * segmentLength: (seg+1) * segmentLength]
+        HIST[seg+1]["ZC"] = getZC(thisSegment,threshold)
+        HIST[seg+1]["WAMP"] = getWAMP(thisSegment,threshold)
+    return(HIST)
+        
+        
+    
+    
 ###############################################################################
 #                                                                             #
 #                       FREQUENCY DOMAIN FEATURES                             #
@@ -511,7 +525,7 @@ def getPSD(rawEMGSignal, samplerate):
     frequencies, psd = welch(rawEMGSignal, fs=samplerate,
                window='hanning',   # apply a Hanning window before taking the DFT
                nperseg=256,        # compute periodograms of 256-long segments of x
-               detrend='constant') # detrend x by subtracting the mean
+               detrend='constant',scaling="spectrum") # detrend x by subtracting the mean
     return([psd,frequencies])  
     
     
@@ -585,12 +599,13 @@ def analyzeEMG(rawEMGSignal, samplerate,lowpass=50,highpass=20,threshold = 50,ns
     resultsdict["TimeDomain"]["WL"] = getWL(filteredEMGSignal)
     resultsdict["TimeDomain"]["AAC"] = getAAC(filteredEMGSignal)
     resultsdict["TimeDomain"]["DASDV"] = getDASDV(filteredEMGSignal)
-    resultsdict["TimeDomain"]["AFB"] = getAFB(filteredEMGSignal,1000,plot=True)
+    resultsdict["TimeDomain"]["AFB"] = getAFB(filteredEMGSignal,samplerate,plot=True)
     resultsdict["TimeDomain"]["ZC"] = getZC(filteredEMGSignal,threshold)
     resultsdict["TimeDomain"]["MYOP"] = getMYOP(filteredEMGSignal,threshold)
     resultsdict["TimeDomain"]["WAMP"] = getWAMP(filteredEMGSignal,threshold)
     resultsdict["TimeDomain"]["SSC"] = getSSC(filteredEMGSignal,threshold)
     resultsdict["TimeDomain"]["MAVSLPk"] = getMAVSLPk(filteredEMGSignal,nseg)
+    resultsdict["TimeDomain"]["HIST"] = getHIST(filteredEMGSignal,threshold=threshold)
     
     #Frequency Domain Analysis
     rawEMGPowerSpectrum, frequencies = getPSD(filteredEMGSignal,samplerate)
