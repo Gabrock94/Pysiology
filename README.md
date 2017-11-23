@@ -12,5 +12,5 @@ With pysiology you can easily analyze:
 
 # Example
 ```python
-print("test")
+import pysiology
 ```
