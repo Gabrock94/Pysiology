@@ -75,6 +75,7 @@ def GSRSCRFeaturesExtraction(filteredGSRSignal, samplerate, peak, presentationIn
             
     """  
     resultsDict = {}
+    resultsDict["peak"] = {"peakStart":peak[0],"peakMax":peak[1],"peakEnd":peak[2]}
     resultsDict["riseTime"] = (peak[1] - peak[0]) / samplerate
     resultsDict["latency"] = (peak[0] - presentationIndex) / samplerate
     resultsDict["amplitude"] = filteredGSRSignal[peak[1]] - filteredGSRSignal[peak[0]]
@@ -105,8 +106,9 @@ def analyzeGSR(rawGSRSignal,samplerate, lowpass=1,highpass=0.05):
     filteredGSRSignal = scipy.signal.resample(filteredGSRSignal,nsamples) #downsample to 10Hz
     filteredGSRSignal = phasicGSRFilter(filteredGSRSignal,10) #apply a phasic filter
     peaks = findPeakOnsetAndOffset(filteredGSRSignal) #get peaks onset,offset and max
-    nPeaks = len(peaks)
-    return(filteredGSRSignal,peaks)
+    for peak in peaks:
+        resultsdict[peaks.index(peak)] = GSRSCRFeaturesExtraction(filteredGSRSignal,10,peak)
+    return(resultsdict)
 
 #Define the filter
 def butter_lowpass(cutoff, fs, order=5):
@@ -141,32 +143,9 @@ def butter_highpass_filter(data, cutoff, fs, order):
 if(__name__=='__main__'):
     import pickle
     import os
-    plt.clf()
+    import pprint
     fakesignal = []
     with open(os.getcwd().replace('/pysiology/pysiology','/pysiology') + '/data/convertedEDA.pkl',"rb") as f:  # Python 3: open(..., 'rb')
         fakesignal = pickle.load(f) #load a fake signal
-        analyzedGSR, peaks = analyzeGSR(fakesignal,1000) #analyze it
-        
-        
-        plt.plot(analyzedGSR)
-        for peak in peaks[0:1]:
-            t0 = plt.scatter(peak[0],analyzedGSR[peak[0]],color='grey')
-            t1 = plt.scatter(peak[1],analyzedGSR[peak[1]],color='green')
-            t2 = plt.scatter(peak[2],analyzedGSR[peak[2]],color='grey')
-            riseTime = plt.plot([peak[0],peak[1]],[0, 0],'--',color='blue',label="riseTime")
-            amplitude = plt.plot([peak[1],peak[1]],[0, analyzedGSR[peak[1]]],'--',color='grey',label="Amplitude")
-            results = GSRSCRFeaturesExtraction(analyzedGSR, 10, peak)
-            plt.scatter(results["halfAmplitudeIndex"],analyzedGSR[results["halfAmplitudeIndex"]],color='purple')            
-            SCRWidth = plt.plot([results["halfAmplitudeIndexPre"],results["halfAmplitudeIndex"]],[analyzedGSR[results["halfAmplitudeIndex"]],analyzedGSR[results["halfAmplitudeIndex"]]],'--',color='purple',label="width")
-            decayTime = plt.plot([peak[1],results["halfAmplitudeIndex"]],[results["halfAmplitude"], results["halfAmplitude"]],'--',color='red', label="decayTime")
-        for peak in peaks[1:]:
-            t0 = plt.scatter(peak[0],analyzedGSR[peak[0]],color='grey')
-            t1 = plt.scatter(peak[1],analyzedGSR[peak[1]],color='green')
-            t2 = plt.scatter(peak[2],analyzedGSR[peak[2]],color='grey')
-            riseTime = plt.plot([peak[0],peak[1]],[0, 0],'--',color='blue')
-            amplitude = plt.plot([peak[1],peak[1]],[0, analyzedGSR[peak[1]]],'--',color='grey')
-            results = GSRSCRFeaturesExtraction(analyzedGSR, 10, peak)
-            plt.scatter(results["halfAmplitudeIndex"],analyzedGSR[results["halfAmplitudeIndex"]],color='purple')            
-            SCRWidth = plt.plot([results["halfAmplitudeIndexPre"],results["halfAmplitudeIndex"]],[analyzedGSR[results["halfAmplitudeIndex"]],analyzedGSR[results["halfAmplitudeIndex"]]],'--',color='purple')
-            decayTime = plt.plot([peak[1],results["halfAmplitudeIndex"]],[results["halfAmplitude"], results["halfAmplitude"]],'--',color='red')
-        plt.legend() 
+        GSRResults = analyzeGSR(fakesignal,1000) #analyze it
+        pprint.pprint(GSRResults)

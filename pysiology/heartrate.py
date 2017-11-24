@@ -129,9 +129,7 @@ def getFrequencies(rawECGSignal, samplerate, llc=0.04, ulc=0.15, lhc=0.15,uhc=0.
     """
     frequencyAnalysis = {}
     rawEMGPowerSpectrum, frequencies = getPSD(rawECGSignal,samplerate)
-    plt.plot(frequencies, rawEMGPowerSpectrum)
     frequencies = list(frequencies)
-    print(frequencies)
     #First we check for the closest value into the frequency list to the cutoff frequencies
     llc = min(frequencies, key=lambda x:abs(x-llc))
     ulc = min(frequencies, key=lambda x:abs(x-ulc))
