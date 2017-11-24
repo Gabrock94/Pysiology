@@ -599,7 +599,7 @@ def analyzeEMG(rawEMGSignal, samplerate,lowpass=50,highpass=20,threshold = 50,ns
     resultsdict["TimeDomain"]["WL"] = getWL(filteredEMGSignal)
     resultsdict["TimeDomain"]["AAC"] = getAAC(filteredEMGSignal)
     resultsdict["TimeDomain"]["DASDV"] = getDASDV(filteredEMGSignal)
-    resultsdict["TimeDomain"]["AFB"] = getAFB(filteredEMGSignal,samplerate,plot=True)
+    resultsdict["TimeDomain"]["AFB"] = getAFB(filteredEMGSignal,samplerate,plot=False)
     resultsdict["TimeDomain"]["ZC"] = getZC(filteredEMGSignal,threshold)
     resultsdict["TimeDomain"]["MYOP"] = getMYOP(filteredEMGSignal,threshold)
     resultsdict["TimeDomain"]["WAMP"] = getWAMP(filteredEMGSignal,threshold)
