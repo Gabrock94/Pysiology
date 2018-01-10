@@ -1,14 +1,10 @@
 # Pysiology
-Python package to analyze Physyological signals.
+##Introduction
+Pysiology is a Python package used to analyze Physyological signals.
 With pysiology you can easily analyze:
 - Electromyography signals
 - Electrocardiography signals
 - Electrodermal activity signals
-
-# Requirements
-- Numpy
-- Scipy
-- peakutils
 
 # Example
 ```python
@@ -46,3 +42,15 @@ if(__name__ == "__main__"):
         results[event[0]]["EMG"] = pysiology.electromiography.analyzeEMG(rawEMGSignal[startSample:endSample],samplerate) #analyze the EMG signal
 
 ```
+
+## Installation
+### Requirements
+- Numpy
+- Scipy
+- peakutils
+
+# Credits
+   
+
+## Contacts
+Feel free to contact me for questions, suggestions or to give me advice as well at: giulio.gabrieli@studenti.unitn.it
