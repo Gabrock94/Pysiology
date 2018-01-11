@@ -226,7 +226,6 @@ def getZC(rawEMGSignal, threshold):
         Output:
             ZC index            
     """
-    N = len(rawEMGSignal)
     positive = (rawEMGSignal[0] > threshold)
     ZC = 0
     for x in rawEMGSignal[1:]:
@@ -431,7 +430,6 @@ def getSM(rawEMGPowerSpectrum, frequencies, order):
 def getFR(rawEMGPowerSpectrum, frequencies, llc=30, ulc=250, lhc=250,uhc=500):
     """ This functions evaluate the frequency ratio of the power spectrum. 
         Cut-off value can be decidec experimentally or from the MNF Feature See: Oskoei, M.A., Hu, H. (2006). GA-based feature subset selection for myoelectric classification.
-        TODO: add automatic cutoff detection
         Input:
             raw EMG power spectrum as list,
             frequencies as list,
@@ -565,7 +563,7 @@ def butter_highpass_filter(data, cutoff, fs, order):
 ###############################################################################
 
     
-def analyzeEMG(rawEMGSignal, samplerate,lowpass=50,highpass=20,threshold = 50,nseg=3,segoverlap=30):
+def analyzeEMG(rawEMGSignal, samplerate, preprocessing=True,lowpass=50,highpass=20,threshold = 50,nseg=3,segoverlap=30):
     
     """ This functions acts as entrypoint for the EMG Analysis.
         Input:
@@ -580,10 +578,14 @@ def analyzeEMG(rawEMGSignal, samplerate,lowpass=50,highpass=20,threshold = 50,ns
     """ 
     resultsdict = {"TimeDomain":{},"FrequencyDomain":{}}
     
-    #Preprocessing
-    filteredEMGSignal = butter_lowpass_filter(rawEMGSignal, lowpass, samplerate, 2)#filter the signal with a cutoff at 1Hz and a 2th order Butterworth filter
-    filteredEMGSignal = butter_highpass_filter(filteredEMGSignal, highpass, samplerate, 2)#filter the signal with a cutoff at 0.05Hz and a 2th order Butterworth filter
-    filteredEGMSignal = phasicFilter(filteredEMGSignal, samplerate)
+    if(preprocessing):
+        #Preprocessing
+        filteredEMGSignal = butter_lowpass_filter(rawEMGSignal, lowpass, samplerate, 2)#filter the signal with a cutoff at 1Hz and a 2th order Butterworth filter
+        filteredEMGSignal = butter_highpass_filter(filteredEMGSignal, highpass, samplerate, 2)#filter the signal with a cutoff at 0.05Hz and a 2th order Butterworth filter
+        filteredEMGSignal = phasicFilter(filteredEMGSignal, samplerate)
+    else:
+        filteredEMGSignal = rawEMGSignal
+    
     #Time Domain Analysis
     resultsdict["TimeDomain"]["IEMG"] = getIEMG(filteredEMGSignal)
     resultsdict["TimeDomain"]["MAV"] = getMAV(filteredEMGSignal)

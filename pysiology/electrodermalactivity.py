@@ -87,7 +87,7 @@ def GSRSCRFeaturesExtraction(filteredGSRSignal, samplerate, peak, presentationIn
     resultsDict["SCRWitdth"] = (resultsDict["halfAmplitudeIndex"] - peak[0]) / samplerate
     return(resultsDict)
     
-def analyzeGSR(rawGSRSignal,samplerate, lowpass=1,highpass=0.05):
+def analyzeGSR(rawGSRSignal,samplerate, preprocessing=True, lowpass=1,highpass=0.05):
     """ Entry point for gsr analysis.
         Signal is filtered and downsampled, then a phasic filter is applied
         Input:
@@ -99,12 +99,15 @@ def analyzeGSR(rawGSRSignal,samplerate, lowpass=1,highpass=0.05):
             dictionary with all the results
     """
     resultsdict = {}    
-    filteredGSRSignal = butter_lowpass_filter(rawGSRSignal, lowpass, samplerate, 2)#filter the signal with a cutoff at 1Hz and a 2th order Butterworth filter
-    filteredGSRSignal = butter_highpass_filter(filteredGSRSignal, highpass, samplerate, 2)#filter the signal with a cutoff at 0.05Hz and a 2th order Butterworth filter
-    scalingFactor = int(samplerate / 10) #scaling factor between the samplerate and 10Hz (downsampling factor)
-    nsamples = int(len(filteredGSRSignal) / scalingFactor) #evalute the new number of samples for the downsampling
-    filteredGSRSignal = scipy.signal.resample(filteredGSRSignal,nsamples) #downsample to 10Hz
-    filteredGSRSignal = phasicGSRFilter(filteredGSRSignal,10) #apply a phasic filter
+    if(preprocessing):
+        filteredGSRSignal = butter_lowpass_filter(rawGSRSignal, lowpass, samplerate, 2)#filter the signal with a cutoff at 1Hz and a 2th order Butterworth filter
+        filteredGSRSignal = butter_highpass_filter(filteredGSRSignal, highpass, samplerate, 2)#filter the signal with a cutoff at 0.05Hz and a 2th order Butterworth filter
+        scalingFactor = int(samplerate / 10) #scaling factor between the samplerate and 10Hz (downsampling factor)
+        nsamples = int(len(filteredGSRSignal) / scalingFactor) #evalute the new number of samples for the downsampling
+        filteredGSRSignal = scipy.signal.resample(filteredGSRSignal,nsamples) #downsample to 10Hz
+        filteredGSRSignal = phasicGSRFilter(filteredGSRSignal,10) #apply a phasic filter
+    else:
+        filteredGSRSignal = rawGSRSignal
     peaks = findPeakOnsetAndOffset(filteredGSRSignal) #get peaks onset,offset and max
     for peak in peaks:
         resultsdict[peaks.index(peak)] = GSRSCRFeaturesExtraction(filteredGSRSignal,10,peak)

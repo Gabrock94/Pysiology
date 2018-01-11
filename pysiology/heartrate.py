@@ -167,7 +167,7 @@ def butter_highpass_filter(data, cutoff, fs, order):
     return(y)
     
 #http://www.paulvangent.com/2016/03/15/analyzing-a-discrete-heart-rate-signal-using-python-part-1/
-def analyzeECG(rawECGSignal,samplerate,highpass = 0.5, lowpass=2.5, ibi=True,bpm=True,sdnn = True,sdsd = True, rmssd = True,pnn50 = True, pnn20 = True):
+def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, lowpass=2.5, ibi=True,bpm=True,sdnn = True,sdsd = True, rmssd = True,pnn50 = True, pnn20 = True):
     """ This function analyze a discreate heart rate signal
         Input: 
             rawECGSignal = ecg signal as list
@@ -176,8 +176,11 @@ def analyzeECG(rawECGSignal,samplerate,highpass = 0.5, lowpass=2.5, ibi=True,bpm
         Output: BPM
     """ 
     #First we get the peaks
-    filteredECGSignal = butter_lowpass_filter(rawECGSignal, lowpass, samplerate, 5)#filter the signal with a cutoff at 2.5Hz and a 5th order Butterworth filter
-    filteredECGSignal = butter_highpass_filter(filteredECGSignal, highpass, samplerate, 5)#filter the signal with a cutoff at 2.5Hz and a 5th order Butterworth filter
+    if(preprocessing):
+        filteredECGSignal = butter_lowpass_filter(rawECGSignal, lowpass, samplerate, 5)#filter the signal with a cutoff at 2.5Hz and a 5th order Butterworth filter
+        filteredECGSignal = butter_highpass_filter(filteredECGSignal, highpass, samplerate, 5)#filter the signal with a cutoff at 2.5Hz and a 5th order Butterworth filter
+    else:
+        filteredECGSignal = rawECGSignal
     min_dist = int(samplerate / 2) #Minimum distance between peaks is set to be 500ms
     peaks = peakutils.indexes(filteredECGSignal,min_dist=min_dist)
     resultsdict = {}

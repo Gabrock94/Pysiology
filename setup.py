@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='pysiology',
-      version='0.0.2',
+      version='0.0.3',
       description='Phisiological Analysis in Python',
       url='https://github.com/Gabrock94/pysiology',
       author='Giulio Gabrieli',
