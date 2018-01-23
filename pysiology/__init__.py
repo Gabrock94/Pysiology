@@ -2,4 +2,4 @@ from . import heartrate
 from . import electromiography
 from . import electrodermalactivity
 
-__version__ = '0.0.3' #Version Control
+__version__ = '0.0.4' #Version Control
