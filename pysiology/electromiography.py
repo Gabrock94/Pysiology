@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 #                       TIME DOMAIN FEATURES                                  #
 #                                                                             #
 ###############################################################################
-""" Features have been taken from: 'Feature reduction and selection for EMG signal classification' """
+""" Features have been taken from: Phinyomark, A., Phukpattaranont, P., & Limsakul, C. (2012). Feature reduction and selection for EMG signal classification. Expert Systems with Applications, 39(8), 7420-7431. """
 
 def getIEMG(rawEMGSignal):
     """ Sum of absolute values of EMG signal Amplitude
@@ -46,7 +46,7 @@ def getMAV1(rawEMGSignal):
     wIndexMin = int(0.25 * len(rawEMGSignal))
     wIndexMax = int(0.75 * len(rawEMGSignal))
     absoluteSignal = [abs(x) for x in rawEMGSignal]
-    IEMG = 0.5 * np.sum([x for x in rawEMGSignal[0:wIndexMin]]) + np.sum([x for x in rawEMGSignal[wIndexMin:wIndexMax]]) + 0.5 * np.sum([x for x in rawEMGSignal[wIndexMax:]])
+    IEMG = 0.5 * np.sum([x for x in absoluteSignal[0:wIndexMin]]) + np.sum([x for x in absoluteSignal[wIndexMin:wIndexMax]]) + 0.5 * np.sum([x for x in absoluteSignal[wIndexMax:]])
     MAV1 = IEMG / len(rawEMGSignal)
     return(MAV1)
     
