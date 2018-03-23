@@ -167,7 +167,7 @@ def butter_highpass_filter(data, cutoff, fs, order):
     return(y)
     
 #http://www.paulvangent.com/2016/03/15/analyzing-a-discrete-heart-rate-signal-using-python-part-1/
-def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, lowpass=2.5, ibi=True,bpm=True,sdnn = True,sdsd = True, rmssd = True,pnn50 = True, pnn20 = True):
+def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, lowpass=2.5, ibi=True,bpm=True,sdnn = True,sdsd = True, rmssd = True,pnn50 = True, pnn20 = True, pnn50pnn20 = True, freqAnalysis = True, freqAnalysisFiltered = True):
     """ This function analyze a discreate heart rate signal
         Input: 
             rawECGSignal = ecg signal as list
@@ -184,16 +184,29 @@ def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, low
     min_dist = int(samplerate / 2) #Minimum distance between peaks is set to be 500ms
     peaks = peakutils.indexes(filteredECGSignal,min_dist=min_dist)
     resultsdict = {}
-    resultsdict["ibi"] =  getIBI(peaks,samplerate)
-    resultsdict["bpm"] =  getBPM(len(peaks),len(rawECGSignal),samplerate)
-    resultsdict["sdnn"] =  getSDNN(peaks,samplerate)
-    resultsdict["sdsd"] =  getSDSD(peaks,samplerate)
-    resultsdict["rmssd"] =  getRMSSD(peaks,samplerate)
-    resultsdict["pnn50"] =  getPNN50(peaks,samplerate)
-    resultsdict["pnn20"] =  getPNN20(peaks,samplerate)
-    resultsdict["pnn50pnn20"] = resultsdict["pnn50"] / resultsdict["pnn20"]
-    resultsdict["frequencyAnalysis"] = getFrequencies(rawECGSignal,samplerate ) #unfiltered Signal
-    resultsdict["frequencyAnalysisFiltered"] = getFrequencies(filteredECGSignal,samplerate ) #unfiltered Signal
+    if(ibi):
+        resultsdict["ibi"] =  getIBI(peaks,samplerate)
+    if(bpm):
+        resultsdict["bpm"] =  getBPM(len(peaks),len(rawECGSignal),samplerate)
+    if(sdnn):
+        resultsdict["sdnn"] =  getSDNN(peaks,samplerate)
+    if(sdsd):
+        resultsdict["sdsd"] =  getSDSD(peaks,samplerate)
+    if(rmssd):
+        resultsdict["rmssd"] =  getRMSSD(peaks,samplerate)
+    if(pnn50):
+        resultsdict["pnn50"] =  getPNN50(peaks,samplerate)
+    if(pnn20):
+        resultsdict["pnn20"] =  getPNN20(peaks,samplerate)
+    if(pnn50pnn20):
+        try:
+            resultsdict["pnn50pnn20"] = resultsdict["pnn50"] / resultsdict["pnn20"]
+        except:
+            print("Unable to compute pnn50pnn20")
+    if(freqAnalysis):
+        resultsdict["frequencyAnalysis"] = getFrequencies(rawECGSignal,samplerate ) #unfiltered Signal
+    if(freqAnalysisFiltered):
+        resultsdict["frequencyAnalysisFiltered"] = getFrequencies(filteredECGSignal,samplerate ) #unfiltered Signal
     return(resultsdict)
 
 ###############################################################################
@@ -208,6 +221,7 @@ if(__name__=='__main__'):
     import pickle
     import pprint
     import matplotlib.pyplot as plt
+    
     basepath = os.path.dirname(os.path.realpath(__file__)) #This get the basepath of the script
     datafolder = "/".join(basepath.split("/")[:-1])+"/data/"
     

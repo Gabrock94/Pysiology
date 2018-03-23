@@ -1,8 +1,8 @@
 from setuptools import setup
 
 setup(name='pysiology',
-      version='0.0.4',
-      description='Phisiological Analysis in Python',
+      version='0.0.5',
+      description='Physiological signal processing in Python',
       url='https://github.com/Gabrock94/pysiology',
       author='Giulio Gabrieli',
       author_email='gack94@gmail.com',
@@ -11,7 +11,10 @@ setup(name='pysiology',
       install_requires=[
           'numpy',
           'peakutils',
-          'scipy'
+          'scipy',
+          'math',
+          'pickle',
+          'matplotlib'
       ],
       zip_safe=False)
 
