@@ -1,0 +1,4 @@
+numpy
+peakutils
+scipy
+matplotlib

@@ -1,0 +1,421 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Heartrate analysis module &#8212; Pysiology  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Pysiology - Physiological analysis made easy" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-heartrate">
+<span id="heartrate-analysis-module"></span><h1>Heartrate analysis module<a class="headerlink" href="#module-heartrate" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="heartrate.analyzeECG">
+<code class="descclassname">heartrate.</code><code class="descname">analyzeECG</code><span class="sig-paren">(</span><em>rawECGSignal</em>, <em>samplerate</em>, <em>preprocessing=True</em>, <em>highpass=0.5</em>, <em>lowpass=2.5</em>, <em>ibi=True</em>, <em>bpm=True</em>, <em>sdnn=True</em>, <em>sdsd=True</em>, <em>rmssd=True</em>, <em>pnn50=True</em>, <em>pnn20=True</em>, <em>pnn50pnn20=True</em>, <em>freqAnalysis=True</em>, <em>freqAnalysisFiltered=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/heartrate.html#analyzeECG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heartrate.analyzeECG" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a simple entrypoint for ECG analysis.</p>
+<p>You can use this function as model for your analysis or to extrapolate several features from an ECG signal.</p>
+<p>You can specify which features to evaluate or to exclude, as well as cutoff for frequencies and filter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>list</em>) – ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
+<li><strong>preprocessing</strong> (<em>boolean</em>) – whether to perform a simple preprocessing of the signal automatically</li>
+<li><strong>highpass</strong> (<em>boolean</em>) – cutoff frequency for the high pass filter</li>
+<li><strong>lowpass</strong> (<em>boolean</em>) – cutoff frequency for the low pass filter</li>
+<li><strong>ibi</strong> – whether or not to perform the IBI analysis</li>
+<li><strong>ibi</strong> – boolean</li>
+<li><strong>bpm</strong> – whether or not to perform the BPM analysis</li>
+<li><strong>bpm</strong> – boolean</li>
+<li><strong>sdnn</strong> – whether or not to perform the sdnn analysis</li>
+<li><strong>sdnn</strong> – boolean</li>
+<li><strong>sdsd</strong> – whether or not to perform the sdsd analysis</li>
+<li><strong>sdsd</strong> – boolean</li>
+<li><strong>rmssd</strong> – whether or not to perform the rmssd analysis</li>
+<li><strong>rmssd</strong> – boolean</li>
+<li><strong>pnn50</strong> – whether or not to perform the pNN50 analysis</li>
+<li><strong>pnn50</strong> – boolean</li>
+<li><strong>pnn20</strong> – whether or not to perform the pNN20 analysis</li>
+<li><strong>pnn20</strong> – boolean</li>
+<li><strong>pnn50pnn20</strong> – whether or not to perform the pNN50 on pNN20 ratio analysis</li>
+<li><strong>pnn50pnn20</strong> – boolean</li>
+<li><strong>freqAnalysis</strong> – whether or not to perform a frequency analysis analysis</li>
+<li><strong>freqAnalysis</strong> – boolean</li>
+<li><strong>freqAnalysisFiltered</strong> – whether or not to perform a frequency analysis automatically filtering the signal</li>
+<li><strong>freqAnalysisFiltered</strong> – boolean</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="heartrate.butter_highpass">
+<code class="descclassname">heartrate.</code><code class="descname">butter_highpass</code><span class="sig-paren">(</span><em>cutoff</em>, <em>fs</em>, <em>order=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/heartrate.html#butter_highpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heartrate.butter_highpass" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions generates a higpass butter filter</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
+<li><strong>cutoff</strong> – cutoff frequency</li>
+<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
+<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="heartrate.butter_highpass_filter">
+<code class="descclassname">heartrate.</code><code class="descname">butter_highpass_filter</code><span class="sig-paren">(</span><em>data</em>, <em>cutoff</em>, <em>fs</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/heartrate.html#butter_highpass_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heartrate.butter_highpass_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions apply a butter highpass filter to a signal</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>list</em>) – ECG signal</li>
+<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
+<li><strong>cutoff</strong> – cutoff frequency</li>
+<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
+<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="heartrate.butter_lowpass">
+<code class="descclassname">heartrate.</code><code class="descname">butter_lowpass</code><span class="sig-paren">(</span><em>cutoff</em>, <em>fs</em>, <em>order=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/heartrate.html#butter_lowpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heartrate.butter_lowpass" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions generates a lowpass butter filter</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
+<li><strong>cutoff</strong> – cutoff frequency</li>
+<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
+<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="heartrate.butter_lowpass_filter">
+<code class="descclassname">heartrate.</code><code class="descname">butter_lowpass_filter</code><span class="sig-paren">(</span><em>data</em>, <em>cutoff</em>, <em>fs</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/heartrate.html#butter_lowpass_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heartrate.butter_lowpass_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions apply a butter lowpass filter to a signal</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>list</em>) – ECG signal</li>
+<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
+<li><strong>cutoff</strong> – cutoff frequency</li>
+<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
+<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="heartrate.getBPM">
+<code class="descclassname">heartrate.</code><code class="descname">getBPM</code><span class="sig-paren">(</span><em>npeaks</em>, <em>nsample</em>, <em>samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/heartrate.html#getBPM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heartrate.getBPM" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns the BPM of a discrete heart signal.</p>
+<p>Input: number of peaks of the ECG signal,number of samples, samplerate of the signal</p>
+<p>Output: BPM</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>npeak</strong> (<em>int</em>) – number of peaks of the ECG signal</li>
+<li><strong>nsample</strong> (<em>int</em>) – number of samples of the ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="heartrate.getFrequencies">
+<code class="descclassname">heartrate.</code><code class="descname">getFrequencies</code><span class="sig-paren">(</span><em>rawECGSignal</em>, <em>samplerate</em>, <em>llc=0.04</em>, <em>ulc=0.15</em>, <em>lhc=0.15</em>, <em>uhc=0.4</em>, <em>lvlc=0.0033</em>, <em>hvlc=0.04</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/heartrate.html#getFrequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heartrate.getFrequencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions returns the power of low Frequencies, high frequencies and very low frequencies.</p>
+<p>Default Values have been taken from: Blood, J. D., Wu, J., Chaplin, T. M., Hommer, R., Vazquez, L., Rutherford, H. J., … &amp; Crowley, M. J. (2015). The variable heart: high frequency and very low frequency correlates of depressive symptoms in children and adolescents. Journal of affective disorders, 186, 119-126.</p>
+<p>It returns a dictionary with the amount of high, low and very low frequencies</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rawECGSignal</strong> (<em>list</em>) – raw ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the ECG signal</li>
+<li><strong>llc</strong> (<em>float</em>) – lower cutoff of low frequencies</li>
+<li><strong>ulc</strong> (<em>float</em>) – upper cutoff of low frequencies</li>
+<li><strong>lhc</strong> (<em>float</em>) – lower cutoff of high frequencies</li>
+<li><strong>uhc</strong> (<em>float</em>) – high cutoff of high frequencies</li>
+<li><strong>lvlc</strong> (<em>float</em>) – lower cutoff of very low frequencies</li>
+<li><strong>uvlc</strong> (<em>float</em>) – upper cutoff of very low frequencies</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="heartrate.getIBI">
+<code class="descclassname">heartrate.</code><code class="descname">getIBI</code><span class="sig-paren">(</span><em>peaks</em>, <em>samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/heartrate.html#getIBI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heartrate.getIBI" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns the IBI of a discrete heart signal.</p>
+<p>Input: peaks of the ECG signal</p>
+<p>Output: IBI in ms</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>peaks</strong> (<em>list</em>) – list of peaks of the ECG signal</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">IBI (in ms) as float value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="heartrate.getPNN20">
+<code class="descclassname">heartrate.</code><code class="descname">getPNN20</code><span class="sig-paren">(</span><em>peaks</em>, <em>samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/heartrate.html#getPNN20"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heartrate.getPNN20" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions evaluate pNN20, the proportion of differences greater than 20ms.</p>
+<p>Input: peaks of the ECG signal,samplerate of the signal</p>
+<p>Output: proportion of number of pairs of successive peaks that diffear by more than 20ms</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="heartrate.getPNN50">
+<code class="descclassname">heartrate.</code><code class="descname">getPNN50</code><span class="sig-paren">(</span><em>peaks</em>, <em>samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/heartrate.html#getPNN50"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heartrate.getPNN50" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions evaluate pNN20, the proportion of differences greater than 50ms.</p>
+<p>Input: peaks of the ECG signal,samplerate of the signal</p>
+<p>Output: proportion of number of pairs of successive peaks that diffear by more than 50ms</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="heartrate.getRMSSD">
+<code class="descclassname">heartrate.</code><code class="descname">getRMSSD</code><span class="sig-paren">(</span><em>peaks</em>, <em>samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/heartrate.html#getRMSSD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heartrate.getRMSSD" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions evaluate the root mean square of successive differences between adjacent R-R intervals.</p>
+<p>RMSSD = sqrt((1 / (N - 1)) * sum(i=1 –&gt; N)(RRdiff i - mean(RRdiff))**2)</p>
+<p>Input: peaks of the ECG signal,samplerate of the signal.</p>
+<p>Output: the root mean square of successive differences between adjacent R-R intervals.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="heartrate.getSDNN">
+<code class="descclassname">heartrate.</code><code class="descname">getSDNN</code><span class="sig-paren">(</span><em>peaks</em>, <em>samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/heartrate.html#getSDNN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heartrate.getSDNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions evaluate the standard deviation of intervals between heartbeats.
+It is often calculated over 24h period, or over short peridos of 5 mins.</p>
+<p>SDNN reflects all the cyclic components responsible for variability in the period of recording, therefore it represents total variability</p>
+<p>SDNN = sqrt((1/N-1) * sum(i=1 –&gt; N)(rri - rrmean)^2</p>
+<p>Input: peaks of the ECG signal,samplerate of the signal</p>
+<p>Output: standard deviations of Intervals between heartbeats.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="heartrate.getSDSD">
+<code class="descclassname">heartrate.</code><code class="descname">getSDSD</code><span class="sig-paren">(</span><em>peaks</em>, <em>samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/heartrate.html#getSDSD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heartrate.getSDSD" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions evaluate the the standard deviation of successive differences between adjacent R-R intervals.</p>
+<p>SDSD: sqrt((1 / (N - 1)) * sum(i=1 –&gt; N)(RR i - mean(RR))**2)</p>
+<p>Input: peaks of the ECG signal,samplerate of the signal</p>
+<p>Output: the standard deviation of successive differences between adjacent R-R intervals</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Pysiology - Physiological analysis made easy</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/heartrate.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Giulio Gabrieli.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/heartrate.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
