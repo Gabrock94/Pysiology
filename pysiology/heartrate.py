@@ -8,6 +8,10 @@ def getIBI(peaks,samplerate):
     """ This function returns the IBI of a discrete heart signal
         Input: peaks of the ECG signal
         Output: IBI in ms
+        
+        :param peaks: list of peaks of the ECG signal
+        :type peaks: list
+        :rtype: IBI (in ms) as float value
     """ 
     delta = []
     for peakIndex in range(1,len(peaks)):
@@ -16,10 +20,19 @@ def getIBI(peaks,samplerate):
     return(IBI)
     
 def getBPM(npeaks,nsample, samplerate):
-    """ This function returns the IBI of a discrete heart signal
+    """ This function returns the BPM of a discrete heart signal
         
         Input: number of peaks of the ECG signal,number of samples, samplerate of the signal
-        Output: PBM
+        Output: BPM
+        
+        :param npeak: number of peaks of the ECG signal
+        :type npeak: int
+        :param nsample: number of samples of the ECG signal
+        :type nsample: int
+        :param samplerate: samplerate of the signal in Hz
+        :type samplerate: int
+        
+        :rtype: float
     """ 
     samplelen = nsample / samplerate #lenght in seconds
     BPM = (npeaks * 60) / samplelen
@@ -31,6 +44,13 @@ def getSDNN(peaks,samplerate):
         
         Input: peaks of the ECG signal,samplerate of the signal
         Output: standard deviations of Intervals between heartbeats
+        
+        :param peaks: list of peaks in the ECG signal
+        :type peaks: list
+        :param samplerate: samplerate of the signal in Hz
+        :type samplerate: int
+        
+        :rtype: float
     """
     delta = []
     for peakIndex in range(1,len(peaks)):
