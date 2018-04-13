@@ -9,9 +9,17 @@ Pysiology - Physiological analysis made easy
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   
+   introduction
+   installation
+   
+   modules
 
-   heartrate/
+   tutorial
 
+   cite
+   acknowledgements
+   references
 Indices
 ==================
 

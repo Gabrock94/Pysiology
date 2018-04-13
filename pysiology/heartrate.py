@@ -7,12 +7,15 @@ import scipy
 def getIBI(peaks,samplerate):
     """ This function returns the IBI of a discrete heart signal.
     
-        Input: peaks of the ECG signal
+        Input: peaks and samplerate of the ECG signal
         
         Output: IBI in ms
         
         :param peaks: list of peaks of the ECG signal
         :type peaks: list
+        :param samplerate: samplerate of the signal in Hz
+        :type samplerate: int
+        :return: the mean IBI of the ECG signal
         :rtype: IBI (in ms) as float value
     """ 
     delta = []
@@ -34,7 +37,7 @@ def getBPM(npeaks,nsample, samplerate):
         :type nsample: int
         :param samplerate: samplerate of the signal in Hz
         :type samplerate: int
-        
+        :return: BPM of the ECG signal
         :rtype: float
     """ 
     samplelen = nsample / samplerate #lenght in seconds
@@ -57,7 +60,7 @@ def getSDNN(peaks,samplerate):
         :type peaks: list
         :param samplerate: samplerate of the signal in Hz
         :type samplerate: int
-        
+        :return: the SDNN of the ECG signal
         :rtype: float
     """
     delta = []
@@ -79,7 +82,7 @@ def getSDSD(peaks,samplerate):
         :type peaks: list
         :param samplerate: samplerate of the signal in Hz
         :type samplerate: int
-        
+        :return: the SDSD of the ECG signal
         :rtype: float
     """
     delta = []
@@ -106,7 +109,7 @@ def getRMSSD(peaks,samplerate):
         :type peaks: list
         :param samplerate: samplerate of the signal in Hz
         :type samplerate: int
-        
+        :return: the RMSSD of the ECG signal
         :rtype: float
         
     """
@@ -132,7 +135,7 @@ def getPNN50(peaks,samplerate):
         :type peaks: list
         :param samplerate: samplerate of the signal in Hz
         :type samplerate: int
-        
+        :return: the pNN50 of the ECG signal
         :rtype: float
     """
     delta = []
@@ -158,7 +161,7 @@ def getPNN20(peaks,samplerate):
         :type peaks: list
         :param samplerate: samplerate of the signal in Hz
         :type samplerate: int
-        
+        :return: the pNN20 of the ECG signal
         :rtype: float
     """
     delta = []
@@ -200,6 +203,7 @@ def getFrequencies(rawECGSignal, samplerate, llc=0.04, ulc=0.15, lhc=0.15,uhc=0.
        :type lvlc: float
        :param uvlc: upper cutoff of very low frequencies
        :type uvlc: float
+       :return: a dictionary containing the results of the frequency analysis
        :rtype: dictionary
     """
     frequencyAnalysis = {}
@@ -230,6 +234,7 @@ def butter_lowpass(cutoff, fs, order=5):
         :type fs: float
         :param order: order of the Butter Filter
         :type order: int
+        :return: butter lowpass filter
         :rtype: list
     """
     nyq = 0.5 * fs #Nyquist frequeny is half the sampling frequency
@@ -248,6 +253,7 @@ def butter_highpass(cutoff, fs, order=5):
         :type fs: float
         :param order: order of the Butter Filter
         :type order: int
+        :return: butter highpass filter
         :rtype: list
     """
     nyq = 0.5 * fs #Nyquist frequeny is half the sampling frequency
@@ -268,6 +274,7 @@ def butter_lowpass_filter(data, cutoff, fs, order):
         :type fs: float
         :param order: order of the Butter Filter
         :type order: int
+        :return: lowpass filtered ECG signal
         :rtype: list
     """
     b, a = butter_lowpass(cutoff, fs, order=order)
@@ -287,6 +294,7 @@ def butter_highpass_filter(data, cutoff, fs, order):
         :type fs: float
         :param order: order of the Butter Filter
         :type order: int
+        :return: highpass filtered ECG signal
         :rtype: list
     """
     b, a = butter_highpass(cutoff, fs, order=order)
@@ -331,9 +339,8 @@ def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, low
         :param freqAnalysis: boolean
         :param freqAnalysisFiltered: whether or not to perform a frequency analysis automatically filtering the signal
         :param freqAnalysisFiltered: boolean
+        :return: a dictionary containing the results of the ECG analysis 
         :rtype: list
-    
-    
     """
     #First we get the peaks
     if(preprocessing):
@@ -342,9 +349,10 @@ def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, low
     else:
         filteredECGSignal = rawECGSignal
     min_dist = int(samplerate / 2) #Minimum distance between peaks is set to be 500ms
-    peaks = peakutils.indexes(filteredECGSignal,min_dist=min_dist)
-    resultsdict = {}
-    if(ibi):
+    peaks = peakutils.indexes(filteredECGSignal,min_dist=min_dist) #get the least of peaks
+    resultsdict = {} #initialize the results dict.
+    #for each analysis, check the boolean value and if true compute the results. Then append it to the final dict. 
+    if(ibi): 
         resultsdict["ibi"] =  getIBI(peaks,samplerate)
     if(bpm):
         resultsdict["bpm"] =  getBPM(len(peaks),len(rawECGSignal),samplerate)
@@ -359,6 +367,7 @@ def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, low
     if(pnn20):
         resultsdict["pnn20"] =  getPNN20(peaks,samplerate)
     if(pnn50pnn20):
+        #We use a  try / except to prevent division by 0 or with null values
         try:
             resultsdict["pnn50pnn20"] = resultsdict["pnn50"] / resultsdict["pnn20"]
         except:
@@ -374,7 +383,7 @@ def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, low
 #                                  DEBUG                                      #
 #                                                                             #
 ###############################################################################
-""" For debug purposes"""
+""" For debug purposes."""
 
 if(__name__=='__main__'):
     import os

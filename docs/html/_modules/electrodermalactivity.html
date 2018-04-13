@@ -1,0 +1,336 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>electrodermalactivity &#8212; Pysiology  documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Pysiology  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for electrodermalactivity</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">peakutils</span> <span class="c1">#peak detection</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1">#to handle datas</span>
+<span class="kn">import</span> <span class="nn">math</span> <span class="c1">#to handle mathematical stuff (example power of 2)</span>
+<span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="k">import</span> <span class="n">butter</span><span class="p">,</span> <span class="n">lfilter</span>  <span class="c1">#for signal filtering</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1">###############################################################################</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">#                                Functions                                    #</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">###############################################################################</span>
+
+<div class="viewcode-block" id="phasicGSRFilter"><a class="viewcode-back" href="../electrodermalactivity.html#electrodermalactivity.phasicGSRFilter">[docs]</a><span class="k">def</span> <span class="nf">phasicGSRFilter</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">,</span><span class="n">samplerate</span><span class="p">,</span><span class="n">seconds</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Apply a phasic filter to the signal, with +- X seconds from each sample. Default is 4 seconds</span>
+<span class="sd">    </span>
+<span class="sd">        * Input:</span>
+<span class="sd">            * rawGSRSignal = gsr signal as list</span>
+<span class="sd">            * samplerate = samplerate of the signal    </span>
+<span class="sd">            * seconds = number of seconds before and after each timepoint to use in order to compute the filtered value</span>
+<span class="sd">        * Output:</span>
+<span class="sd">            * phasic filtered signal            </span>
+<span class="sd">        </span>
+<span class="sd">        :param rawGSRSignal: raw GSR Signal</span>
+<span class="sd">        :type rawGSRSignal: list</span>
+<span class="sd">        :param samplerate: samplerate of the GSR signal in Hz</span>
+<span class="sd">        :type samplerate: int</span>
+<span class="sd">        :param seconds: seconds to use to apply the phasic filter</span>
+<span class="sd">        :param seconds: int</span>
+<span class="sd">        :return: filtered signal</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">phasicSignal</span> <span class="o">=</span> <span class="p">[]</span>    
+    <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">)):</span>
+        <span class="n">smin</span> <span class="o">=</span> <span class="n">sample</span> <span class="o">-</span> <span class="n">seconds</span> <span class="o">*</span> <span class="n">samplerate</span> <span class="c1">#min sample index</span>
+        <span class="n">smax</span> <span class="o">=</span> <span class="n">sample</span> <span class="o">+</span> <span class="n">seconds</span> <span class="o">*</span> <span class="n">samplerate</span> <span class="c1">#max sample index</span>
+        <span class="c1">#is smin is &lt; 0 or smax &gt; signal length, fix it to the closest real sample</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">smin</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span> 
+            <span class="n">smin</span> <span class="o">=</span> <span class="n">sample</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">smax</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">)):</span>
+            <span class="n">smax</span> <span class="o">=</span> <span class="n">sample</span>
+        <span class="c1">#substract the mean of the segment</span>
+        <span class="n">newsample</span> <span class="o">=</span> <span class="n">rawGSRSignal</span><span class="p">[</span><span class="n">sample</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">[</span><span class="n">smin</span><span class="p">:</span><span class="n">smax</span><span class="p">])</span>
+        <span class="c1">#move to th</span>
+        <span class="n">phasicSignal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newsample</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">phasicSignal</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="findPeakOnsetAndOffset"><a class="viewcode-back" href="../electrodermalactivity.html#electrodermalactivity.findPeakOnsetAndOffset">[docs]</a><span class="k">def</span> <span class="nf">findPeakOnsetAndOffset</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">,</span><span class="n">onset</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span><span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This functions finds the peaks of a GSR signal</span>
+<span class="sd">    </span>
+<span class="sd">        * Input:</span>
+<span class="sd">            * rawGSRSignal = GSR signal as list            </span>
+<span class="sd">            * onset = onset for Peak Detection (uS)</span>
+<span class="sd">            * offset = offset for Peak Detection (uS)</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * multi dimensional list, \[onsetIndex,maxIndex,offsetIndex\] x nPeaks</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawGSRSignal: GSR Signal to analyze</span>
+<span class="sd">        :type rawGSRSignal: list</span>
+<span class="sd">        :param onset: onset value for peak detection (in uS)</span>
+<span class="sd">        :type onset: float</span>
+<span class="sd">        :param offset: onset value for peak detection (in uS)</span>
+<span class="sd">        :type offset: float</span>
+<span class="sd">        :return: list of the peaks in the signal</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">listOfPeaks</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#initialize the list of Peaks</span>
+    <span class="n">isOnset</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1">#set onset of False</span>
+    <span class="n">lastPeak</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">#start lastpeak</span>
+    <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">)):</span> <span class="c1">#for each sample</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">rawGSRSignal</span><span class="p">[</span><span class="n">point</span><span class="p">]</span> <span class="c1">#x is the value in uS of the sample</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">isOnset</span><span class="p">):</span> <span class="c1">#if we are in onset phase</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">offset</span><span class="p">):</span> <span class="c1">#if x is below the offset</span>
+                <span class="n">peakOnset</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">[</span><span class="n">lastPeak</span><span class="p">:</span><span class="n">point</span><span class="p">])</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">peakOnset</span> <span class="o">&gt;=</span> <span class="n">onset</span><span class="p">):</span>
+                    <span class="n">listOfPeaks</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">lastPeak</span><span class="p">,</span><span class="n">rawGSRSignal</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">peakOnset</span><span class="p">),</span><span class="n">point</span><span class="p">])</span> <span class="c1">#create the peak element</span>
+                <span class="n">isOnset</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1">#set isOnset to False</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#if we are in the offset phase</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">offset</span><span class="p">):</span> <span class="c1">#if the point is above the onset</span>
+                <span class="n">lastPeak</span> <span class="o">=</span> <span class="n">point</span> <span class="c1">#memorize the onset index</span>
+                <span class="n">isOnset</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1">#switch onset to True</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">listOfPeaks</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="GSRSCRFeaturesExtraction"><a class="viewcode-back" href="../electrodermalactivity.html#electrodermalactivity.GSRSCRFeaturesExtraction">[docs]</a><span class="k">def</span> <span class="nf">GSRSCRFeaturesExtraction</span><span class="p">(</span><span class="n">filteredGSRSignal</span><span class="p">,</span> <span class="n">samplerate</span><span class="p">,</span> <span class="n">peak</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This functions extract GSR SCR features: http://eda-explorer.media.mit.edu/static/SCR_withFeatures.png  </span>
+<span class="sd">    </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * rawGSRSignal: filtered GSR Signal as list</span>
+<span class="sd">            * samplerate: samplerate of the signak§</span>
+<span class="sd">            * peak: list of peaks [peakStart, max, peakend]</span>
+<span class="sd">                </span>
+<span class="sd">        * Output:</span>
+<span class="sd">            * dict: {riseTime,Amplitude,EDAatApex,DecayTime (50%),SCRWidth (50%)}</span>
+<span class="sd">        </span>
+<span class="sd">        :param rawGSRSignal: raw GSR Signal</span>
+<span class="sd">        :type rawGSRSignal: list</span>
+<span class="sd">        :param samplerate: samplerate of the GSR signal in Hz</span>
+<span class="sd">        :type samplerate: int</span>
+<span class="sd">        :param peak: a list containing the peak onset, max and offset indexes (as returned by the function findPeakOnsetAndOffset)</span>
+<span class="sd">        :type peak: list</span>
+<span class="sd">        :return: a dictionary with the results of the extracted features</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">            </span>
+<span class="sd">    &quot;&quot;&quot;</span>  
+    <span class="n">resultsDict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;peak&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;peakStart&quot;</span><span class="p">:</span><span class="n">peak</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="s2">&quot;peakMax&quot;</span><span class="p">:</span><span class="n">peak</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s2">&quot;peakEnd&quot;</span><span class="p">:</span><span class="n">peak</span><span class="p">[</span><span class="mi">2</span><span class="p">]}</span>
+    <span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;riseTime&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">peak</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">peak</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">samplerate</span>
+    <span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;latency&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">peak</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">samplerate</span>
+    <span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;amplitude&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filteredGSRSignal</span><span class="p">[</span><span class="n">peak</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">-</span> <span class="n">filteredGSRSignal</span><span class="p">[</span><span class="n">peak</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;halfAmplitude&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;amplitude&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;halfAmplitudeIndex&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filteredGSRSignal</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">filteredGSRSignal</span><span class="p">[</span><span class="n">peak</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">peak</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;halfAmplitude&quot;</span><span class="p">])))</span>
+    <span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;halfAmplitudeIndexPre&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filteredGSRSignal</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">filteredGSRSignal</span><span class="p">[</span><span class="n">peak</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">peak</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;halfAmplitude&quot;</span><span class="p">])))</span>
+    <span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;EDAatApex&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filteredGSRSignal</span><span class="p">[</span><span class="n">peak</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;decayTime&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;halfAmplitudeIndex&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">peak</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">samplerate</span>
+    <span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;SCRWitdth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">resultsDict</span><span class="p">[</span><span class="s2">&quot;halfAmplitudeIndex&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">peak</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">samplerate</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">resultsDict</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="analyzeGSR"><a class="viewcode-back" href="../electrodermalactivity.html#electrodermalactivity.analyzeGSR">[docs]</a><span class="k">def</span> <span class="nf">analyzeGSR</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">,</span><span class="n">samplerate</span><span class="p">,</span> <span class="n">preprocessing</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lowpass</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">highpass</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Entry point for gsr analysis.</span>
+<span class="sd">        Signal is filtered and downsampled, then a phasic filter is applied</span>
+<span class="sd">        </span>
+<span class="sd">        * Input:</span>
+<span class="sd">            * rawGSRSignal = gsr signal as list</span>
+<span class="sd">            * samplerate = samplerate of the signal</span>
+<span class="sd">            * preprocessing = wether to perform or not a preprocessing of the signal                </span>
+<span class="sd">            * lowpass = cutoff for lowpass filter</span>
+<span class="sd">            * highpass = cutoff for highpass filter</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * dictionary with all the results</span>
+<span class="sd">        </span>
+<span class="sd">        :param rawGSRSignal: raw GSR Signal</span>
+<span class="sd">        :type rawGSRSignal: list</span>
+<span class="sd">        :param samplerate: samplerate of the GSR signal in Hz</span>
+<span class="sd">        :type samplerate: int</span>
+<span class="sd">        :param preprocessing: wether to perform or not an automatic preprocessing of the signal</span>
+<span class="sd">        :type preprocessing: true</span>
+<span class="sd">        :param lowpass: cutoff frequency for the lowpass filter</span>
+<span class="sd">        :type lowpass: float</span>
+<span class="sd">        :param highpass: cutoff frequency for the highpass filter</span>
+<span class="sd">        :type highpass: float</span>
+<span class="sd">        :return: a dictionary with the results of the automatic GSR analysis</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">resultsdict</span> <span class="o">=</span> <span class="p">{}</span>    
+    <span class="k">if</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">):</span>
+        <span class="n">filteredGSRSignal</span> <span class="o">=</span> <span class="n">butter_lowpass_filter</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">,</span> <span class="n">lowpass</span><span class="p">,</span> <span class="n">samplerate</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="c1">#filter the signal with a cutoff at 1Hz and a 2th order Butterworth filter</span>
+        <span class="n">filteredGSRSignal</span> <span class="o">=</span> <span class="n">butter_highpass_filter</span><span class="p">(</span><span class="n">filteredGSRSignal</span><span class="p">,</span> <span class="n">highpass</span><span class="p">,</span> <span class="n">samplerate</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="c1">#filter the signal with a cutoff at 0.05Hz and a 2th order Butterworth filter</span>
+        <span class="n">scalingFactor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">samplerate</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span> <span class="c1">#scaling factor between the samplerate and 10Hz (downsampling factor)</span>
+        <span class="n">nsamples</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filteredGSRSignal</span><span class="p">)</span> <span class="o">/</span> <span class="n">scalingFactor</span><span class="p">)</span> <span class="c1">#evalute the new number of samples for the downsampling</span>
+        <span class="n">filteredGSRSignal</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">filteredGSRSignal</span><span class="p">,</span><span class="n">nsamples</span><span class="p">)</span> <span class="c1">#downsample to 10Hz</span>
+        <span class="n">filteredGSRSignal</span> <span class="o">=</span> <span class="n">phasicGSRFilter</span><span class="p">(</span><span class="n">filteredGSRSignal</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> <span class="c1">#apply a phasic filter</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">filteredGSRSignal</span> <span class="o">=</span> <span class="n">rawGSRSignal</span>
+    <span class="n">peaks</span> <span class="o">=</span> <span class="n">findPeakOnsetAndOffset</span><span class="p">(</span><span class="n">filteredGSRSignal</span><span class="p">)</span> <span class="c1">#get peaks onset,offset and max</span>
+    <span class="k">for</span> <span class="n">peak</span> <span class="ow">in</span> <span class="n">peaks</span><span class="p">:</span>
+        <span class="n">resultsdict</span><span class="p">[</span><span class="n">peaks</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">peak</span><span class="p">)]</span> <span class="o">=</span> <span class="n">GSRSCRFeaturesExtraction</span><span class="p">(</span><span class="n">filteredGSRSignal</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">peak</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">resultsdict</span><span class="p">)</span></div>
+
+<span class="c1">#Define the filters</span>
+<div class="viewcode-block" id="butter_lowpass"><a class="viewcode-back" href="../electrodermalactivity.html#electrodermalactivity.butter_lowpass">[docs]</a><span class="k">def</span> <span class="nf">butter_lowpass</span><span class="p">(</span><span class="n">cutoff</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This functions generates a lowpass butter filter</span>
+<span class="sd">    </span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param fs: samplerate of the signal</span>
+<span class="sd">        :type fs: float</span>
+<span class="sd">        :param order: order of the Butter Filter</span>
+<span class="sd">        :type order: int</span>
+<span class="sd">        :return: butter lowpass filter</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nyq</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">fs</span> <span class="c1">#Nyquist frequeny is half the sampling frequency</span>
+    <span class="n">normal_cutoff</span> <span class="o">=</span> <span class="n">cutoff</span> <span class="o">/</span> <span class="n">nyq</span> 
+    <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">butter</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">normal_cutoff</span><span class="p">,</span> <span class="n">btype</span><span class="o">=</span><span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="n">analog</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="butter_highpass"><a class="viewcode-back" href="../electrodermalactivity.html#electrodermalactivity.butter_highpass">[docs]</a><span class="k">def</span> <span class="nf">butter_highpass</span><span class="p">(</span><span class="n">cutoff</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This functions generates a higpass butter filter</span>
+<span class="sd">    </span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param fs: samplerate of the signal</span>
+<span class="sd">        :type fs: float</span>
+<span class="sd">        :param order: order of the Butter Filter</span>
+<span class="sd">        :type order: int</span>
+<span class="sd">        :return: butter highpass filter</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nyq</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">fs</span> <span class="c1">#Nyquist frequeny is half the sampling frequency</span>
+    <span class="n">normal_cutoff</span> <span class="o">=</span> <span class="n">cutoff</span> <span class="o">/</span> <span class="n">nyq</span> 
+    <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">butter</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">normal_cutoff</span><span class="p">,</span> <span class="n">btype</span><span class="o">=</span><span class="s1">&#39;high&#39;</span><span class="p">,</span> <span class="n">analog</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="butter_lowpass_filter"><a class="viewcode-back" href="../electrodermalactivity.html#electrodermalactivity.butter_lowpass_filter">[docs]</a><span class="k">def</span> <span class="nf">butter_lowpass_filter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This functions apply a butter lowpass filter to a signal</span>
+<span class="sd">    </span>
+<span class="sd">        :param data: ECG signal</span>
+<span class="sd">        :type data: list</span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param fs: samplerate of the signal</span>
+<span class="sd">        :type fs: float</span>
+<span class="sd">        :param order: order of the Butter Filter</span>
+<span class="sd">        :type order: int</span>
+<span class="sd">        :return: lowpass filtered ECG signal</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">butter_lowpass</span><span class="p">(</span><span class="n">cutoff</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">lfilter</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">y</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="butter_highpass_filter"><a class="viewcode-back" href="../electrodermalactivity.html#electrodermalactivity.butter_highpass_filter">[docs]</a><span class="k">def</span> <span class="nf">butter_highpass_filter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This functions apply a butter highpass filter to a signal</span>
+<span class="sd">    </span>
+<span class="sd">        :param data: ECG signal</span>
+<span class="sd">        :type data: list</span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param fs: samplerate of the signal</span>
+<span class="sd">        :type fs: float</span>
+<span class="sd">        :param order: order of the Butter Filter</span>
+<span class="sd">        :type order: int</span>
+<span class="sd">        :return: highpass filtered ECG signal</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">butter_highpass</span><span class="p">(</span><span class="n">cutoff</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">lfilter</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">y</span><span class="p">)</span></div>
+
+    
+<span class="c1">###############################################################################</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">#                                  DEBUG                                      #</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">###############################################################################</span>
+<span class="sd">&quot;&quot;&quot; For debug purposes&quot;&quot;&quot;</span>
+
+<span class="k">if</span><span class="p">(</span><span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">pickle</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="kn">import</span> <span class="nn">pprint</span>
+    <span class="n">fakesignal</span> <span class="o">=</span> <span class="p">[]</span> 
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/pysiology/pysiology&#39;</span><span class="p">,</span><span class="s1">&#39;/pysiology&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/data/convertedEDA.pkl&#39;</span><span class="p">,</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>  <span class="c1"># Python 3: open(..., &#39;rb&#39;)</span>
+        <span class="n">fakesignal</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1">#load a fake signal</span>
+        <span class="n">GSRResults</span> <span class="o">=</span> <span class="n">analyzeGSR</span><span class="p">(</span><span class="n">fakesignal</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span> <span class="c1">#analyze it</span>
+        <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">GSRResults</span><span class="p">)</span> <span class="c1">#print the results for each peak found</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Pysiology  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Giulio Gabrieli.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+    </div>
+  </body>
+</html>

@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>heartrate &#8212; Pysiology  documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -15,15 +15,21 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="search" title="Search" href="../search.html" /> 
   </head><body>
-  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Pysiology  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -40,12 +46,15 @@
 <div class="viewcode-block" id="getIBI"><a class="viewcode-back" href="../heartrate.html#heartrate.getIBI">[docs]</a><span class="k">def</span> <span class="nf">getIBI</span><span class="p">(</span><span class="n">peaks</span><span class="p">,</span><span class="n">samplerate</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; This function returns the IBI of a discrete heart signal.</span>
 <span class="sd">    </span>
-<span class="sd">        Input: peaks of the ECG signal</span>
+<span class="sd">        Input: peaks and samplerate of the ECG signal</span>
 <span class="sd">        </span>
 <span class="sd">        Output: IBI in ms</span>
 <span class="sd">        </span>
 <span class="sd">        :param peaks: list of peaks of the ECG signal</span>
 <span class="sd">        :type peaks: list</span>
+<span class="sd">        :param samplerate: samplerate of the signal in Hz</span>
+<span class="sd">        :type samplerate: int</span>
+<span class="sd">        :return: the mean IBI of the ECG signal</span>
 <span class="sd">        :rtype: IBI (in ms) as float value</span>
 <span class="sd">    &quot;&quot;&quot;</span> 
     <span class="n">delta</span> <span class="o">=</span> <span class="p">[]</span>
@@ -67,7 +76,7 @@
 <span class="sd">        :type nsample: int</span>
 <span class="sd">        :param samplerate: samplerate of the signal in Hz</span>
 <span class="sd">        :type samplerate: int</span>
-<span class="sd">        </span>
+<span class="sd">        :return: BPM of the ECG signal</span>
 <span class="sd">        :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span> 
     <span class="n">samplelen</span> <span class="o">=</span> <span class="n">nsample</span> <span class="o">/</span> <span class="n">samplerate</span> <span class="c1">#lenght in seconds</span>
@@ -90,7 +99,7 @@
 <span class="sd">        :type peaks: list</span>
 <span class="sd">        :param samplerate: samplerate of the signal in Hz</span>
 <span class="sd">        :type samplerate: int</span>
-<span class="sd">        </span>
+<span class="sd">        :return: the SDNN of the ECG signal</span>
 <span class="sd">        :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">delta</span> <span class="o">=</span> <span class="p">[]</span>
@@ -112,7 +121,7 @@
 <span class="sd">        :type peaks: list</span>
 <span class="sd">        :param samplerate: samplerate of the signal in Hz</span>
 <span class="sd">        :type samplerate: int</span>
-<span class="sd">        </span>
+<span class="sd">        :return: the SDSD of the ECG signal</span>
 <span class="sd">        :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">delta</span> <span class="o">=</span> <span class="p">[]</span>
@@ -139,7 +148,7 @@
 <span class="sd">        :type peaks: list</span>
 <span class="sd">        :param samplerate: samplerate of the signal in Hz</span>
 <span class="sd">        :type samplerate: int</span>
-<span class="sd">        </span>
+<span class="sd">        :return: the RMSSD of the ECG signal</span>
 <span class="sd">        :rtype: float</span>
 <span class="sd">        </span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -165,7 +174,7 @@
 <span class="sd">        :type peaks: list</span>
 <span class="sd">        :param samplerate: samplerate of the signal in Hz</span>
 <span class="sd">        :type samplerate: int</span>
-<span class="sd">        </span>
+<span class="sd">        :return: the pNN50 of the ECG signal</span>
 <span class="sd">        :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">delta</span> <span class="o">=</span> <span class="p">[]</span>
@@ -191,7 +200,7 @@
 <span class="sd">        :type peaks: list</span>
 <span class="sd">        :param samplerate: samplerate of the signal in Hz</span>
 <span class="sd">        :type samplerate: int</span>
-<span class="sd">        </span>
+<span class="sd">        :return: the pNN20 of the ECG signal</span>
 <span class="sd">        :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">delta</span> <span class="o">=</span> <span class="p">[]</span>
@@ -233,6 +242,7 @@
 <span class="sd">       :type lvlc: float</span>
 <span class="sd">       :param uvlc: upper cutoff of very low frequencies</span>
 <span class="sd">       :type uvlc: float</span>
+<span class="sd">       :return: a dictionary containing the results of the frequency analysis</span>
 <span class="sd">       :rtype: dictionary</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">frequencyAnalysis</span> <span class="o">=</span> <span class="p">{}</span>
@@ -263,6 +273,7 @@
 <span class="sd">        :type fs: float</span>
 <span class="sd">        :param order: order of the Butter Filter</span>
 <span class="sd">        :type order: int</span>
+<span class="sd">        :return: butter lowpass filter</span>
 <span class="sd">        :rtype: list</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nyq</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">fs</span> <span class="c1">#Nyquist frequeny is half the sampling frequency</span>
@@ -281,6 +292,7 @@
 <span class="sd">        :type fs: float</span>
 <span class="sd">        :param order: order of the Butter Filter</span>
 <span class="sd">        :type order: int</span>
+<span class="sd">        :return: butter highpass filter</span>
 <span class="sd">        :rtype: list</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nyq</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">fs</span> <span class="c1">#Nyquist frequeny is half the sampling frequency</span>
@@ -301,6 +313,7 @@
 <span class="sd">        :type fs: float</span>
 <span class="sd">        :param order: order of the Butter Filter</span>
 <span class="sd">        :type order: int</span>
+<span class="sd">        :return: lowpass filtered ECG signal</span>
 <span class="sd">        :rtype: list</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">butter_lowpass</span><span class="p">(</span><span class="n">cutoff</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
@@ -320,6 +333,7 @@
 <span class="sd">        :type fs: float</span>
 <span class="sd">        :param order: order of the Butter Filter</span>
 <span class="sd">        :type order: int</span>
+<span class="sd">        :return: highpass filtered ECG signal</span>
 <span class="sd">        :rtype: list</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">butter_highpass</span><span class="p">(</span><span class="n">cutoff</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
@@ -364,9 +378,8 @@
 <span class="sd">        :param freqAnalysis: boolean</span>
 <span class="sd">        :param freqAnalysisFiltered: whether or not to perform a frequency analysis automatically filtering the signal</span>
 <span class="sd">        :param freqAnalysisFiltered: boolean</span>
+<span class="sd">        :return: a dictionary containing the results of the ECG analysis </span>
 <span class="sd">        :rtype: list</span>
-<span class="sd">    </span>
-<span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1">#First we get the peaks</span>
     <span class="k">if</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">):</span>
@@ -375,9 +388,10 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">filteredECGSignal</span> <span class="o">=</span> <span class="n">rawECGSignal</span>
     <span class="n">min_dist</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">samplerate</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="c1">#Minimum distance between peaks is set to be 500ms</span>
-    <span class="n">peaks</span> <span class="o">=</span> <span class="n">peakutils</span><span class="o">.</span><span class="n">indexes</span><span class="p">(</span><span class="n">filteredECGSignal</span><span class="p">,</span><span class="n">min_dist</span><span class="o">=</span><span class="n">min_dist</span><span class="p">)</span>
-    <span class="n">resultsdict</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">ibi</span><span class="p">):</span>
+    <span class="n">peaks</span> <span class="o">=</span> <span class="n">peakutils</span><span class="o">.</span><span class="n">indexes</span><span class="p">(</span><span class="n">filteredECGSignal</span><span class="p">,</span><span class="n">min_dist</span><span class="o">=</span><span class="n">min_dist</span><span class="p">)</span> <span class="c1">#get the least of peaks</span>
+    <span class="n">resultsdict</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1">#initialize the results dict.</span>
+    <span class="c1">#for each analysis, check the boolean value and if true compute the results. Then append it to the final dict. </span>
+    <span class="k">if</span><span class="p">(</span><span class="n">ibi</span><span class="p">):</span> 
         <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;ibi&quot;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">getIBI</span><span class="p">(</span><span class="n">peaks</span><span class="p">,</span><span class="n">samplerate</span><span class="p">)</span>
     <span class="k">if</span><span class="p">(</span><span class="n">bpm</span><span class="p">):</span>
         <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;bpm&quot;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">getBPM</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">peaks</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">rawECGSignal</span><span class="p">),</span><span class="n">samplerate</span><span class="p">)</span>
@@ -392,6 +406,7 @@
     <span class="k">if</span><span class="p">(</span><span class="n">pnn20</span><span class="p">):</span>
         <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;pnn20&quot;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">getPNN20</span><span class="p">(</span><span class="n">peaks</span><span class="p">,</span><span class="n">samplerate</span><span class="p">)</span>
     <span class="k">if</span><span class="p">(</span><span class="n">pnn50pnn20</span><span class="p">):</span>
+        <span class="c1">#We use a  try / except to prevent division by 0 or with null values</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;pnn50pnn20&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;pnn50&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;pnn20&quot;</span><span class="p">]</span>
         <span class="k">except</span><span class="p">:</span>
@@ -407,7 +422,7 @@
 <span class="c1">#                                  DEBUG                                      #</span>
 <span class="c1">#                                                                             #</span>
 <span class="c1">###############################################################################</span>
-<span class="sd">&quot;&quot;&quot; For debug purposes&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot; For debug purposes.&quot;&quot;&quot;</span>
 
 <span class="k">if</span><span class="p">(</span><span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">):</span>
     <span class="kn">import</span> <span class="nn">os</span>
@@ -436,15 +451,7 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
+        <div class="sphinxsidebarwrapper">
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -461,17 +468,22 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2018, Giulio Gabrieli.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
-      
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Pysiology  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
     </div>
-
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Giulio Gabrieli.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+    </div>
   </body>
 </html>
