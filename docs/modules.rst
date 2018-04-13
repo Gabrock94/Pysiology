@@ -7,3 +7,4 @@ Modules
 
    heartrate/  
    electrodermalactivity/
+   electromiography/

@@ -1,0 +1,1075 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>electromiography &#8212; Pysiology  documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Pysiology  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for electromiography</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">peakutils</span> <span class="c1">#peak detection</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1">#to handle datas</span>
+<span class="kn">import</span> <span class="nn">math</span> <span class="c1">#to handle mathematical stuff (example power of 2)</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="k">import</span> <span class="n">butter</span><span class="p">,</span> <span class="n">lfilter</span><span class="p">,</span> <span class="n">welch</span><span class="p">,</span> <span class="n">square</span>  <span class="c1">#for signal filtering</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<span class="c1">###############################################################################</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">#                       TIME DOMAIN FEATURES                                  #</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">###############################################################################</span>
+<span class="sd">&quot;&quot;&quot; Features have been taken from: Phinyomark, A., Phukpattaranont, P., &amp; Limsakul, C. (2012).m classification. Expert Systems with Applications, 39(8), 7420-7431. &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="getIEMG"><a class="viewcode-back" href="../electromiography.html#electromiography.getIEMG">[docs]</a><span class="k">def</span> <span class="nf">getIEMG</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This function compute the sum of absolute values of EMG signal Amplitude.::</span>
+<span class="sd">        </span>
+<span class="sd">            IEMG = sum(|xi|) for i = 1 --&gt; N</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Signal as list</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * integrated EMG    </span>
+<span class="sd">        </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :return: the IEMG of the EMG Signal</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">IEMG</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rawEMGSignal</span><span class="p">])</span>    
+    <span class="k">return</span><span class="p">(</span><span class="n">IEMG</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="getMAV"><a class="viewcode-back" href="../electromiography.html#electromiography.getMAV">[docs]</a><span class="k">def</span> <span class="nf">getMAV</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Thif functions compute the  average of EMG signal Amplitude.::</span>
+<span class="sd">        </span>
+<span class="sd">            MAV = 1/N * sum(|xi|) for i = 1 --&gt; N</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Signal as list</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * Mean Absolute Value    </span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :return: the MAV of the EMG Signal</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">MAV</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span> <span class="o">*</span>  <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rawEMGSignal</span><span class="p">])</span>    
+    <span class="k">return</span><span class="p">(</span><span class="n">MAV</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="getMAV1"><a class="viewcode-back" href="../electromiography.html#electromiography.getMAV1">[docs]</a><span class="k">def</span> <span class="nf">getMAV1</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This functoin evaluate Average of EMG signal Amplitude, using the modified version n°.1.::</span>
+<span class="sd">        </span>
+<span class="sd">            IEMG = 1/N * sum(wi|xi|) for i = 1 --&gt; N</span>
+<span class="sd">            wi = {</span>
+<span class="sd">                  1 if 0.25N &lt;= i &lt;= 0.75N,</span>
+<span class="sd">                  0.5 otherwise</span>
+<span class="sd">                  }</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Signal as list</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * Mean Absolute Value   </span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :return: the MAV (modified version n. 1)  of the EMG Signal</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">wIndexMin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.25</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">))</span>
+    <span class="n">wIndexMax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.75</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">))</span>
+    <span class="n">absoluteSignal</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rawEMGSignal</span><span class="p">]</span>
+    <span class="n">IEMG</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">absoluteSignal</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">wIndexMin</span><span class="p">]])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">absoluteSignal</span><span class="p">[</span><span class="n">wIndexMin</span><span class="p">:</span><span class="n">wIndexMax</span><span class="p">]])</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">absoluteSignal</span><span class="p">[</span><span class="n">wIndexMax</span><span class="p">:]])</span>
+    <span class="n">MAV1</span> <span class="o">=</span> <span class="n">IEMG</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">MAV1</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="getMAV2"><a class="viewcode-back" href="../electromiography.html#electromiography.getMAV2">[docs]</a><span class="k">def</span> <span class="nf">getMAV2</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This functoin evaluate Average of EMG signal Amplitude, using the modified version n°.2.::</span>
+<span class="sd">        </span>
+<span class="sd">            IEMG = 1/N * sum(wi|xi|) for i = 1 --&gt; N</span>
+<span class="sd">            wi = {</span>
+<span class="sd">                  1 if 0.25N &lt;= i &lt;= 0.75N,</span>
+<span class="sd">                  4i/N if i &lt; 0.25N</span>
+<span class="sd">                  4(i-N)/N otherwise</span>
+<span class="sd">                  }</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Signal as list</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * Mean Absolute Value </span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :return: the MAV (modified version n. 2)  of the EMG Signal</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span>
+    <span class="n">wIndexMin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.25</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span> <span class="c1">#get the index at 0.25N</span>
+    <span class="n">wIndexMax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.75</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span><span class="c1">#get the index at 0.75N</span>
+
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#create an empty list</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">wIndexMin</span><span class="p">):</span> <span class="c1">#case 1: i &lt; 0.25N</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">i</span><span class="o">/</span><span class="n">N</span><span class="p">))</span>
+        <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">wIndexMin</span><span class="p">,</span><span class="n">wIndexMax</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span> <span class="c1">#case2: 0.25 &lt;= i &lt;= 0.75N</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">wIndexMax</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">):</span> <span class="c1">#case3; i &gt; 0.75N</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span>
+        <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        
+    <span class="n">MAV2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">MAV2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="getSSI"><a class="viewcode-back" href="../electromiography.html#electromiography.getSSI">[docs]</a><span class="k">def</span> <span class="nf">getSSI</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This function compute the summation of square values of the EMG signal.::</span>
+<span class="sd">        </span>
+<span class="sd">            SSI = sum(xi**2) for i = 1 --&gt; N</span>
+
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Signal as list</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * Simple Square Integral</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :return: SSI of the signal</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">SSI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rawEMGSignal</span><span class="p">])</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">SSI</span><span class="p">)</span>    </div>
+    
+<div class="viewcode-block" id="getVAR"><a class="viewcode-back" href="../electromiography.html#electromiography.getVAR">[docs]</a><span class="k">def</span> <span class="nf">getVAR</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Summation of average square values of the deviation of a variable.::</span>
+<span class="sd">        </span>
+<span class="sd">            VAR = (1 / (N - 1)) * sum(xi**2) for i = 1 --&gt; N</span>
+
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Signal as list</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * Summation of the average square values</span>
+<span class="sd">        </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :return: the VAR of the EMG Signal</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">SSI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rawEMGSignal</span><span class="p">])</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span>
+    <span class="n">VAR</span> <span class="o">=</span> <span class="n">SSI</span><span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">VAR</span><span class="p">)</span>    </div>
+    
+<div class="viewcode-block" id="getTM"><a class="viewcode-back" href="../electromiography.html#electromiography.getTM">[docs]</a><span class="k">def</span> <span class="nf">getTM</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        This function compute the Temporal Moment of order X of the EMG signal.::</span>
+<span class="sd">        </span>
+<span class="sd">            TM = (1 / N * sum(xi**order) for i = 1 --&gt; N</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Signal as list</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * TM of order = order</span>
+<span class="sd">        </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :param order: order the the TM function </span>
+<span class="sd">        :type order: int</span>
+<span class="sd">        :return: Temporal Moment of order X of the EMG signal</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span>
+    <span class="n">TM</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="n">order</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rawEMGSignal</span><span class="p">]))</span>
+    
+    <span class="k">return</span><span class="p">(</span><span class="n">TM</span><span class="p">)</span>    </div>
+    
+<div class="viewcode-block" id="getRMS"><a class="viewcode-back" href="../electromiography.html#electromiography.getRMS">[docs]</a><span class="k">def</span> <span class="nf">getRMS</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Get the root mean square of a signal.::</span>
+<span class="sd">        </span>
+<span class="sd">            RMS = (sqrt( (1 / N) * sum(xi**2))) for i = 1 --&gt; N</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Signal as list</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * Root mean square of the signal</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :return: Root mean square of the EMG signal</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span>
+    <span class="n">RMS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rawEMGSignal</span><span class="p">]))</span>
+    
+    <span class="k">return</span><span class="p">(</span><span class="n">RMS</span><span class="p">)</span>   </div>
+<div class="viewcode-block" id="getLOG"><a class="viewcode-back" href="../electromiography.html#electromiography.getLOG">[docs]</a><span class="k">def</span> <span class="nf">getLOG</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; LOG is a feature that provides an estimate of the muscle contraction force.::</span>
+<span class="sd">        </span>
+<span class="sd">            LOG = e^((1/N) * sum(|xi|)) for x i = 1 --&gt; N</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Signal</span>
+<span class="sd">        * Output = * LOG    </span>
+<span class="sd">        </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :return: LOG feature of the EMG Signal</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">LOG</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">))</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rawEMGSignal</span><span class="p">]))</span>    
+    
+    <span class="k">return</span><span class="p">(</span><span class="n">LOG</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="getWL"><a class="viewcode-back" href="../electromiography.html#electromiography.getWL">[docs]</a><span class="k">def</span> <span class="nf">getWL</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Get the waveform length of the signal, a measure of complexity of the EMG Signal.::</span>
+<span class="sd">            </span>
+<span class="sd">            WL = sum(|x(i+1) - xi|) for i = 1 --&gt; N-1</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Signal as list</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * wavelength of the signal</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :return: Waveform length of the signal</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    <span class="n">WL</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">WL</span><span class="p">)</span>   </div>
+    
+<div class="viewcode-block" id="getAAC"><a class="viewcode-back" href="../electromiography.html#electromiography.getAAC">[docs]</a><span class="k">def</span> <span class="nf">getAAC</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Get the Average amplitude change.::</span>
+<span class="sd">        </span>
+<span class="sd">            AAC = 1/N * sum(|x(i+1) - xi|) for i = 1 --&gt; N-1</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Signal as list</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * Average amplitude change of the signal</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :return: Average Amplitude Change of the signal</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span>
+    <span class="n">WL</span> <span class="o">=</span> <span class="n">getWL</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span>
+    <span class="n">ACC</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="n">WL</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">ACC</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="getDASDV"><a class="viewcode-back" href="../electromiography.html#electromiography.getDASDV">[docs]</a><span class="k">def</span> <span class="nf">getDASDV</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Get the standard deviation value of the the wavelength.::</span>
+<span class="sd">        </span>
+<span class="sd">            DASDV = sqrt( (1 / (N-1)) * sum((x[i+1] - x[i])**2 ) for i = 1 --&gt; N - 1    </span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Signal</span>
+<span class="sd">        * Output:</span>
+<span class="sd">            * DASDV</span>
+<span class="sd">            </span>
+<span class="sd">                    </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :return: standard deviation value of the the wavelength</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">DASDV</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">DASDV</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="getAFB"><a class="viewcode-back" href="../electromiography.html#electromiography.getAFB">[docs]</a><span class="k">def</span> <span class="nf">getAFB</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">,</span><span class="n">samplerate</span><span class="p">,</span> <span class="n">windowSize</span><span class="o">=</span><span class="mi">32</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Get the amplitude at first Burst.</span>
+<span class="sd">    </span>
+<span class="sd">        Reference: Du, S., &amp; Vuskovic, M. (2004, November). Temporal vs. spectral approach to feature extraction from prehensile EMG signals. In Information Reuse and Integration, 2004. IRI 2004. Proceedings of the 2004 IEEE International Conference on (pp. 344-350). IEEE.</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * rawEMGSignal as list</span>
+<span class="sd">            * samplerate of the signal in Hz (sample / s)</span>
+<span class="sd">            * windowSize = window size in ms</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * amplitude at first burst</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :param samplerate: samplerate of the signal int Hz</span>
+<span class="sd">        :type samplerate: int</span>
+<span class="sd">        :param windowSize: window size in ms to use for the analysis</span>
+<span class="sd">        :type windowsSize: int</span>
+<span class="sd">        :return: Amplitute ad first Burst</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">squaredSignal</span> <span class="o">=</span> <span class="n">square</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span> <span class="c1">#squaring the signal</span>
+    <span class="n">windowSample</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">windowSize</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">/</span> <span class="n">samplerate</span><span class="p">)</span> <span class="c1">#get the number of samples for each window</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hamming</span><span class="p">(</span><span class="n">windowSample</span><span class="p">)</span>
+    <span class="c1">#From: http://scipy-cookbook.readthedocs.io/items/SignalSmooth.html</span>
+    <span class="n">filteredSignal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">w</span><span class="o">/</span><span class="n">w</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span><span class="n">squaredSignal</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">)</span>
+    <span class="n">peak</span> <span class="o">=</span> <span class="n">peakutils</span><span class="o">.</span><span class="n">indexes</span><span class="p">(</span><span class="n">filteredSignal</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">AFB</span> <span class="o">=</span> <span class="n">filteredSignal</span><span class="p">[</span><span class="n">peak</span><span class="p">]</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">AFB</span><span class="p">)</span></div>
+              
+    
+<div class="viewcode-block" id="getZC"><a class="viewcode-back" href="../electromiography.html#electromiography.getZC">[docs]</a><span class="k">def</span> <span class="nf">getZC</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; How many times does the signal crosses the 0 (+-threshold).::</span>
+<span class="sd">        </span>
+<span class="sd">            ZC = sum([sgn(x[i] X x[i+1]) intersecated |x[i] - x[i+1]| &gt;= threshold]) for i = 1 --&gt; N - 1</span>
+<span class="sd">            sign(x) = {</span>
+<span class="sd">                        1, if x &gt;= threshold</span>
+<span class="sd">                        0, otherwise</span>
+<span class="sd">                    }</span>
+<span class="sd">        </span>
+<span class="sd">        * Input:</span>
+<span class="sd">            * rawEMGSignal = EMG signal as list</span>
+<span class="sd">            * threshold = threshold to use in order to avoid fluctuations caused by noise and low voltage fluctuations</span>
+<span class="sd">        * Output:</span>
+<span class="sd">            * ZC index       </span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :param threshold: value to sum / substract to the zero when evaluating the crossing.</span>
+<span class="sd">        :type threshold: int</span>
+<span class="sd">        :return: Number of times the signal crosses the 0 (+- threshold)</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">positive</span> <span class="o">=</span> <span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span>
+    <span class="n">ZC</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rawEMGSignal</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">positive</span><span class="p">):</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">-</span><span class="n">threshold</span><span class="p">):</span>
+                <span class="n">positive</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">ZC</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">+</span> <span class="n">threshold</span><span class="p">):</span>
+                <span class="n">positive</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">ZC</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">ZC</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="getMYOP"><a class="viewcode-back" href="../electromiography.html#electromiography.getMYOP">[docs]</a><span class="k">def</span> <span class="nf">getMYOP</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The myopulse percentage rate (MYOP) is an average value of myopulse output.</span>
+<span class="sd">        It is defined as one absolute value of the EMG signal exceed a pre-defined thershold value. ::</span>
+<span class="sd">        </span>
+<span class="sd">            MYOP = (1/N) * sum(|f(xi)|) for i = 1 --&gt; N</span>
+<span class="sd">            f(x) = {</span>
+<span class="sd">                    1 if x &gt;= threshold</span>
+<span class="sd">                    0 otherwise</span>
+<span class="sd">            }</span>
+<span class="sd">        </span>
+<span class="sd">        * Input:</span>
+<span class="sd">            * rawEMGSignal = EMG signal as list</span>
+<span class="sd">            * threshold = threshold to avoid fluctuations caused by noise and low voltage fluctuations</span>
+<span class="sd">        * Output:</span>
+<span class="sd">            * Myopulse percentage rate</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :param threshold: value to sum / substract to the zero when evaluating the crossing.</span>
+<span class="sd">        :type threshold: int</span>
+<span class="sd">        :return: Myopulse percentage rate of the signal</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span>
+    <span class="n">MYOP</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rawEMGSignal</span> <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">])</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">MYOP</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="getWAMP"><a class="viewcode-back" href="../electromiography.html#electromiography.getWAMP">[docs]</a><span class="k">def</span> <span class="nf">getWAMP</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Wilson or Willison amplitude is a measure of frequency information.</span>
+<span class="sd">        It is a number of time resulting from difference between the EMG signal of two adjoining segments, that exceed a threshold.::</span>
+<span class="sd">            </span>
+<span class="sd">            WAMP = sum( f(|x[i] - x[i+1]|)) for n = 1 --&gt; n-1</span>
+<span class="sd">            f(x){</span>
+<span class="sd">                1 if x &gt;= threshold</span>
+<span class="sd">                0 otherwise</span>
+<span class="sd">            }</span>
+<span class="sd">        </span>
+<span class="sd">        * Input:</span>
+<span class="sd">            * rawEMGSignal = EMG signal as list</span>
+<span class="sd">            * threshold = threshold to avoid fluctuations caused by noise and low voltage fluctuations</span>
+<span class="sd">        * Output:</span>
+<span class="sd">            * Wilson Amplitude value</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :param threshold: value to sum / substract to the zero when evaluating the crossing.</span>
+<span class="sd">        :type threshold: int</span>
+<span class="sd">        :return: Willison amplitude </span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span>
+    <span class="n">WAMP</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">):</span>
+            <span class="n">WAMP</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">WAMP</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="getSSC"><a class="viewcode-back" href="../electromiography.html#electromiography.getSSC">[docs]</a><span class="k">def</span> <span class="nf">getSSC</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">,</span><span class="n">threshold</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Number of times the slope of the EMG signal changes sign.::</span>
+<span class="sd">        </span>
+<span class="sd">            SSC = sum(f( (x[i] - x[i-1]) X (x[i] - x[i+1]))) for i = 2 --&gt; n-1</span>
+<span class="sd">            </span>
+<span class="sd">            f(x){</span>
+<span class="sd">                1 if x &gt;= threshold</span>
+<span class="sd">                0 otherwise</span>
+<span class="sd">            }</span>
+<span class="sd">           </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Signal</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * number of Slope Changes</span>
+<span class="sd">        </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :param threshold: value to sum / substract to the zero when evaluating the crossing.</span>
+<span class="sd">        :type threshold: int</span>
+<span class="sd">        :return: Number of slope&#39;s sign changes</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span>
+    <span class="n">SSC</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">&gt;=</span> <span class="n">threshold</span> <span class="o">*</span><span class="mi">3</span> <span class="p">):</span> <span class="c1">#computed only if the 3 values are above the threshold</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="n">c</span> <span class="ow">or</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="n">c</span> <span class="p">):</span> <span class="c1">#if there&#39;s change in the slope</span>
+                <span class="n">SSC</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">SSC</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="getMAVSLPk"><a class="viewcode-back" href="../electromiography.html#electromiography.getMAVSLPk">[docs]</a><span class="k">def</span> <span class="nf">getMAVSLPk</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">,</span> <span class="n">nseg</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Mean Absolute value slope is a modified versions of MAV feature.</span>
+<span class="sd">    </span>
+<span class="sd">        The MAVs of adiacent segments are determinated. ::</span>
+<span class="sd">            </span>
+<span class="sd">            MAVSLPk = MAV[k+1] - MAV[k]; k = 1,..,k+1</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG signal as list</span>
+<span class="sd">            * nseg = number of segments to evaluate</span>
+<span class="sd">                </span>
+<span class="sd">        * Output: </span>
+<span class="sd">             * list of MAVs</span>
+<span class="sd">        </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :param nseg: number of segments to evaluate</span>
+<span class="sd">        :type nseg: int</span>
+<span class="sd">        :return: Mean absolute slope value</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span>
+    <span class="n">lenK</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">N</span> <span class="o">/</span> <span class="n">nseg</span><span class="p">)</span> <span class="c1">#length of each segment to compute</span>
+    <span class="n">MAVSLPk</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">lenK</span><span class="p">):</span>
+        <span class="n">MAVSLPk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">getMAV</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">s</span><span class="p">:</span><span class="n">s</span><span class="o">+</span><span class="n">lenK</span><span class="p">]))</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">MAVSLPk</span><span class="p">)</span>    </div>
+
+
+<div class="viewcode-block" id="getHIST"><a class="viewcode-back" href="../electromiography.html#electromiography.getHIST">[docs]</a><span class="k">def</span> <span class="nf">getHIST</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">,</span><span class="n">nseg</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span><span class="n">threshold</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Histograms is an extension version of ZC and WAMP features. </span>
+<span class="sd">    </span>
+<span class="sd">        * Input:</span>
+<span class="sd">            * raw EMG Signal as list</span>
+<span class="sd">            * nseg = number of segment to analyze</span>
+<span class="sd">            * threshold = threshold to use to avoid DC fluctuations</span>
+<span class="sd">            </span>
+<span class="sd">        * Output:</span>
+<span class="sd">            * get zc/wamp for each segment</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :param nseg: number of segments to analyze</span>
+<span class="sd">        :type nseg: int</span>
+<span class="sd">        :param threshold: value to sum / substract to the zero when evaluating the crossing.</span>
+<span class="sd">        :type threshold: int</span>
+<span class="sd">        :return: Willison amplitude </span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">segmentLength</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)</span> <span class="o">/</span> <span class="n">nseg</span><span class="p">)</span>
+    <span class="n">HIST</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">seg</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nseg</span><span class="p">):</span>
+        <span class="n">HIST</span><span class="p">[</span><span class="n">seg</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">thisSegment</span> <span class="o">=</span> <span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">seg</span> <span class="o">*</span> <span class="n">segmentLength</span><span class="p">:</span> <span class="p">(</span><span class="n">seg</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">segmentLength</span><span class="p">]</span>
+        <span class="n">HIST</span><span class="p">[</span><span class="n">seg</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;ZC&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getZC</span><span class="p">(</span><span class="n">thisSegment</span><span class="p">,</span><span class="n">threshold</span><span class="p">)</span>
+        <span class="n">HIST</span><span class="p">[</span><span class="n">seg</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;WAMP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getWAMP</span><span class="p">(</span><span class="n">thisSegment</span><span class="p">,</span><span class="n">threshold</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">HIST</span><span class="p">)</span></div>
+        
+        
+    
+    
+<span class="c1">###############################################################################</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">#                       FREQUENCY DOMAIN FEATURES                             #</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">###############################################################################</span>
+<span class="sd">&quot;&quot;&quot; This section contains all the functions used in frequency analysis &quot;&quot;&quot;</span> 
+
+
+<div class="viewcode-block" id="getMNF"><a class="viewcode-back" href="../electromiography.html#electromiography.getMNF">[docs]</a><span class="k">def</span> <span class="nf">getMNF</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Obtain the mean frequency of the EMG signal, evaluated as the sum of </span>
+<span class="sd">        product of the EMG power spectrum and the frequency divided by total sum of the spectrum intensity::</span>
+<span class="sd">            </span>
+<span class="sd">            MNF = sum(fPj) / sum(Pj) for j = 1 -&gt; M </span>
+<span class="sd">            M = length of the frequency bin</span>
+<span class="sd">            Pj = power at freqeuncy bin j</span>
+<span class="sd">            fJ = frequency of the spectrum at frequency bin j</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * rawEMGPowerSpectrum: PSD as list</span>
+<span class="sd">            * frequencies: frequencies of the PSD spectrum as list</span>
+<span class="sd">        * Output:</span>
+<span class="sd">            * Mean Frequency of the PSD</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGPowerSpectrum: power spectrum of the EMG signal</span>
+<span class="sd">        :type rawEMGPowerSpectrum: list</span>
+<span class="sd">        :param frequencies: frequencies of the PSD</span>
+<span class="sd">        :type frequencies: list</span>
+<span class="sd">        :return: mean frequency of the EMG power spectrum</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frequencies</span><span class="p">)):</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frequencies</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">rawEMGPowerSpectrum</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">)</span>
+    <span class="n">MNF</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">MNF</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="getMDF"><a class="viewcode-back" href="../electromiography.html#electromiography.getMDF">[docs]</a><span class="k">def</span> <span class="nf">getMDF</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Obtain the Median Frequency of the PSD. </span>
+<span class="sd">    </span>
+<span class="sd">        MDF is a frequency at which the spectrum is divided into two regions with equal amplitude, in other words, MDF is half of TTP feature</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Power Spectrum</span>
+<span class="sd">            * frequencies</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * Median Frequency  (Hz)</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGPowerSpectrum: power spectrum of the EMG signal</span>
+<span class="sd">        :type rawEMGPowerSpectrum: list</span>
+<span class="sd">        :param frequencies: frequencies of the PSD</span>
+<span class="sd">        :type frequencies: list</span>
+<span class="sd">        :return: median frequency of the EMG power spectrum</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">MDP</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">)):</span>
+        <span class="k">if</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">i</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">MDP</span><span class="p">):</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">frequencies</span><span class="p">[</span><span class="n">i</span><span class="p">])</span></div>
+            
+<div class="viewcode-block" id="getPeakFrequency"><a class="viewcode-back" href="../electromiography.html#electromiography.getPeakFrequency">[docs]</a><span class="k">def</span> <span class="nf">getPeakFrequency</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Obtain the frequency at which the maximum peak occur </span>
+<span class="sd">    </span>
+<span class="sd">        * Input:    </span>
+<span class="sd">            * raw EMG Power Spectrum as list</span>
+<span class="sd">            * frequencies as list</span>
+<span class="sd">        * Output:</span>
+<span class="sd">            * frequency in Hz</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGPowerSpectrum: power spectrum of the EMG signal</span>
+<span class="sd">        :type rawEMGPowerSpectrum: list</span>
+<span class="sd">        :param frequencies: frequencies of the PSD</span>
+<span class="sd">        :type frequencies: list</span>
+<span class="sd">        :return: peakfrequency of the EMG Power spectrum</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">peakFrequency</span> <span class="o">=</span> <span class="n">frequencies</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">)]</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">peakFrequency</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="getMNP"><a class="viewcode-back" href="../electromiography.html#electromiography.getMNP">[docs]</a><span class="k">def</span> <span class="nf">getMNP</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This functions evaluate the mean power of the spectrum.::</span>
+<span class="sd">        </span>
+<span class="sd">            Mean Power = sum(Pj) / M, j = 1 --&gt; M, M = len of the spectrum</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * EMG power spectrum</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * mean power</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGPowerSpectrum: power spectrum of the EMG signal</span>
+<span class="sd">        :type rawEMGPowerSpectrum: list</span>
+<span class="sd">        :param frequencies: frequencies of the PSD</span>
+<span class="sd">        :type frequencies: list</span>
+<span class="sd">        :return: mean power of the EMG power spectrum</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">MNP</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">MNP</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="getTTP"><a class="viewcode-back" href="../electromiography.html#electromiography.getTTP">[docs]</a><span class="k">def</span> <span class="nf">getTTP</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This functions evaluate the aggregate of the EMG power spectrum (aka Zero Spectral Moment)</span>
+<span class="sd">    </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Power Spectrum</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * Total Power</span>
+<span class="sd">        </span>
+<span class="sd">        :param rawEMGPowerSpectrum: power spectrum of the EMG signal</span>
+<span class="sd">        :type rawEMGPowerSpectrum: list</span>
+<span class="sd">        :param frequencies: frequencies of the PSD</span>
+<span class="sd">        :type frequencies: list</span>
+<span class="sd">        :return: total power of the EMG power spectrum</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">TTP</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">TTP</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="getSM"><a class="viewcode-back" href="../electromiography.html#electromiography.getSM">[docs]</a><span class="k">def</span> <span class="nf">getSM</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Get the spectral moment of a spectrum::</span>
+<span class="sd">        </span>
+<span class="sd">            SM = sum(fj*(Pj**order)), j = 1 --&gt; M</span>
+<span class="sd">        </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * raw EMG Power Spectrum</span>
+<span class="sd">            * frequencies as list</span>
+<span class="sd">            * order (int)</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * SM of order = order</span>
+<span class="sd">        </span>
+<span class="sd">        :param rawEMGPowerSpectrum: power spectrum of the EMG signal</span>
+<span class="sd">        :type rawEMGPowerSpectrum: list</span>
+<span class="sd">        :param frequencies: frequencies of the PSD</span>
+<span class="sd">        :type frequencies: list</span>
+<span class="sd">        :param order: order to the moment</span>
+<span class="sd">        :type order: int</span>
+<span class="sd">        :return: Spectral moment of order X of the EMG power spectrum</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">SMo</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">frequencies</span><span class="p">)):</span>
+        <span class="n">SMo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frequencies</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">**</span> <span class="n">order</span><span class="p">))</span>
+    <span class="n">SMo</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">SMo</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">SMo</span><span class="p">)</span>   </div>
+    
+<div class="viewcode-block" id="getFR"><a class="viewcode-back" href="../electromiography.html#electromiography.getFR">[docs]</a><span class="k">def</span> <span class="nf">getFR</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">,</span> <span class="n">llc</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">ulc</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">lhc</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span><span class="n">uhc</span><span class="o">=</span><span class="mi">500</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This functions evaluate the frequency ratio of the power spectrum. </span>
+<span class="sd">    </span>
+<span class="sd">        Cut-off value can be decidec experimentally or from the MNF Feature See: Oskoei, M.A., Hu, H. (2006). GA-based feature subset selection for myoelectric classification.</span>
+<span class="sd">        </span>
+<span class="sd">        * Input:</span>
+<span class="sd">            * raw EMG power spectrum as list,</span>
+<span class="sd">            * frequencies as list,</span>
+<span class="sd">            * llc = lower low cutoff</span>
+<span class="sd">            * ulc = upper low cutoff</span>
+<span class="sd">            * lhc = lower high cutoff</span>
+<span class="sd">            * uhc = upper high cutoff</span>
+<span class="sd">        * Output:</span>
+<span class="sd">            * Frequency Ratio</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawEMGPowerSpectrum: power spectrum of the EMG signal</span>
+<span class="sd">        :type rawEMGPowerSpectrum: list</span>
+<span class="sd">        :param frequencies: frequencies of the PSD</span>
+<span class="sd">        :type frequencies: list</span>
+<span class="sd">        :param llc: lower cutoff frequency for the low frequency components</span>
+<span class="sd">        :type llc: float</span>
+<span class="sd">        :param ulc: upper cutoff frequency for the low frequency components</span>
+<span class="sd">        :type ulc: float</span>
+<span class="sd">        :param lhc: lower cutoff frequency for the high frequency components</span>
+<span class="sd">        :type lhc: float</span>
+<span class="sd">        :param uhc: upper cutoff frequency for the high frequency components</span>
+<span class="sd">        :type uhc: float</span>
+<span class="sd">        :return: frequencies ratio of the EMG power spectrum</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">frequencies</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">frequencies</span><span class="p">)</span>
+    <span class="c1">#First we check for the closest value into the frequency list to the cutoff frequencies</span>
+    <span class="n">llc</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">llc</span><span class="p">))</span>
+    <span class="n">ulc</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">ulc</span><span class="p">))</span>
+    <span class="n">lhc</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">lhc</span><span class="p">))</span>
+    <span class="n">uhc</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">uhc</span><span class="p">))</span>
+    
+    <span class="n">LF</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">P</span> <span class="k">for</span> <span class="n">P</span> <span class="ow">in</span> <span class="n">rawEMGPowerSpectrum</span><span class="p">[</span><span class="n">frequencies</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">llc</span><span class="p">):</span><span class="n">frequencies</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ulc</span><span class="p">)]])</span>
+    <span class="n">HF</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">P</span> <span class="k">for</span> <span class="n">P</span> <span class="ow">in</span> <span class="n">rawEMGPowerSpectrum</span><span class="p">[</span><span class="n">frequencies</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">lhc</span><span class="p">):</span><span class="n">frequencies</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">uhc</span><span class="p">)]])</span>
+    <span class="n">FR</span> <span class="o">=</span> <span class="n">LF</span> <span class="o">/</span> <span class="n">HF</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">FR</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="getPSR"><a class="viewcode-back" href="../electromiography.html#electromiography.getPSR">[docs]</a><span class="k">def</span> <span class="nf">getPSR</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span><span class="n">frequencies</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fmin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">fmax</span><span class="o">=</span><span class="mi">500</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This function computes the Power Spectrum Ratio of the signal, defined as:</span>
+<span class="sd">        Ratio between the energy P0 which is nearby the maximum value of the EMG power spectrum and the energy P which is the whole energy of the EMG power spectrum</span>
+<span class="sd">        </span>
+<span class="sd">        * Input:</span>
+<span class="sd">            * EMG power spectrum</span>
+<span class="sd">            * frequencies as list</span>
+<span class="sd">            * n = range around f0 to evaluate P0</span>
+<span class="sd">            * fmin = min frequency</span>
+<span class="sd">            * fmax = max frequency</span>
+<span class="sd">        </span>
+<span class="sd">        :param rawEMGPowerSpectrum: power spectrum of the EMG signal</span>
+<span class="sd">        :type rawEMGPowerSpectrum: list</span>
+<span class="sd">        :param frequencies: frequencies of the PSD</span>
+<span class="sd">        :type frequencies: list</span>
+<span class="sd">        :param n: range of frequencies around f0 to evaluate</span>
+<span class="sd">        :type n: int</span>
+<span class="sd">        :param fmin: min frequency to evaluate</span>
+<span class="sd">        :type fmin: int</span>
+<span class="sd">        :param fmax: lmaximum frequency to evaluate</span>
+<span class="sd">        :type fmax: int</span>
+<span class="sd">        :return: Power spectrum ratio of the EMG power spectrum</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">frequencies</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">frequencies</span><span class="p">)</span>
+    
+    <span class="c1">#The maximum peak and frequencies are evaluate using the getPeakFrequency functions</span>
+    <span class="c1">#First we check for the closest value into the frequency list to the cutoff frequencies</span>
+    <span class="n">peakFrequency</span> <span class="o">=</span> <span class="n">getPeakFrequency</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">)</span>
+    <span class="n">f0min</span> <span class="o">=</span> <span class="n">peakFrequency</span> <span class="o">-</span> <span class="n">n</span>
+    <span class="n">f0max</span> <span class="o">=</span> <span class="n">peakFrequency</span> <span class="o">+</span> <span class="n">n</span>
+    <span class="n">f0min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">f0min</span><span class="p">))</span>
+    <span class="n">f0max</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">f0max</span><span class="p">))</span>
+    <span class="n">fmin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">fmin</span><span class="p">))</span>
+    <span class="n">fmax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">fmax</span><span class="p">))</span>
+    
+    <span class="c1">#here we evaluate P0 and P</span>
+    <span class="n">P0</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">[</span><span class="n">frequencies</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">f0min</span><span class="p">):</span><span class="n">frequencies</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">f0max</span><span class="p">)])</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">[</span><span class="n">frequencies</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">fmin</span><span class="p">):</span><span class="n">frequencies</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">fmax</span><span class="p">)])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>
+    <span class="n">PSR</span> <span class="o">=</span> <span class="n">P0</span> <span class="o">/</span> <span class="n">P</span>
+    
+    <span class="k">return</span><span class="p">(</span><span class="n">PSR</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="getVCF"><a class="viewcode-back" href="../electromiography.html#electromiography.getVCF">[docs]</a><span class="k">def</span> <span class="nf">getVCF</span><span class="p">(</span><span class="n">SM0</span><span class="p">,</span><span class="n">SM1</span><span class="p">,</span><span class="n">SM2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function evaluate the variance of the central freuency of the PSD.::</span>
+<span class="sd">            </span>
+<span class="sd">            VCF = (1 / SM0)*sum(Pj*(fj - fc)**2),j = 1 --&gt; M, = SM2 / SM0 - (SM1 /SM0) **2</span>
+<span class="sd">        </span>
+<span class="sd">        * Input:</span>
+<span class="sd">            * SM0: spectral moment of order 0</span>
+<span class="sd">            * SM1: spectral moment of order 1</span>
+<span class="sd">            * SM2: spectral moment of order 0</span>
+<span class="sd">        * Output: </span>
+<span class="sd">            * Variance of Central frequency of the Power spectrum</span>
+<span class="sd">            </span>
+<span class="sd">        :param SM0: Spectral moment of order 0</span>
+<span class="sd">        :type SM0: float</span>
+<span class="sd">        :param SM1: Spectral moment of order 1</span>
+<span class="sd">        :type SM1: float</span>
+<span class="sd">        :param SM2: Spectral moment of order 2</span>
+<span class="sd">        :type SM2: float</span>
+<span class="sd">        :return: Variance of central frequency</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">VCF</span> <span class="o">=</span> <span class="p">(</span><span class="n">SM2</span> <span class="o">/</span> <span class="n">SM0</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">SM1</span><span class="o">/</span><span class="n">SM0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">VCF</span><span class="p">)</span></div>
+    
+<span class="c1">###############################################################################</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">#                           PREPROCESSING                                     #</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">###############################################################################  </span>
+
+<div class="viewcode-block" id="phasicFilter"><a class="viewcode-back" href="../electromiography.html#electromiography.phasicFilter">[docs]</a><span class="k">def</span> <span class="nf">phasicFilter</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">,</span><span class="n">samplerate</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Apply a phasic filter to the signal, with +-4 seconds from each sample</span>
+<span class="sd">        </span>
+<span class="sd">        * Input:</span>
+<span class="sd">            * rawEMGSignal = emg signal as list</span>
+<span class="sd">            * samplerate = samplerate of the signal    </span>
+<span class="sd">        * Output:</span>
+<span class="sd">            * phasic filtered signal   </span>
+<span class="sd">        </span>
+<span class="sd">        :param rawEMGSignal: the raw EMG signal</span>
+<span class="sd">        :type rawEMGSignal: list</span>
+<span class="sd">        :param samplerate: samplerate of the signal in Hz</span>
+<span class="sd">        :type samplerate: int </span>
+<span class="sd">        :return: the phasic filtered signal</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">phasicSignal</span> <span class="o">=</span> <span class="p">[]</span>    
+    <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)):</span>
+        <span class="n">smin</span> <span class="o">=</span> <span class="n">sample</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">samplerate</span> <span class="c1">#min sample index</span>
+        <span class="n">smax</span> <span class="o">=</span> <span class="n">sample</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">samplerate</span> <span class="c1">#max sample index</span>
+        <span class="c1">#is smin is &lt; 0 or smax &gt; signal length, fix it to the closest real sample</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">smin</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span> 
+            <span class="n">smin</span> <span class="o">=</span> <span class="n">sample</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">smax</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">)):</span>
+            <span class="n">smax</span> <span class="o">=</span> <span class="n">sample</span>
+        <span class="c1">#substract the mean of the segment</span>
+        <span class="n">newsample</span> <span class="o">=</span> <span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">sample</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">[</span><span class="n">smin</span><span class="p">:</span><span class="n">smax</span><span class="p">])</span>
+        <span class="c1">#move to th</span>
+        <span class="n">phasicSignal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newsample</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">phasicSignal</span><span class="p">)</span></div>
+    
+<span class="k">def</span> <span class="nf">getPSD</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">,</span> <span class="n">samplerate</span><span class="p">):</span>
+    <span class="n">frequencies</span><span class="p">,</span> <span class="n">psd</span> <span class="o">=</span> <span class="n">welch</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">samplerate</span><span class="p">,</span>
+               <span class="n">window</span><span class="o">=</span><span class="s1">&#39;hanning&#39;</span><span class="p">,</span>   <span class="c1"># apply a Hanning window before taking the DFT</span>
+               <span class="n">nperseg</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>        <span class="c1"># compute periodograms of 256-long segments of x</span>
+               <span class="n">detrend</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span><span class="n">scaling</span><span class="o">=</span><span class="s2">&quot;spectrum&quot;</span><span class="p">)</span> <span class="c1"># detrend x by subtracting the mean</span>
+    <span class="k">return</span><span class="p">([</span><span class="n">psd</span><span class="p">,</span><span class="n">frequencies</span><span class="p">])</span>  
+    
+    
+<span class="c1">###############################################################################</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">#                              FILTERS                                        #</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">###############################################################################</span>
+    
+<span class="c1">#Define the filters</span>
+<div class="viewcode-block" id="butter_lowpass"><a class="viewcode-back" href="../electromiography.html#electromiography.butter_lowpass">[docs]</a><span class="k">def</span> <span class="nf">butter_lowpass</span><span class="p">(</span><span class="n">cutoff</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This functions generates a lowpass butter filter</span>
+<span class="sd">    </span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param fs: samplerate of the signal</span>
+<span class="sd">        :type fs: float</span>
+<span class="sd">        :param order: order of the Butter Filter</span>
+<span class="sd">        :type order: int</span>
+<span class="sd">        :return: butter lowpass filter</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nyq</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">fs</span> <span class="c1">#Nyquist frequeny is half the sampling frequency</span>
+    <span class="n">normal_cutoff</span> <span class="o">=</span> <span class="n">cutoff</span> <span class="o">/</span> <span class="n">nyq</span> 
+    <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">butter</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">normal_cutoff</span><span class="p">,</span> <span class="n">btype</span><span class="o">=</span><span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="n">analog</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="butter_highpass"><a class="viewcode-back" href="../electromiography.html#electromiography.butter_highpass">[docs]</a><span class="k">def</span> <span class="nf">butter_highpass</span><span class="p">(</span><span class="n">cutoff</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This functions generates a higpass butter filter</span>
+<span class="sd">    </span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param fs: samplerate of the signal</span>
+<span class="sd">        :type fs: float</span>
+<span class="sd">        :param order: order of the Butter Filter</span>
+<span class="sd">        :type order: int</span>
+<span class="sd">        :return: butter highpass filter</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nyq</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">fs</span> <span class="c1">#Nyquist frequeny is half the sampling frequency</span>
+    <span class="n">normal_cutoff</span> <span class="o">=</span> <span class="n">cutoff</span> <span class="o">/</span> <span class="n">nyq</span> 
+    <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">butter</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">normal_cutoff</span><span class="p">,</span> <span class="n">btype</span><span class="o">=</span><span class="s1">&#39;high&#39;</span><span class="p">,</span> <span class="n">analog</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="butter_lowpass_filter"><a class="viewcode-back" href="../electromiography.html#electromiography.butter_lowpass_filter">[docs]</a><span class="k">def</span> <span class="nf">butter_lowpass_filter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This functions apply a butter lowpass filter to a signal</span>
+<span class="sd">    </span>
+<span class="sd">        :param data: ECG signal</span>
+<span class="sd">        :type data: list</span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param fs: samplerate of the signal</span>
+<span class="sd">        :type fs: float</span>
+<span class="sd">        :param order: order of the Butter Filter</span>
+<span class="sd">        :type order: int</span>
+<span class="sd">        :return: lowpass filtered ECG signal</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">butter_lowpass</span><span class="p">(</span><span class="n">cutoff</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">lfilter</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">y</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="butter_highpass_filter"><a class="viewcode-back" href="../electromiography.html#electromiography.butter_highpass_filter">[docs]</a><span class="k">def</span> <span class="nf">butter_highpass_filter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This functions apply a butter highpass filter to a signal</span>
+<span class="sd">    </span>
+<span class="sd">        :param data: ECG signal</span>
+<span class="sd">        :type data: list</span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param cutoff: cutoff frequency</span>
+<span class="sd">        :type cutoff: float</span>
+<span class="sd">        :param fs: samplerate of the signal</span>
+<span class="sd">        :type fs: float</span>
+<span class="sd">        :param order: order of the Butter Filter</span>
+<span class="sd">        :type order: int</span>
+<span class="sd">        :return: highpass filtered ECG signal</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">butter_highpass</span><span class="p">(</span><span class="n">cutoff</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">lfilter</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">y</span><span class="p">)</span></div>
+
+    
+<span class="c1">###############################################################################</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">#                               ENTRYPOINT                                    #</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">###############################################################################</span>
+
+    
+<div class="viewcode-block" id="analyzeEMG"><a class="viewcode-back" href="../electromiography.html#electromiography.analyzeEMG">[docs]</a><span class="k">def</span> <span class="nf">analyzeEMG</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">,</span> <span class="n">samplerate</span><span class="p">,</span> <span class="n">preprocessing</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">lowpass</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">highpass</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="p">,</span><span class="n">nseg</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">segoverlap</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot; This functions acts as entrypoint for the EMG Analysis.</span>
+<span class="sd">    </span>
+<span class="sd">        * Input:</span>
+<span class="sd">            * rawEMGSignal = raw signal as list</span>
+<span class="sd">            * samplerate = samplerate of the signal</span>
+<span class="sd">            * lowpass = lowpass cutoff in Hz</span>
+<span class="sd">            * highpass = highpass cutoff in Hz</span>
+<span class="sd">            * threshold for the evaluation of ZC,MYOP,WAMP,SSC</span>
+<span class="sd">            * nseg = number of segments for MAVSLPk, MHW,MTW</span>
+<span class="sd">            * segoverlap = Overlapping of the segments in percentage for MHW,MTW</span>
+<span class="sd">        * Output:</span>
+<span class="sd">            * results dictionary</span>
+<span class="sd">            </span>
+<span class="sd">    &quot;&quot;&quot;</span> 
+    <span class="n">resultsdict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">:{},</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">:{}}</span>
+    
+    <span class="k">if</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">):</span>
+        <span class="c1">#Preprocessing</span>
+        <span class="n">filteredEMGSignal</span> <span class="o">=</span> <span class="n">butter_lowpass_filter</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">,</span> <span class="n">lowpass</span><span class="p">,</span> <span class="n">samplerate</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="c1">#filter the signal with a cutoff at 1Hz and a 2th order Butterworth filter</span>
+        <span class="n">filteredEMGSignal</span> <span class="o">=</span> <span class="n">butter_highpass_filter</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">,</span> <span class="n">highpass</span><span class="p">,</span> <span class="n">samplerate</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="c1">#filter the signal with a cutoff at 0.05Hz and a 2th order Butterworth filter</span>
+        <span class="n">filteredEMGSignal</span> <span class="o">=</span> <span class="n">phasicFilter</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">,</span> <span class="n">samplerate</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">filteredEMGSignal</span> <span class="o">=</span> <span class="n">rawEMGSignal</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">)</span>
+    
+    <span class="c1">#Time Domain Analysis</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;IEMG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getIEMG</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;MAV&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getMAV</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;MAV1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getMAV1</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;MAV2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getMAV2</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;SSI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getSSI</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;VAR&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getVAR</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;TM3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getTM</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;TM4&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getTM</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;TM5&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getTM</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;LOG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getLOG</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;RMS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getRMS</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;WL&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getWL</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;AAC&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getAAC</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;DASDV&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getDASDV</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;AFB&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getAFB</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">,</span><span class="n">samplerate</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;ZC&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getZC</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">,</span><span class="n">threshold</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;MYOP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getMYOP</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">,</span><span class="n">threshold</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;WAMP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getWAMP</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">,</span><span class="n">threshold</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;SSC&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getSSC</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">,</span><span class="n">threshold</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;MAVSLPk&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getMAVSLPk</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">,</span><span class="n">nseg</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;TimeDomain&quot;</span><span class="p">][</span><span class="s2">&quot;HIST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getHIST</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">,</span><span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">)</span>
+    
+    <span class="c1">#Frequency Domain Analysis</span>
+    <span class="n">rawEMGPowerSpectrum</span><span class="p">,</span> <span class="n">frequencies</span> <span class="o">=</span> <span class="n">getPSD</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">,</span><span class="n">samplerate</span><span class="p">)</span>
+    
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;MNF&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getMNF</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;MDF&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getMDF</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;PeakFrequency&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getPeakFrequency</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;MNP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getMNP</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;TTP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getTTP</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;SM1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getSM</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span><span class="n">frequencies</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;SM2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getSM</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span><span class="n">frequencies</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;SM3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getSM</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span><span class="n">frequencies</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;FR&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getFR</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span><span class="n">frequencies</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;PSR&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getPSR</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span><span class="n">frequencies</span><span class="p">)</span>
+    <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;VCF&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getVCF</span><span class="p">(</span><span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;TTP&quot;</span><span class="p">],</span><span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;SM1&quot;</span><span class="p">],</span><span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;SM2&quot;</span><span class="p">])</span>
+    
+    <span class="k">return</span><span class="p">(</span><span class="n">resultsdict</span><span class="p">)</span></div>
+    
+    
+<span class="c1">###############################################################################</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">#                                  DEBUG                                      #</span>
+<span class="c1">#                                                                             #</span>
+<span class="c1">###############################################################################</span>
+<span class="sd">&quot;&quot;&quot; For debug purposes. This runs only if this file is loaded directly and not imported &quot;&quot;&quot;</span>
+
+<span class="k">if</span><span class="p">(</span><span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="kn">import</span> <span class="nn">pickle</span>
+    <span class="kn">import</span> <span class="nn">pprint</span>
+    <span class="n">basepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span> <span class="c1">#This get the basepath of the script</span>
+    <span class="n">datafolder</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basepath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="s2">&quot;/data/&quot;</span>
+    
+    <span class="n">fakesignal</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">datafolder</span><span class="o">+</span><span class="s2">&quot;convertedEMG.pkl&quot;</span><span class="p">,</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>  <span class="c1"># Python 3: open(..., &#39;rb&#39;)</span>
+        <span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">]</span> <span class="c1">#set a fake event</span>
+        <span class="n">tmin</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">#start from the beginning of the events</span>
+        <span class="n">tmax</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1">#end from the beginning of the events</span>
+        <span class="n">fakesignal</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1">#load a fake signal</span>
+        <span class="n">samplerate</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1">#samplerate of the fake signal</span>
+        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span> <span class="c1">#for each event</span>
+            <span class="n">smin</span> <span class="o">=</span> <span class="n">tmin</span><span class="o">*</span><span class="n">samplerate</span> <span class="o">+</span> <span class="n">event</span>
+            <span class="n">smax</span> <span class="o">=</span> <span class="n">tmax</span><span class="o">*</span><span class="n">samplerate</span> <span class="o">+</span> <span class="n">event</span>
+            <span class="n">eventSignal</span> <span class="o">=</span> <span class="n">fakesignal</span><span class="p">[</span><span class="n">smin</span><span class="p">:</span><span class="n">smax</span><span class="p">]</span>
+            <span class="n">analyzedEMG</span> <span class="o">=</span> <span class="n">analyzeEMG</span><span class="p">(</span><span class="n">eventSignal</span><span class="p">,</span><span class="n">samplerate</span><span class="p">,</span><span class="n">preprocessing</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1">#analyze it</span>
+            <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">analyzedEMG</span><span class="p">)</span> <span class="c1">#print the results of the analysis</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Pysiology  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Giulio Gabrieli.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+    </div>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 
-Electrodermal Acitivity analysis module
+Electrodermal Activity analysis module
 =======================================
 .. automodule:: electrodermalactivity
     :members:
