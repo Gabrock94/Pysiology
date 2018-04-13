@@ -1,5 +1,5 @@
 # Pysiology
-
+![GitHub release](https://img.shields.io/github/release/Gabrock94/Pysiology.svg)
 [![PyPI version](https://badge.fury.io/py/pysiology.svg)](https://badge.fury.io/py/pysiology)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/pysiology.svg)](https://pypi.python.org/pypi/pysiology/)
 [![PyPI status](https://img.shields.io/pypi/status/pysiology.svg)](https://pypi.python.org/pypi/pysiology/)
@@ -61,6 +61,10 @@ if(__name__ == "__main__"):
 - Numpy
 - Scipy
 - peakutils
+
+### Installation using pip
+To install the package using pip, open a terminal and type:
+pip install pysiology
 
 # Credits
    
