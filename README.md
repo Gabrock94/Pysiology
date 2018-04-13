@@ -56,17 +56,12 @@ if(__name__ == "__main__"):
 
 ```
 
-## Installation
 ### Requirements
 - Numpy
 - Scipy
 - peakutils
 
-### Installation using pip
-To install the package using pip, open a terminal and type:
-pip install pysiology
-
-# Credits
+## Credits
    
 
 ## Contacts
