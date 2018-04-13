@@ -50,7 +50,7 @@
 <span class="c1">#                       TIME DOMAIN FEATURES                                  #</span>
 <span class="c1">#                                                                             #</span>
 <span class="c1">###############################################################################</span>
-<span class="sd">&quot;&quot;&quot; Features have been taken from: Phinyomark, A., Phukpattaranont, P., &amp; Limsakul, C. (2012).m classification. Expert Systems with Applications, 39(8), 7420-7431. &quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot; Features have been taken from: Phinyomark, A., Phukpattaranont, P., &amp; Limsakul, C. (2012). &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="getIEMG"><a class="viewcode-back" href="../electromiography.html#electromiography.getIEMG">[docs]</a><span class="k">def</span> <span class="nf">getIEMG</span><span class="p">(</span><span class="n">rawEMGSignal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; This function compute the sum of absolute values of EMG signal Amplitude.::</span>
@@ -988,7 +988,6 @@
     
     <span class="c1">#Frequency Domain Analysis</span>
     <span class="n">rawEMGPowerSpectrum</span><span class="p">,</span> <span class="n">frequencies</span> <span class="o">=</span> <span class="n">getPSD</span><span class="p">(</span><span class="n">filteredEMGSignal</span><span class="p">,</span><span class="n">samplerate</span><span class="p">)</span>
-    
     <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;MNF&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getMNF</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">)</span>
     <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;MDF&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getMDF</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">)</span>
     <span class="n">resultsdict</span><span class="p">[</span><span class="s2">&quot;FrequencyDomain&quot;</span><span class="p">][</span><span class="s2">&quot;PeakFrequency&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getPeakFrequency</span><span class="p">(</span><span class="n">rawEMGPowerSpectrum</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">)</span>

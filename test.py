@@ -1,3 +1,3 @@
-import os
-import csv
 import pysiology
+
+print(pysiology.__version__)

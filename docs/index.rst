@@ -12,14 +12,10 @@ Pysiology - Physiological analysis made easy
    
    introduction
    installation
-   
    modules
-
    tutorial
-
-   cite
-   acknowledgements
    references
+
 Indices
 ==================
 

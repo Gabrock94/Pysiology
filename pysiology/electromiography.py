@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 #                       TIME DOMAIN FEATURES                                  #
 #                                                                             #
 ###############################################################################
-""" Features have been taken from: Phinyomark, A., Phukpattaranont, P., & Limsakul, C. (2012).m classification. Expert Systems with Applications, 39(8), 7420-7431. """
+""" Features have been taken from: Phinyomark, A., Phukpattaranont, P., & Limsakul, C. (2012). """
 
 def getIEMG(rawEMGSignal):
     """ This function compute the sum of absolute values of EMG signal Amplitude.::
@@ -949,7 +949,6 @@ def analyzeEMG(rawEMGSignal, samplerate, preprocessing=True,lowpass=50,highpass=
     
     #Frequency Domain Analysis
     rawEMGPowerSpectrum, frequencies = getPSD(filteredEMGSignal,samplerate)
-    
     resultsdict["FrequencyDomain"]["MNF"] = getMNF(rawEMGPowerSpectrum, frequencies)
     resultsdict["FrequencyDomain"]["MDF"] = getMDF(rawEMGPowerSpectrum, frequencies)
     resultsdict["FrequencyDomain"]["PeakFrequency"] = getPeakFrequency(rawEMGPowerSpectrum, frequencies)
