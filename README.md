@@ -6,6 +6,12 @@ With pysiology you can easily analyze:
 - Electrocardiography signals
 - Electrodermal activity signals
 
+## Installation
+pip install pysiology
+
+## Documentation
+You can check the full documentation here: https://gabrock94.github.io/Pysiology/html/index.html
+
 # Example
 ```python
 import os #used for reading files and directories
