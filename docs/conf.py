@@ -24,9 +24,9 @@ copyright = '2018, Giulio Gabrieli'
 author = 'Giulio Gabrieli'
 
 # The short X.Y version
-version = ''
+version = '0.0.6'
 # The full version, including alpha/beta/rc tags
-release = ''
+release = '0.0.6 - Alpha version'
 
 
 # -- General configuration ---------------------------------------------------

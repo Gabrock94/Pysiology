@@ -1,11 +1,11 @@
 from setuptools import setup
 
 setup(name='pysiology',
-    version='0.0.5b',
+    version='0.0.6',
     description='Physiological signal processing in Python',
     long_description="A simple python package for physiological signal processing (ECG,EMG,GSR).",
     url='https://github.com/Gabrock94/Pysiology',
-    download_url='https://github.com/Gabrock94/Pysiology/archive/0.0.5b.tar.gz',
+    download_url='https://github.com/Gabrock94/Pysiology/archive/0.0.6.tar.gz',
     author='Giulio Gabrieli',
     author_email='gack94@gmail.com',
     license='Apache2',
