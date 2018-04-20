@@ -4,13 +4,12 @@ import os
 datadir = os.path.join("share","data")
 datafiles = [(d,[os.path.join(d,f) for f in files]) for d, folders, files in os.walk(datadir)]
 
-
 setup(name='pysiology',
-    version='0.0.7',
+    version='0.0.8',
     description='Physiological signal processing in Python',
     long_description="A simple python package for physiological signal processing (ECG,EMG,GSR). Tutorial and documentation can be found on the Github Repository or at pysiology.rtfd.io.",
     url='https://github.com/Gabrock94/Pysiology',
-    download_url='https://github.com/Gabrock94/Pysiology/archive/0.0.6.tar.gz',
+    download_url='https://github.com/Gabrock94/Pysiology/archive/0.0.7.tar.gz',
     author='Giulio Gabrieli',
     author_email='gack94@gmail.com',
     license='GPL-3.0',

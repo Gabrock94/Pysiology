@@ -730,7 +730,6 @@ def getPSR(rawEMGPowerSpectrum,frequencies,n=20,fmin=10,fmax=500):
     #here we evaluate P0 and P
     P0 = sum(rawEMGPowerSpectrum[frequencies.index(f0min):frequencies.index(f0max)])
     P = sum(rawEMGPowerSpectrum[frequencies.index(fmin):frequencies.index(fmax)])
-    print(P0, P)
     PSR = P0 / P
     
     return(PSR)

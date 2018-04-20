@@ -14,45 +14,46 @@ With pysiology you can easily analyze:
 - Electrodermal activity signals
 
 ## Installation
+Pysiology can be installed using pip:
+```bash
 pip install pysiology
+```
+or downloading / cloning the repository and, from the root folder of the project, running:
+```bash
+python setup.py install
+```
+
 
 ## Documentation
 You can check the full documentation here: https://gabrock94.github.io/Pysiology/html/index.html
 
 # Example
 ```python
-import os #used for reading files and directories
-import pickle #used to open pickle files.
+import matplotlib.pyplot as plt #used for visualization purposes in this tutorial.
+
 import pysiology
+print(pysiology.__version__)
 
 
-datafolder = "path/to/data/" #path to the data folder
-fileECG = "ECGSignal.pkl" #filename of the ECG signal
-fileEDA = "EDASignal.pkl" #filename of the EDA signal
-fileEMG = "EMGSignal.pkl" #filename of the EMG signal
+ECG = pysiology.sampledata.loadsampleECG() #load the sample ECG Signal
+EMG = pysiology.sampledata.loadsampleEMG() #load the sample EMG Signal
+GSR = pysiology.sampledata.loadsampleEDA() #load the sample GSR Signal
 
-if(__name__ == "__main__"):
-    samplerate = 1000 #samplerate of the signals
-    eventDuration = 8 #event duration in seconds 
-    
-    #First we load our data
-    with open(datafolder+fileECG,"rb") as f:
-        rawECGSignal = pickle.load(f)
-    with open(datafolder+fileEDA,"rb") as f:
-        rawEDASignal = pickle.load(f)
-    with open(datafolder+fileEMG,"rb") as f:
-        rawEMGSignal = pickle.load(f)
-        
-    #Here we create some fake events
-    events = [["A",30],["B",60],["C",90]] #id, starttime in seconds
-    results = {}
-    for event in events:
-        startSample = event[1] * samplerate #First sample of the event
-        endSample = eventDuration*samplerate + startSample #Final sample of the event
-        results[event[0]] = {} #create a dict for this event results
-        results[event[0]]["ECG"] = pysiology.heartrate.analyzeECG(rawECGSignal[startSample:endSample],samplerate) #analyze the ECG signal
-        results[event[0]]["EDA"] = pysiology.electrodermalactivity.analyzeGSR(rawEDASignal[startSample:endSample],samplerate) #analyze the GSR signal
-        results[event[0]]["EMG"] = pysiology.electromiography.analyzeEMG(rawEMGSignal[startSample:endSample],samplerate) #analyze the EMG signal
+sr = 1000 #samplerate in Hz
+
+#We can define the event in the way we prefer. 
+#In this example I will use a 2 x nEvent matrix, containing the name of the event and the onset time.
+events = [["A",10],
+          ["B",20]]
+eventLenght = 8 #lenght in seconds we want to use to compute feature estimation
+results = {} #we will store the results in a dict for simplicity.
+for event in events:
+    startSample = sr * event[1] #samplerate of the signal multiplied by the onset of the event in s
+    endSample = startSample + (sr * eventLenght) #Final sample to use for estimation
+    results[event[0]] = {} #initialize the results
+    results[event[0]]["ECG"] = pysiology.heartrate.analyzeECG(ECG[startSample:endSample],sr) #analyze the ECG signal
+    results[event[0]]["EMG"] = pysiology.electromiography.analyzeEMG(EMG[startSample:endSample],sr) #analyze the EMG signal
+    results[event[0]]["GSR"] = pysiology.electrodermalactivity.analyzeGSR(GSR[startSample:endSample],sr) #analyze the GSR signal
 
 ```
 
@@ -61,8 +62,6 @@ if(__name__ == "__main__"):
 - Scipy
 - Peakutils
 - Matplotlib
-
-## Credits
    
 
 ## Contacts
