@@ -1,14 +1,19 @@
 from setuptools import setup
+import os
+
+datadir = os.path.join("share","data")
+datafiles = [(d,[os.path.join(d,f) for f in files]) for d, folders, files in os.walk(datadir)]
+
 
 setup(name='pysiology',
-    version='0.0.6',
+    version='0.0.7',
     description='Physiological signal processing in Python',
-    long_description="A simple python package for physiological signal processing (ECG,EMG,GSR).",
+    long_description="A simple python package for physiological signal processing (ECG,EMG,GSR). Tutorial and documentation can be found on the Github Repository or at pysiology.rtfd.io.",
     url='https://github.com/Gabrock94/Pysiology',
     download_url='https://github.com/Gabrock94/Pysiology/archive/0.0.6.tar.gz',
     author='Giulio Gabrieli',
     author_email='gack94@gmail.com',
-    license='Apache2',
+    license='GPL-3.0',
     packages=['pysiology'],      
     install_requires=[
         'numpy',
@@ -22,10 +27,10 @@ setup(name='pysiology',
         #   3 - Alpha
         #   4 - Beta
         #   5 - Production/Stable
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         
         # Pick your license as you wish (should match "license" above)
-         'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: GNU General Public License (GPL)',
         
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
@@ -37,4 +42,6 @@ setup(name='pysiology',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
     ],
-    zip_safe=False)
+    zip_safe=False,
+    include_package_data=True,
+    data_files = datafiles)

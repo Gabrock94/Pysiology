@@ -389,20 +389,15 @@ if(__name__=='__main__'):
     import os
     import pickle
     import pprint
-    
-    basepath = os.path.dirname(os.path.realpath(__file__)) #This get the basepath of the script
-    datafolder = "/".join(basepath.split("/")[:-1])+"/data/"
-    
-    fakesignal = []
-    with open(datafolder+"convertedECG.pkl","rb") as f:  # Python 3: open(..., 'rb')
-        events = [30000] #set a list of fake fake events
-        tmin = 0 #start from the beginning of the events
-        tmax = 8 #end from the beginning of the events
-        fakesignal = pickle.load(f) #load a fake signal
-        samplerate = 1000 #samplerate of the fake signal
-        for event in events: #for each event
-            smin = tmin*samplerate + event
-            smax = tmax*samplerate + event
-            eventSignal = fakesignal[smin:smax]
-            analyzedECG = analyzeECG(eventSignal,samplerate) #analyze it
-            pprint.pprint(analyzedECG) #print the results of the analysis
+    import sampledata
+    fakesignal = sampledata.loadsampleECG()
+    events = [30000] #set a list of fake fake events
+    tmin = 0 #start from the beginning of the events
+    tmax = 8 #end from the beginning of the events
+    samplerate = 1000 #samplerate of the fake signal
+    for event in events: #for each event
+        smin = tmin*samplerate + event
+        smax = tmax*samplerate + event
+        eventSignal = fakesignal[smin:smax]
+        analyzedECG = analyzeECG(eventSignal,samplerate) #analyze it
+        pprint.pprint(analyzedECG) #print the results of the analysis

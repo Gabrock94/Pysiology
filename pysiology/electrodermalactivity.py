@@ -248,8 +248,7 @@ if(__name__=='__main__'):
     import pickle
     import os
     import pprint
-    fakesignal = [] 
-    with open(os.getcwd().replace('/pysiology/pysiology','/pysiology') + '/data/convertedEDA.pkl',"rb") as f:  # Python 3: open(..., 'rb')
-        fakesignal = pickle.load(f) #load a fake signal
-        GSRResults = analyzeGSR(fakesignal,1000) #analyze it
-        pprint.pprint(GSRResults) #print the results for each peak found
+    import sampledata
+    fakesignal = sampledata.loadsampleEDA()
+    GSRResults = analyzeGSR(fakesignal,1000) #analyze it
+    pprint.pprint(GSRResults) #print the results for each peak found

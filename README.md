@@ -59,7 +59,8 @@ if(__name__ == "__main__"):
 ### Requirements
 - Numpy
 - Scipy
-- peakutils
+- Peakutils
+- Matplotlib
 
 ## Credits
    

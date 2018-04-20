@@ -975,19 +975,15 @@ if(__name__=='__main__'):
     import os
     import pickle
     import pprint
-    basepath = os.path.dirname(os.path.realpath(__file__)) #This get the basepath of the script
-    datafolder = "/".join(basepath.split("/")[:-1])+"/data/"
-    
-    fakesignal = []
-    with open(datafolder+"convertedEMG.pkl","rb") as f:  # Python 3: open(..., 'rb')
-        events = [30] #set a fake event
-        tmin = 0 #start from the beginning of the events
-        tmax = 5 #end from the beginning of the events
-        fakesignal = pickle.load(f) #load a fake signal
-        samplerate = 1000 #samplerate of the fake signal
-        for event in events: #for each event
-            smin = tmin*samplerate + event
-            smax = tmax*samplerate + event
-            eventSignal = fakesignal[smin:smax]
-            analyzedEMG = analyzeEMG(eventSignal,samplerate,preprocessing=False) #analyze it
-            pprint.pprint(analyzedEMG) #print the results of the analysis
+    import sampledata
+    fakesignal = sampledata.loadsampleEMG()
+    events = [30] #set a fake event
+    tmin = 0 #start from the beginning of the events
+    tmax = 5 #end from the beginning of the events
+    samplerate = 1000 #samplerate of the fake signal
+    for event in events: #for each event
+        smin = tmin*samplerate + event
+        smax = tmax*samplerate + event
+        eventSignal = fakesignal[smin:smax]
+        analyzedEMG = analyzeEMG(eventSignal,samplerate,preprocessing=False) #analyze it
+        pprint.pprint(analyzedEMG) #print the results of the analysis
