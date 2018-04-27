@@ -921,7 +921,6 @@ def analyzeEMG(rawEMGSignal, samplerate, preprocessing=True,lowpass=50,highpass=
         filteredEMGSignal = phasicFilter(filteredEMGSignal, samplerate)
     else:
         filteredEMGSignal = rawEMGSignal
-        plt.plot(filteredEMGSignal)
     
     #Time Domain Analysis
     resultsdict["TimeDomain"]["IEMG"] = getIEMG(filteredEMGSignal)

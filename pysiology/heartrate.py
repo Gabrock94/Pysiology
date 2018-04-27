@@ -125,7 +125,7 @@ def getRMSSD(peaks,samplerate):
     return(RMSSD)
     
 def getPNN50(peaks,samplerate):
-    """ This functions evaluate pNN20, the proportion of differences greater than 50ms.
+    """ This functions evaluate pNN50, the proportion of differences greater than 50ms.
     
         Input: peaks of the ECG signal,samplerate of the signal
         
@@ -348,8 +348,9 @@ def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, low
         filteredECGSignal = butter_highpass_filter(filteredECGSignal, highpass, samplerate, 5)#filter the signal with a cutoff at 2.5Hz and a 5th order Butterworth filter
     else:
         filteredECGSignal = rawECGSignal
+    #TODO: move in function calling
     min_dist = int(samplerate / 2) #Minimum distance between peaks is set to be 500ms
-    peaks = peakutils.indexes(filteredECGSignal,min_dist=min_dist) #get the least of peaks
+    peaks = peakutils.indexes(filteredECGSignal,min_dist=min_dist) #get the list of peaks
     resultsdict = {} #initialize the results dict.
     #for each analysis, check the boolean value and if true compute the results. Then append it to the final dict. 
     if(ibi): 

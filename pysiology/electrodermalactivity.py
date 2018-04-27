@@ -103,17 +103,21 @@ def GSRSCRFeaturesExtraction(filteredGSRSignal, samplerate, peak):
         :rtype: dict
             
     """  
+    
     resultsDict = {}
-    resultsDict["peak"] = {"peakStart":peak[0],"peakMax":peak[1],"peakEnd":peak[2]}
-    resultsDict["riseTime"] = (peak[1] - peak[0]) / samplerate
-    resultsDict["latency"] = (peak[0]) / samplerate
-    resultsDict["amplitude"] = filteredGSRSignal[peak[1]] - filteredGSRSignal[peak[0]]
-    resultsDict["halfAmplitude"] = float(resultsDict["amplitude"] / 2)
-    resultsDict["halfAmplitudeIndex"] = filteredGSRSignal.index(min(filteredGSRSignal[peak[1]:peak[2]], key=lambda x:abs(x-resultsDict["halfAmplitude"])))
-    resultsDict["halfAmplitudeIndexPre"] = filteredGSRSignal.index(min(filteredGSRSignal[peak[0]:peak[1]], key=lambda x:abs(x-resultsDict["halfAmplitude"])))
-    resultsDict["EDAatApex"] = filteredGSRSignal[peak[1]]
-    resultsDict["decayTime"] = (resultsDict["halfAmplitudeIndex"] - peak[1]) / samplerate
-    resultsDict["SCRWitdth"] = (resultsDict["halfAmplitudeIndex"] - peak[0]) / samplerate
+    try:
+        resultsDict["peak"] = {"peakStart":peak[0],"peakMax":peak[1],"peakEnd":peak[2]}
+        resultsDict["riseTime"] = (peak[1] - peak[0]) / samplerate
+        resultsDict["latency"] = (peak[0]) / samplerate
+        resultsDict["amplitude"] = filteredGSRSignal[peak[1]] - filteredGSRSignal[peak[0]]
+        resultsDict["halfAmplitude"] = float(resultsDict["amplitude"] / 2)
+        resultsDict["halfAmplitudeIndex"] = filteredGSRSignal.index(min(filteredGSRSignal[peak[1]:peak[2]], key=lambda x:abs(x-resultsDict["halfAmplitude"])))
+        resultsDict["halfAmplitudeIndexPre"] = filteredGSRSignal.index(min(filteredGSRSignal[peak[0]:peak[1]], key=lambda x:abs(x-resultsDict["halfAmplitude"])))
+        resultsDict["EDAatApex"] = filteredGSRSignal[peak[1]]
+        resultsDict["decayTime"] = (resultsDict["halfAmplitudeIndex"] - peak[1]) / samplerate
+        resultsDict["SCRWitdth"] = (resultsDict["halfAmplitudeIndex"] - peak[0]) / samplerate
+    except:
+        pass
     return(resultsDict)
     
 def analyzeGSR(rawGSRSignal,samplerate, preprocessing=True, lowpass=1,highpass=0.05):
@@ -250,5 +254,5 @@ if(__name__=='__main__'):
     import pprint
     import sampledata
     fakesignal = sampledata.loadsampleEDA()
-    GSRResults = analyzeGSR(fakesignal,1000) #analyze it
+    GSRResults = analyzeGSR(fakesignal,1000,preprocessing=False) #analyze it
     pprint.pprint(GSRResults) #print the results for each peak found
