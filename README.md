@@ -51,8 +51,8 @@ for event in events:
     startSample = sr * event[1] #samplerate of the signal multiplied by the onset of the event in s
     endSample = startSample + (sr * eventLenght) #Final sample to use for estimation
     results[event[0]] = {} #initialize the results
-    results[event[0]]["ECG"] = pysiology.heartrate.analyzeECG(ECG[startSample:endSample],sr) #analyze the ECG signal
-    results[event[0]]["EMG"] = pysiology.electromiography.analyzeEMG(EMG[startSample:endSample],sr) #analyze the EMG signal
+    results[event[0]]["ECG"] = pysiology.electrocardiography.analyzeECG(ECG[startSample:endSample],sr) #analyze the ECG signal
+    results[event[0]]["EMG"] = pysiology.electromyography.analyzeEMG(EMG[startSample:endSample],sr) #analyze the EMG signal
     results[event[0]]["GSR"] = pysiology.electrodermalactivity.analyzeGSR(GSR[startSample:endSample],sr) #analyze the GSR signal
 
 ```
