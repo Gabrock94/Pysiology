@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 ###############################################################################
 
 def phasicGSRFilter(rawGSRSignal,samplerate,seconds=4):
-    """ Apply a phasic filter to the signal, with +- X seconds from each sample. Default is 4 seconds
+    """ Apply a phasic filter to the signal, with +- X seconds from each sample. Default is 10 seconds
     
         * Input:
             * rawGSRSignal = gsr signal as list
@@ -120,7 +120,7 @@ def GSRSCRFeaturesExtraction(filteredGSRSignal, samplerate, peak):
         pass
     return(resultsDict)
     
-def analyzeGSR(rawGSRSignal,samplerate, preprocessing=True, lowpass=1,highpass=0.05):
+def analyzeGSR(rawGSRSignal,samplerate, preprocessing=True, lowpass=1,highpass=0.05, phasic_seconds=10):
     """ Entry point for gsr analysis.
         Signal is filtered and downsampled, then a phasic filter is applied
         
@@ -153,7 +153,7 @@ def analyzeGSR(rawGSRSignal,samplerate, preprocessing=True, lowpass=1,highpass=0
         scalingFactor = int(samplerate / 10) #scaling factor between the samplerate and 10Hz (downsampling factor)
         nsamples = int(len(filteredGSRSignal) / scalingFactor) #evalute the new number of samples for the downsampling
         filteredGSRSignal = scipy.signal.resample(filteredGSRSignal,nsamples) #downsample to 10Hz
-        filteredGSRSignal = phasicGSRFilter(filteredGSRSignal,10) #apply a phasic filter
+        filteredGSRSignal = phasicGSRFilter(filteredGSRSignal,samplerate,seconds=phasic_seconds) #apply a phasic filter
     else:
         filteredGSRSignal = rawGSRSignal
     peaks = findPeakOnsetAndOffset(filteredGSRSignal) #get peaks onset,offset and max
@@ -253,6 +253,6 @@ if(__name__=='__main__'):
     import os
     import pprint
     import sampledata
-    fakesignal = sampledata.loadsampleEDA()
-    GSRResults = analyzeGSR(fakesignal,1000,preprocessing=False) #analyze it
+    fakesignal =sampledata.loadsampleEDA() #load the sample GSR Signal
+    GSRResults = analyzeGSR(fakesignal[1500:9500],1000,preprocessing=False,phasic_seconds=8) #analyze it
     pprint.pprint(GSRResults) #print the results for each peak found

@@ -764,7 +764,7 @@ def getVCF(SM0,SM1,SM2):
 #                                                                             #
 ###############################################################################  
 
-def phasicFilter(rawEMGSignal,samplerate):
+def phasicFilter(rawEMGSignal,samplerate, seconds=4):
     """ Apply a phasic filter to the signal, with +-4 seconds from each sample
         
         * Input:
@@ -790,7 +790,7 @@ def phasicFilter(rawEMGSignal,samplerate):
         if(smax > len(rawEMGSignal)):
             smax = sample
         #substract the mean of the segment
-        newsample = rawEMGSignal[sample] - np.mean(rawEMGSignal[smin:smax])
+        newsample = rawEMGSignal[sample] - np.median(rawEMGSignal[smin:smax])
         #move to th
         phasicSignal.append(newsample)
     return(phasicSignal)
@@ -896,7 +896,7 @@ def butter_highpass_filter(data, cutoff, fs, order):
 ###############################################################################
 
     
-def analyzeEMG(rawEMGSignal, samplerate, preprocessing=True,lowpass=50,highpass=20,threshold = 0.01 ,nseg=3,segoverlap=30):
+def analyzeEMG(rawEMGSignal, samplerate, preprocessing=True,lowpass=50,highpass=20,threshold = 0.01 ,nseg=3,phasic_seconds=4):
     
     """ This functions acts as entrypoint for the EMG Analysis.
     
@@ -907,7 +907,6 @@ def analyzeEMG(rawEMGSignal, samplerate, preprocessing=True,lowpass=50,highpass=
             * highpass = highpass cutoff in Hz
             * threshold for the evaluation of ZC,MYOP,WAMP,SSC
             * nseg = number of segments for MAVSLPk, MHW,MTW
-            * segoverlap = Overlapping of the segments in percentage for MHW,MTW
         * Output:
             * results dictionary
             
@@ -918,7 +917,7 @@ def analyzeEMG(rawEMGSignal, samplerate, preprocessing=True,lowpass=50,highpass=
         #Preprocessing
         filteredEMGSignal = butter_lowpass_filter(rawEMGSignal, lowpass, samplerate, 2)#filter the signal with a cutoff at 1Hz and a 2th order Butterworth filter
         filteredEMGSignal = butter_highpass_filter(filteredEMGSignal, highpass, samplerate, 2)#filter the signal with a cutoff at 0.05Hz and a 2th order Butterworth filter
-        filteredEMGSignal = phasicFilter(filteredEMGSignal, samplerate)
+        filteredEMGSignal = phasicFilter(filteredEMGSignal, samplerate,seconds=phasic_seconds)
     else:
         filteredEMGSignal = rawEMGSignal
     

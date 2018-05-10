@@ -44,6 +44,6 @@ if(__name__ == "__main__"):
         startSample = event[1] * samplerate #First sample of the event
         endSample = eventDuration*samplerate + startSample #Final sample of the event
         results[event[0]] = {} #create a dict for this event results
-        results[event[0]]["ECG"] = pysiology.heartrate.analyzeECG(rawECGSignal[startSample:endSample],samplerate) #analyze the ECG signal
+        results[event[0]]["ECG"] = pysiology.electrocardiography.analyzeECG(rawECGSignal[startSample:endSample],samplerate) #analyze the ECG signal
         results[event[0]]["EDA"] = pysiology.electrodermalactivity.analyzeGSR(rawEDASignal[startSample:endSample],samplerate) #analyze the GSR signal
-        results[event[0]]["EMG"] = pysiology.electromiography.analyzeEMG(rawEMGSignal[startSample:endSample],samplerate) #analyze the EMG signal
+        results[event[0]]["EMG"] = pysiology.electromyography.analyzeEMG(rawEMGSignal[startSample:endSample],samplerate) #analyze the EMG signal

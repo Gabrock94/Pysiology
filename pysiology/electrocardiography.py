@@ -302,7 +302,7 @@ def butter_highpass_filter(data, cutoff, fs, order):
     return(y)
     
 #http://www.paulvangent.com/2016/03/15/analyzing-a-discrete-heart-rate-signal-using-python-part-1/
-def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, lowpass=2.5, ibi=True,bpm=True,sdnn = True,sdsd = True, rmssd = True,pnn50 = True, pnn20 = True, pnn50pnn20 = True, freqAnalysis = True, freqAnalysisFiltered = True):
+def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, lowpass=2.5, min_dist = 500, ibi=True,bpm=True,sdnn = True,sdsd = True, rmssd = True,pnn50 = True, pnn20 = True, pnn50pnn20 = True, freqAnalysis = True, freqAnalysisFiltered = True):
     """ This is a simple entrypoint for ECG analysis. 
     
         You can use this function as model for your analysis or to extrapolate several features from an ECG signal.
@@ -319,26 +319,28 @@ def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, low
         :type highpass: boolean
         :param lowpass: cutoff frequency for the low pass filter
         :type lowpass: boolean
+        :param min_dist: minimum distance between peaks in ms. Used for peak detection
+        :type:int
         :param ibi: whether or not to perform the IBI analysis
-        :param ibi: boolean
+        :type ibi: boolean
         :param bpm: whether or not to perform the BPM analysis
-        :param bpm: boolean
+        :type bpm: boolean
         :param sdnn: whether or not to perform the sdnn analysis
-        :param sdnn: boolean
+        :type sdnn: boolean
         :param sdsd: whether or not to perform the sdsd analysis
-        :param sdsd: boolean
+        :type sdsd: boolean
         :param rmssd: whether or not to perform the rmssd analysis
-        :param rmssd: boolean
+        :type rmssd: boolean
         :param pnn50: whether or not to perform the pNN50 analysis
-        :param pnn50: boolean
+        :type pnn50: boolean
         :param pnn20: whether or not to perform the pNN20 analysis
-        :param pnn20: boolean
+        :type pnn20: boolean
         :param pnn50pnn20: whether or not to perform the pNN50 on pNN20 ratio analysis
-        :param pnn50pnn20: boolean
+        :type pnn50pnn20: boolean
         :param freqAnalysis: whether or not to perform a frequency analysis analysis
-        :param freqAnalysis: boolean
+        :type freqAnalysis: boolean
         :param freqAnalysisFiltered: whether or not to perform a frequency analysis automatically filtering the signal
-        :param freqAnalysisFiltered: boolean
+        :type freqAnalysisFiltered: boolean
         :return: a dictionary containing the results of the ECG analysis 
         :rtype: list
     """
@@ -348,8 +350,8 @@ def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, low
         filteredECGSignal = butter_highpass_filter(filteredECGSignal, highpass, samplerate, 5)#filter the signal with a cutoff at 2.5Hz and a 5th order Butterworth filter
     else:
         filteredECGSignal = rawECGSignal
-    #TODO: move in function calling
-    min_dist = int(samplerate / 2) #Minimum distance between peaks is set to be 500ms
+    #min_dist = int(samplerate / 2) #Minimum distance between peaks is set to be 500ms
+    min_dist = float(min_dist) / 1000 *samplerate
     peaks = peakutils.indexes(filteredECGSignal,min_dist=min_dist) #get the list of peaks
     resultsdict = {} #initialize the results dict.
     #for each analysis, check the boolean value and if true compute the results. Then append it to the final dict. 
