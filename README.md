@@ -1,4 +1,4 @@
-# Pysiology
+# PySiology
 ![GitHub release](https://img.shields.io/github/release/Gabrock94/Pysiology.svg)
 [![PyPI version](https://badge.fury.io/py/pysiology.svg)](https://badge.fury.io/py/pysiology)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/pysiology.svg)](https://pypi.python.org/pypi/pysiology/)
@@ -7,14 +7,14 @@
 
 
 ## Introduction
-Pysiology is a Python package used to analyze Physyological signals.
+PySiology is a Python package used to analyze Physyological signals.
 With pysiology you can easily analyze:
 - Electromyographic signals
 - Electrocardiographic signals
 - Electrodermal activity signals
 
 ## Installation
-Pysiology can be installed using pip:
+PySiology can be installed using pip:
 ```bash
 pip install pysiology
 ```
