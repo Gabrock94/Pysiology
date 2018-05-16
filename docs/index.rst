@@ -5,7 +5,7 @@
 
 Pysiology - Physiological analysis made easy
 ==============================================
-Version: 0.0.9.001
+Version: 0.0.9.2
 
 .. toctree::
    :maxdepth: 2
