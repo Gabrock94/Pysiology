@@ -1,7 +1,7 @@
 
-Heartrate analysis module
-==========================  
-.. automodule:: heartrate
+Electrocardiography analysis module
+=======================================
+.. automodule:: electrocardiography
     :members:
 
 

@@ -203,6 +203,7 @@ def getFrequencies(rawECGSignal, samplerate, llc=0.04, ulc=0.15, lhc=0.15,uhc=0.
        :type lvlc: float
        :param uvlc: upper cutoff of very low frequencies
        :type uvlc: float
+
        :return: a dictionary containing the results of the frequency analysis
        :rtype: dictionary
     """
@@ -234,6 +235,7 @@ def butter_lowpass(cutoff, fs, order=5):
         :type fs: float
         :param order: order of the Butter Filter
         :type order: int
+
         :return: butter lowpass filter
         :rtype: list
     """
@@ -253,6 +255,7 @@ def butter_highpass(cutoff, fs, order=5):
         :type fs: float
         :param order: order of the Butter Filter
         :type order: int
+
         :return: butter highpass filter
         :rtype: list
     """
@@ -274,6 +277,7 @@ def butter_lowpass_filter(data, cutoff, fs, order):
         :type fs: float
         :param order: order of the Butter Filter
         :type order: int
+
         :return: lowpass filtered ECG signal
         :rtype: list
     """
@@ -294,6 +298,7 @@ def butter_highpass_filter(data, cutoff, fs, order):
         :type fs: float
         :param order: order of the Butter Filter
         :type order: int
+
         :return: highpass filtered ECG signal
         :rtype: list
     """
@@ -320,7 +325,7 @@ def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, low
         :param lowpass: cutoff frequency for the low pass filter
         :type lowpass: boolean
         :param min_dist: minimum distance between peaks in ms. Used for peak detection
-        :type:int
+        :type min_dist: int
         :param ibi: whether or not to perform the IBI analysis
         :type ibi: boolean
         :param bpm: whether or not to perform the BPM analysis
@@ -341,8 +346,10 @@ def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, low
         :type freqAnalysis: boolean
         :param freqAnalysisFiltered: whether or not to perform a frequency analysis automatically filtering the signal
         :type freqAnalysisFiltered: boolean
+
         :return: a dictionary containing the results of the ECG analysis 
         :rtype: list
+
     """
     #First we get the peaks
     if(preprocessing):
