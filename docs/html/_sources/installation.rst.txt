@@ -10,8 +10,8 @@ This will install all the required dependencies as well.
 Download and Installation
 #########################
 
-Using pip
-*********
+Using pip (suggested method)
+*****************************
 
 Open a terminal and type:
 

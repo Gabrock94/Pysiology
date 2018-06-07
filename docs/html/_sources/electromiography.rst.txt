@@ -1,7 +1,7 @@
 
-Electromiography Activity analysis module
+Electromyography analysis module
 ==========================================
-.. automodule:: electromiography
+.. automodule:: electromyography
     :members:
 
 

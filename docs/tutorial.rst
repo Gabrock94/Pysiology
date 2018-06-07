@@ -1,4 +1,4 @@
 Tutorials
 =========
 
-Tutorials can be found online at  https://github.com/Gabrock94/Pysiology/tree/master/Tutorial.
+`Quickstart v.0.0.9 <https://github.com/Gabrock94/Pysiology/blob/master/Tutorial/Tutorial_0.0.9.ipynb>`_

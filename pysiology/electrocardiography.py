@@ -181,11 +181,11 @@ def getPSD(rawECGSignal, samplerate):
     return([psd,frequencies]) 
     
 def getFrequencies(rawECGSignal, samplerate, llc=0.04, ulc=0.15, lhc=0.15,uhc=0.4, lvlc = 0.0033 , hvlc = 0.04 ):
-    """This functions returns the power of low Frequencies, high frequencies and very low frequencies.
+    """This functions returns the sum of the PSD of low Frequencies, high frequencies and very low frequencies.
     
-       Default Values have been taken from: Blood, J. D., Wu, J., Chaplin, T. M., Hommer, R., Vazquez, L., Rutherford, H. J., ... & Crowley, M. J. (2015). The variable heart: high frequency and very low frequency correlates of depressive symptoms in children and adolescents. Journal of affective disorders, 186, 119-126.
+       Default Values have been adapted from: Blood, J. D., Wu, J., Chaplin, T. M., Hommer, R., Vazquez, L., Rutherford, H. J., ... & Crowley, M. J. (2015). The variable heart: high frequency and very low frequency correlates of depressive symptoms in children and adolescents. Journal of affective disorders, 186, 119-126.
        
-       It returns a dictionary with the amount of high, low and very low frequencies
+       It returns a dictionary with the values for high, low and very low frequencies
        
        :param rawECGSignal: raw ECG signal
        :type rawECGSignal: list
@@ -208,18 +208,17 @@ def getFrequencies(rawECGSignal, samplerate, llc=0.04, ulc=0.15, lhc=0.15,uhc=0.
        :rtype: dictionary
     """
     frequencyAnalysis = {}
-    rawEMGPowerSpectrum, frequencies = getPSD(rawECGSignal,samplerate)
+    rawECGPowerSpectrum, frequencies = getPSD(rawECGSignal,samplerate)
     frequencies = list(frequencies)
-    #First we check for the closest value into the frequency list to the cutoff frequencies
     llc = min(frequencies, key=lambda x:abs(x-llc))
     ulc = min(frequencies, key=lambda x:abs(x-ulc))
     lhc = min(frequencies, key=lambda x:abs(x-lhc))
     uhc = min(frequencies, key=lambda x:abs(x-uhc))
     hvlc = min(frequencies, key=lambda x:abs(x-hvlc))
     lvlc = min(frequencies, key=lambda x:abs(x-lvlc))
-    frequencyAnalysis["LF"] = sum([P for P in rawEMGPowerSpectrum[frequencies.index(llc):frequencies.index(ulc)]])
-    frequencyAnalysis["HF"] = sum([P for P in rawEMGPowerSpectrum[frequencies.index(lhc):frequencies.index(uhc)]])
-    frequencyAnalysis["VLF"] = sum([P for P in rawEMGPowerSpectrum[frequencies.index(lvlc):frequencies.index(hvlc)]])
+    frequencyAnalysis["LF"] = sum([P for P in rawECGPowerSpectrum[frequencies.index(llc):frequencies.index(ulc)]])
+    frequencyAnalysis["HF"] = sum([P for P in rawECGPowerSpectrum[frequencies.index(lhc):frequencies.index(uhc)]])
+    frequencyAnalysis["VLF"] = sum([P for P in rawECGPowerSpectrum[frequencies.index(lvlc):frequencies.index(hvlc)]])
     
     return(frequencyAnalysis)
     

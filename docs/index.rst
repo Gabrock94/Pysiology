@@ -7,6 +7,9 @@ Pysiology - Physiological analysis made easy
 ==============================================
 Version: 0.0.9.2
 
+`Github <https://github.com/Gabrock94/Pysiology>`_
+`Pypi <https://pypi.org/project/pysiology/>`_
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
