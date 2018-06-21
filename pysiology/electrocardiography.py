@@ -50,7 +50,7 @@ def getSDNN(peaks,samplerate):
         
         SDNN reflects all the cyclic components responsible for variability in the period of recording, therefore it represents total variability
         
-        SDNN = sqrt((1/N-1) * sum(i=1 --> N)(rri - rrmean)^2
+        SDNN = sqrt((1/N-1) * sum(i=1 --> N)(rri - rrmean)^2)
         
         Input: peaks of the ECG signal,samplerate of the signal
         
