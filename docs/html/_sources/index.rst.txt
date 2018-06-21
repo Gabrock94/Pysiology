@@ -18,6 +18,7 @@ Version: 0.0.9.2
    installation
    modules
    tutorial
+   cite
    references
 
 Indices
