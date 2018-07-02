@@ -27,7 +27,7 @@ python setup.py install
 ## Documentation
 You can check the full documentation here: https://gabrock94.github.io/Pysiology/html/index.html
 
-# Example
+## Example
 ```python
 import matplotlib.pyplot as plt #used for visualization purposes in this tutorial.
 
