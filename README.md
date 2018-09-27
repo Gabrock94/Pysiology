@@ -5,7 +5,6 @@
 [![PyPI status](https://img.shields.io/pypi/status/pysiology.svg)](https://pypi.python.org/pypi/pysiology/)
 [![Documentation Status](https://readthedocs.org/projects/pysiology/badge/?version=latest)](http://pysiology.readthedocs.io/en/latest/?badge=latest)
 
-
 ## Introduction
 PySiology is a Python package used to analyze Physyological signals.
 With pysiology you can easily analyze:
@@ -65,7 +64,6 @@ If you use PySiology, please cite:
 - Scipy
 - Peakutils
 - Matplotlib
-   
 
 ## Contacts
 Feel free to contact me for questions, suggestions or to give me advice as well at: giulio.gabrieli@studenti.unitn.it
