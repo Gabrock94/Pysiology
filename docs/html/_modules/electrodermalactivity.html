@@ -4,19 +4,28 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>electrodermalactivity &#8212; Pysiology 0.0.9 - Beta version documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.9 - Beta version',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-  </head><body>
+  </head>
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -50,14 +59,14 @@
 <span class="c1">###############################################################################</span>
 
 <div class="viewcode-block" id="phasicGSRFilter"><a class="viewcode-back" href="../electrodermalactivity.html#electrodermalactivity.phasicGSRFilter">[docs]</a><span class="k">def</span> <span class="nf">phasicGSRFilter</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">,</span><span class="n">samplerate</span><span class="p">,</span><span class="n">seconds</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Apply a phasic filter to the signal, with +- X seconds from each sample. Default is 10 seconds</span>
+    <span class="sd">&quot;&quot;&quot; Apply a phasic filter to the signal, with +- X seconds from each sample. Default is 4 seconds</span>
 <span class="sd">    </span>
 <span class="sd">        * Input:</span>
 <span class="sd">            * rawGSRSignal = gsr signal as list</span>
 <span class="sd">            * samplerate = samplerate of the signal    </span>
 <span class="sd">            * seconds = number of seconds before and after each timepoint to use in order to compute the filtered value</span>
 <span class="sd">        * Output:</span>
-<span class="sd">            * phasic filtered signal            </span>
+<span class="sd">            * phasic signal            </span>
 <span class="sd">        </span>
 <span class="sd">        :param rawGSRSignal: raw GSR Signal</span>
 <span class="sd">        :type rawGSRSignal: list</span>
@@ -67,6 +76,7 @@
 <span class="sd">        :param seconds: int</span>
 <span class="sd">        :return: filtered signal</span>
 <span class="sd">        :rtype: list</span>
+<span class="sd">        </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="n">phasicSignal</span> <span class="o">=</span> <span class="p">[]</span>    
@@ -84,6 +94,68 @@
         <span class="n">phasicSignal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newsample</span><span class="p">)</span>
     <span class="k">return</span><span class="p">(</span><span class="n">phasicSignal</span><span class="p">)</span></div>
 
+
+<div class="viewcode-block" id="tonicGSRFilter"><a class="viewcode-back" href="../electrodermalactivity.html#electrodermalactivity.tonicGSRFilter">[docs]</a><span class="k">def</span> <span class="nf">tonicGSRFilter</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">,</span><span class="n">samplerate</span><span class="p">,</span><span class="n">seconds</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Apply a modified filter to the signal, with +- X seconds from each sample, in order to extract the tonic component. Default is 4 seconds</span>
+<span class="sd">    </span>
+<span class="sd">        * Input:</span>
+<span class="sd">            * rawGSRSignal = gsr signal as list</span>
+<span class="sd">            * samplerate = samplerate of the signal    </span>
+<span class="sd">            * seconds = number of seconds before and after each timepoint to use in order to compute the filtered value</span>
+<span class="sd">        * Output:</span>
+<span class="sd">            * tonic signal            </span>
+<span class="sd">        </span>
+<span class="sd">        :param rawGSRSignal: raw GSR Signal</span>
+<span class="sd">        :type rawGSRSignal: list</span>
+<span class="sd">        :param samplerate: samplerate of the GSR signal in Hz</span>
+<span class="sd">        :type samplerate: int</span>
+<span class="sd">        :param seconds: seconds to use to apply the phasic filter</span>
+<span class="sd">        :param seconds: int</span>
+<span class="sd">        :return: filtered signal</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">tonicSignal</span> <span class="o">=</span> <span class="p">[]</span>    
+    <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">)):</span>
+        <span class="n">smin</span> <span class="o">=</span> <span class="n">sample</span> <span class="o">-</span> <span class="n">seconds</span> <span class="o">*</span> <span class="n">samplerate</span> <span class="c1">#min sample index</span>
+        <span class="n">smax</span> <span class="o">=</span> <span class="n">sample</span> <span class="o">+</span> <span class="n">seconds</span> <span class="o">*</span> <span class="n">samplerate</span> <span class="c1">#max sample index</span>
+        <span class="c1">#is smin is &lt; 0 or smax &gt; signal length, fix it to the closest real sample</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">smin</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span> 
+            <span class="n">smin</span> <span class="o">=</span> <span class="n">sample</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">smax</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">)):</span>
+            <span class="n">smax</span> <span class="o">=</span> <span class="n">sample</span>
+        <span class="c1">#substract the mean of the segment</span>
+        <span class="n">newsample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">[</span><span class="n">smin</span><span class="p">:</span><span class="n">smax</span><span class="p">])</span>
+        <span class="c1">#move to th</span>
+        <span class="n">tonicSignal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newsample</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">tonicSignal</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="getPhasicAndTonic"><a class="viewcode-back" href="../electrodermalactivity.html#electrodermalactivity.getPhasicAndTonic">[docs]</a><span class="k">def</span> <span class="nf">getPhasicAndTonic</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">,</span> <span class="n">samplerate</span><span class="p">,</span> <span class="n">seconds</span> <span class="o">=</span> <span class="mi">4</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This function returns the phasic and tonic components of a singnal.</span>
+<span class="sd">    </span>
+<span class="sd">        * Input: </span>
+<span class="sd">            * rawGSRSignal = gsr signal as list</span>
+<span class="sd">            * samplerate = samplerate of the signal    </span>
+<span class="sd">            * seconds = number of seconds before and after each timepoint to use in order to compute the filtered value</span>
+<span class="sd">        * Output:</span>
+<span class="sd">            * List containing the phasic and tonic components</span>
+<span class="sd">            </span>
+<span class="sd">        :param rawGSRSignal: raw GSR Signal</span>
+<span class="sd">        :type rawGSRSignal: list</span>
+<span class="sd">        :param samplerate: samplerate of the GSR signal in Hz</span>
+<span class="sd">        :type samplerate: int</span>
+<span class="sd">        :param seconds: seconds to use to apply the phasic filter</span>
+<span class="sd">        :param seconds: int</span>
+<span class="sd">        :return: phasic and tonic signals</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+        
+    <span class="n">phasic</span> <span class="o">=</span> <span class="n">phasicGSRFilter</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">,</span> <span class="n">samplerate</span><span class="p">,</span> <span class="n">seconds</span><span class="p">)</span>
+    <span class="n">tonic</span> <span class="o">=</span> <span class="n">tonicGSRFilter</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">,</span> <span class="n">samplerate</span><span class="p">,</span> <span class="n">seconds</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">phasic</span><span class="p">,</span> <span class="n">tonic</span><span class="p">)</span></div>
+    
 <div class="viewcode-block" id="findPeakOnsetAndOffset"><a class="viewcode-back" href="../electrodermalactivity.html#electrodermalactivity.findPeakOnsetAndOffset">[docs]</a><span class="k">def</span> <span class="nf">findPeakOnsetAndOffset</span><span class="p">(</span><span class="n">rawGSRSignal</span><span class="p">,</span><span class="n">onset</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span><span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; This functions finds the peaks of a GSR signal</span>
 <span class="sd">    </span>
@@ -279,7 +351,6 @@
     <span class="n">y</span> <span class="o">=</span> <span class="n">lfilter</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
     <span class="k">return</span><span class="p">(</span><span class="n">y</span><span class="p">)</span></div>
 
-    
 <span class="c1">###############################################################################</span>
 <span class="c1">#                                                                             #</span>
 <span class="c1">#                                  DEBUG                                      #</span>
@@ -292,7 +363,8 @@
     <span class="kn">import</span> <span class="nn">os</span>
     <span class="kn">import</span> <span class="nn">pprint</span>
     <span class="kn">import</span> <span class="nn">sampledata</span>
-    <span class="n">fakesignal</span> <span class="o">=</span><span class="n">sampledata</span><span class="o">.</span><span class="n">loadsampleEDA</span><span class="p">()</span> <span class="c1">#load the sample GSR Signal</span>
+    <span class="n">fakesignal</span> <span class="o">=</span> <span class="s1">&#39;/home/giulio/Desktop/EDAPhasic/convertedEDA.pkl&#39;</span>
+    <span class="n">fakesignal</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">fakesignal</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">))</span>
     <span class="n">GSRResults</span> <span class="o">=</span> <span class="n">analyzeGSR</span><span class="p">(</span><span class="n">fakesignal</span><span class="p">[</span><span class="mi">1500</span><span class="p">:</span><span class="mi">9500</span><span class="p">],</span><span class="mi">1000</span><span class="p">,</span><span class="n">preprocessing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">phasic_seconds</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span> <span class="c1">#analyze it</span>
     <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">GSRResults</span><span class="p">)</span> <span class="c1">#print the results for each peak found</span>
 </pre></div>
@@ -304,14 +376,12 @@
         <div class="sphinxsidebarwrapper">
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -333,7 +403,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Giulio Gabrieli.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>

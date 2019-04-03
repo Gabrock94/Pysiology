@@ -4,12 +4,20 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Electromyography analysis module &#8212; Pysiology 0.0.9 - Beta version documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.9 - Beta version',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -18,7 +26,8 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tutorials" href="tutorial.html" />
     <link rel="prev" title="Electrodermal Activity analysis module" href="electrodermalactivity.html" /> 
-  </head><body>
+  </head>
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -185,7 +194,7 @@
 <dt id="electromyography.getAAC">
 <code class="descclassname">electromyography.</code><code class="descname">getAAC</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getAAC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getAAC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the Average amplitude change.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AAC</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">AAC</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -270,7 +279,7 @@
 <dt id="electromyography.getDASDV">
 <code class="descclassname">electromyography.</code><code class="descname">getDASDV</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getDASDV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getDASDV" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the standard deviation value of the the wavelength.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DASDV</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span>    
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DASDV</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span>    
 </pre></div>
 </div>
 <ul class="simple">
@@ -406,7 +415,7 @@
 <dt id="electromyography.getIEMG">
 <code class="descclassname">electromyography.</code><code class="descname">getIEMG</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getIEMG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getIEMG" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function compute the sum of absolute values of EMG signal Amplitude.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IEMG</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">IEMG</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -445,7 +454,7 @@
 <dt id="electromyography.getLOG">
 <code class="descclassname">electromyography.</code><code class="descname">getLOG</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getLOG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getLOG" title="Permalink to this definition">¶</a></dt>
 <dd><p>LOG is a feature that provides an estimate of the muscle contraction force.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LOG</span> <span class="o">=</span> <span class="n">e</span><span class="o">^</span><span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LOG</span> <span class="o">=</span> <span class="n">e</span><span class="o">^</span><span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -477,7 +486,7 @@
 <dt id="electromyography.getMAV">
 <code class="descclassname">electromyography.</code><code class="descname">getMAV</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMAV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMAV" title="Permalink to this definition">¶</a></dt>
 <dd><p>Thif functions compute the  average of EMG signal Amplitude.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MAV</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MAV</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -516,7 +525,7 @@
 <dt id="electromyography.getMAV1">
 <code class="descclassname">electromyography.</code><code class="descname">getMAV1</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMAV1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMAV1" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functoin evaluate Average of EMG signal Amplitude, using the modified version n°.1.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IEMG</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">wi</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">IEMG</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">wi</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 <span class="n">wi</span> <span class="o">=</span> <span class="p">{</span>
       <span class="mi">1</span> <span class="k">if</span> <span class="mf">0.25</span><span class="n">N</span> <span class="o">&lt;=</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mf">0.75</span><span class="n">N</span><span class="p">,</span>
       <span class="mf">0.5</span> <span class="n">otherwise</span>
@@ -559,7 +568,7 @@
 <dt id="electromyography.getMAV2">
 <code class="descclassname">electromyography.</code><code class="descname">getMAV2</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMAV2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMAV2" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functoin evaluate Average of EMG signal Amplitude, using the modified version n°.2.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IEMG</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">wi</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">IEMG</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">wi</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 <span class="n">wi</span> <span class="o">=</span> <span class="p">{</span>
       <span class="mi">1</span> <span class="k">if</span> <span class="mf">0.25</span><span class="n">N</span> <span class="o">&lt;=</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mf">0.75</span><span class="n">N</span><span class="p">,</span>
       <span class="mi">4</span><span class="n">i</span><span class="o">/</span><span class="n">N</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mf">0.25</span><span class="n">N</span>
@@ -604,7 +613,7 @@
 <code class="descclassname">electromyography.</code><code class="descname">getMAVSLPk</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>nseg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMAVSLPk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMAVSLPk" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mean Absolute value slope is a modified versions of MAV feature.</p>
 <p>The MAVs of adiacent segments are determinated.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MAVSLPk</span> <span class="o">=</span> <span class="n">MAV</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">MAV</span><span class="p">[</span><span class="n">k</span><span class="p">];</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="o">..</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MAVSLPk</span> <span class="o">=</span> <span class="n">MAV</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">MAV</span><span class="p">[</span><span class="n">k</span><span class="p">];</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="o">..</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -695,7 +704,7 @@
 <code class="descclassname">electromyography.</code><code class="descname">getMNF</code><span class="sig-paren">(</span><em>rawEMGPowerSpectrum</em>, <em>frequencies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMNF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMNF" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain the mean frequency of the EMG signal, evaluated as the sum of 
 product of the EMG power spectrum and the frequency divided by total sum of the spectrum intensity:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MNF</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fPj</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Pj</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-&gt;</span> <span class="n">M</span> 
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MNF</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fPj</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Pj</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-&gt;</span> <span class="n">M</span> 
 <span class="n">M</span> <span class="o">=</span> <span class="n">length</span> <span class="n">of</span> <span class="n">the</span> <span class="n">frequency</span> <span class="nb">bin</span>
 <span class="n">Pj</span> <span class="o">=</span> <span class="n">power</span> <span class="n">at</span> <span class="n">freqeuncy</span> <span class="nb">bin</span> <span class="n">j</span>
 <span class="n">fJ</span> <span class="o">=</span> <span class="n">frequency</span> <span class="n">of</span> <span class="n">the</span> <span class="n">spectrum</span> <span class="n">at</span> <span class="n">frequency</span> <span class="nb">bin</span> <span class="n">j</span>
@@ -744,7 +753,7 @@ product of the EMG power spectrum and the frequency divided by total sum of the 
 <dt id="electromyography.getMNP">
 <code class="descclassname">electromyography.</code><code class="descname">getMNP</code><span class="sig-paren">(</span><em>rawEMGPowerSpectrum</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMNP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMNP" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions evaluate the mean power of the spectrum.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Mean</span> <span class="n">Power</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Pj</span><span class="p">)</span> <span class="o">/</span> <span class="n">M</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">M</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span> <span class="n">of</span> <span class="n">the</span> <span class="n">spectrum</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Mean</span> <span class="n">Power</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Pj</span><span class="p">)</span> <span class="o">/</span> <span class="n">M</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">M</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span> <span class="n">of</span> <span class="n">the</span> <span class="n">spectrum</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -790,7 +799,7 @@ product of the EMG power spectrum and the frequency divided by total sum of the 
 <code class="descclassname">electromyography.</code><code class="descname">getMYOP</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMYOP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMYOP" title="Permalink to this definition">¶</a></dt>
 <dd><p>The myopulse percentage rate (MYOP) is an average value of myopulse output.
 It is defined as one absolute value of the EMG signal exceed a pre-defined thershold value.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MYOP</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MYOP</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
         <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">threshold</span>
         <span class="mi">0</span> <span class="n">otherwise</span>
@@ -925,7 +934,7 @@ Ratio between the energy P0 which is nearby the maximum value of the EMG power s
 <dt id="electromyography.getRMS">
 <code class="descclassname">electromyography.</code><code class="descname">getRMS</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getRMS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getRMS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the root mean square of a signal.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RMS</span> <span class="o">=</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">RMS</span> <span class="o">=</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -964,7 +973,7 @@ Ratio between the energy P0 which is nearby the maximum value of the EMG power s
 <dt id="electromyography.getSM">
 <code class="descclassname">electromyography.</code><code class="descname">getSM</code><span class="sig-paren">(</span><em>rawEMGPowerSpectrum</em>, <em>frequencies</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getSM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getSM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the spectral moment of a spectrum:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SM</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fj</span><span class="o">*</span><span class="p">(</span><span class="n">Pj</span><span class="o">**</span><span class="n">order</span><span class="p">)),</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">M</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SM</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fj</span><span class="o">*</span><span class="p">(</span><span class="n">Pj</span><span class="o">**</span><span class="n">order</span><span class="p">)),</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">M</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -1012,7 +1021,7 @@ Ratio between the energy P0 which is nearby the maximum value of the EMG power s
 <dt id="electromyography.getSSC">
 <code class="descclassname">electromyography.</code><code class="descname">getSSC</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getSSC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getSSC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of times the slope of the EMG signal changes sign.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SSC</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">f</span><span class="p">(</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="n">X</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])))</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">--&gt;</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SSC</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">f</span><span class="p">(</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="n">X</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])))</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">--&gt;</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span>
 
 <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">){</span>
     <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">threshold</span>
@@ -1062,7 +1071,7 @@ Ratio between the energy P0 which is nearby the maximum value of the EMG power s
 <dt id="electromyography.getSSI">
 <code class="descclassname">electromyography.</code><code class="descname">getSSI</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getSSI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getSSI" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function compute the summation of square values of the EMG signal.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SSI</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SSI</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -1101,7 +1110,7 @@ Ratio between the energy P0 which is nearby the maximum value of the EMG power s
 <dt id="electromyography.getTM">
 <code class="descclassname">electromyography.</code><code class="descname">getTM</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getTM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getTM" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function compute the Temporal Moment of order X of the EMG signal.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TM</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="n">order</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">TM</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="n">order</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -1188,7 +1197,7 @@ Ratio between the energy P0 which is nearby the maximum value of the EMG power s
 <dt id="electromyography.getVAR">
 <code class="descclassname">electromyography.</code><code class="descname">getVAR</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getVAR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getVAR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Summation of average square values of the deviation of a variable.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -1227,7 +1236,7 @@ Ratio between the energy P0 which is nearby the maximum value of the EMG power s
 <dt id="electromyography.getVCF">
 <code class="descclassname">electromyography.</code><code class="descname">getVCF</code><span class="sig-paren">(</span><em>SM0</em>, <em>SM1</em>, <em>SM2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getVCF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getVCF" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function evaluate the variance of the central freuency of the PSD.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VCF</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">SM0</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">Pj</span><span class="o">*</span><span class="p">(</span><span class="n">fj</span> <span class="o">-</span> <span class="n">fc</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span><span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">M</span><span class="p">,</span> <span class="o">=</span> <span class="n">SM2</span> <span class="o">/</span> <span class="n">SM0</span> <span class="o">-</span> <span class="p">(</span><span class="n">SM1</span> <span class="o">/</span><span class="n">SM0</span><span class="p">)</span> <span class="o">**</span><span class="mi">2</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">VCF</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">SM0</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">Pj</span><span class="o">*</span><span class="p">(</span><span class="n">fj</span> <span class="o">-</span> <span class="n">fc</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span><span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">M</span><span class="p">,</span> <span class="o">=</span> <span class="n">SM2</span> <span class="o">/</span> <span class="n">SM0</span> <span class="o">-</span> <span class="p">(</span><span class="n">SM1</span> <span class="o">/</span><span class="n">SM0</span><span class="p">)</span> <span class="o">**</span><span class="mi">2</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -1276,7 +1285,7 @@ Ratio between the energy P0 which is nearby the maximum value of the EMG power s
 <code class="descclassname">electromyography.</code><code class="descname">getWAMP</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getWAMP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getWAMP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wilson or Willison amplitude is a measure of frequency information.
 It is a number of time resulting from difference between the EMG signal of two adjoining segments, that exceed a threshold.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WAMP</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span> <span class="n">f</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">|</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WAMP</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span> <span class="n">f</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">|</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span>
 <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">){</span>
     <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">threshold</span>
     <span class="mi">0</span> <span class="n">otherwise</span>
@@ -1326,7 +1335,7 @@ It is a number of time resulting from difference between the EMG signal of two a
 <dt id="electromyography.getWL">
 <code class="descclassname">electromyography.</code><code class="descname">getWL</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getWL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getWL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the waveform length of the signal, a measure of complexity of the EMG Signal.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WL</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WL</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -1365,7 +1374,7 @@ It is a number of time resulting from difference between the EMG signal of two a
 <dt id="electromyography.getZC">
 <code class="descclassname">electromyography.</code><code class="descname">getZC</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getZC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getZC" title="Permalink to this definition">¶</a></dt>
 <dd><p>How many times does the signal crosses the 0 (+-threshold).:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ZC</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">sgn</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="n">X</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="n">intersecated</span> <span class="o">|</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">|</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ZC</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">sgn</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="n">X</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="n">intersecated</span> <span class="o">|</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">|</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span>
 <span class="n">sign</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
             <span class="mi">1</span><span class="p">,</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">threshold</span>
             <span class="mi">0</span><span class="p">,</span> <span class="n">otherwise</span>
@@ -1477,14 +1486,12 @@ It is a number of time resulting from difference between the EMG signal of two a
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1512,7 +1519,7 @@ It is a number of time resulting from difference between the EMG signal of two a
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Giulio Gabrieli.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
     </div>
   </body>
 </html>

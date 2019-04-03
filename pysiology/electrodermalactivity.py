@@ -11,14 +11,14 @@ import matplotlib.pyplot as plt
 ###############################################################################
 
 def phasicGSRFilter(rawGSRSignal,samplerate,seconds=4):
-    """ Apply a phasic filter to the signal, with +- X seconds from each sample. Default is 10 seconds
+    """ Apply a phasic filter to the signal, with +- X seconds from each sample. Default is 4 seconds
     
         * Input:
             * rawGSRSignal = gsr signal as list
             * samplerate = samplerate of the signal    
             * seconds = number of seconds before and after each timepoint to use in order to compute the filtered value
         * Output:
-            * phasic filtered signal            
+            * phasic signal            
         
         :param rawGSRSignal: raw GSR Signal
         :type rawGSRSignal: list
@@ -28,6 +28,7 @@ def phasicGSRFilter(rawGSRSignal,samplerate,seconds=4):
         :param seconds: int
         :return: filtered signal
         :rtype: list
+        
     """
     
     phasicSignal = []    
@@ -45,6 +46,68 @@ def phasicGSRFilter(rawGSRSignal,samplerate,seconds=4):
         phasicSignal.append(newsample)
     return(phasicSignal)
 
+
+def tonicGSRFilter(rawGSRSignal,samplerate,seconds=4):
+    """ Apply a modified filter to the signal, with +- X seconds from each sample, in order to extract the tonic component. Default is 4 seconds
+    
+        * Input:
+            * rawGSRSignal = gsr signal as list
+            * samplerate = samplerate of the signal    
+            * seconds = number of seconds before and after each timepoint to use in order to compute the filtered value
+        * Output:
+            * tonic signal            
+        
+        :param rawGSRSignal: raw GSR Signal
+        :type rawGSRSignal: list
+        :param samplerate: samplerate of the GSR signal in Hz
+        :type samplerate: int
+        :param seconds: seconds to use to apply the phasic filter
+        :param seconds: int
+        :return: filtered signal
+        :rtype: list
+        
+    """
+    
+    tonicSignal = []    
+    for sample in range(0,len(rawGSRSignal)):
+        smin = sample - seconds * samplerate #min sample index
+        smax = sample + seconds * samplerate #max sample index
+        #is smin is < 0 or smax > signal length, fix it to the closest real sample
+        if(smin < 0): 
+            smin = sample
+        if(smax > len(rawGSRSignal)):
+            smax = sample
+        #substract the mean of the segment
+        newsample = np.mean(rawGSRSignal[smin:smax])
+        #move to th
+        tonicSignal.append(newsample)
+    return(tonicSignal)
+    
+def getPhasicAndTonic(rawGSRSignal, samplerate, seconds = 4):
+    """ This function returns the phasic and tonic components of a singnal.
+    
+        * Input: 
+            * rawGSRSignal = gsr signal as list
+            * samplerate = samplerate of the signal    
+            * seconds = number of seconds before and after each timepoint to use in order to compute the filtered value
+        * Output:
+            * List containing the phasic and tonic components
+            
+        :param rawGSRSignal: raw GSR Signal
+        :type rawGSRSignal: list
+        :param samplerate: samplerate of the GSR signal in Hz
+        :type samplerate: int
+        :param seconds: seconds to use to apply the phasic filter
+        :param seconds: int
+        :return: phasic and tonic signals
+        :rtype: list
+        
+    """
+        
+    phasic = phasicGSRFilter(rawGSRSignal, samplerate, seconds)
+    tonic = tonicGSRFilter(rawGSRSignal, samplerate, seconds)
+    return(phasic, tonic)
+    
 def findPeakOnsetAndOffset(rawGSRSignal,onset=0.01,offset=0):
     """ This functions finds the peaks of a GSR signal
     
@@ -240,7 +303,6 @@ def butter_highpass_filter(data, cutoff, fs, order):
     y = lfilter(b, a, data)
     return(y)
 
-    
 ###############################################################################
 #                                                                             #
 #                                  DEBUG                                      #
@@ -253,6 +315,7 @@ if(__name__=='__main__'):
     import os
     import pprint
     import sampledata
-    fakesignal =sampledata.loadsampleEDA() #load the sample GSR Signal
+    fakesignal = '/home/giulio/Desktop/EDAPhasic/convertedEDA.pkl'
+    fakesignal = pickle.load(open(fakesignal,'rb'))
     GSRResults = analyzeGSR(fakesignal[1500:9500],1000,preprocessing=False,phasic_seconds=8) #analyze it
     pprint.pprint(GSRResults) #print the results for each peak found
