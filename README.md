@@ -5,6 +5,9 @@
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/pysiology.svg)](https://pypi.python.org/pypi/pysiology/)
 [![PyPI status](https://img.shields.io/pypi/status/pysiology.svg)](https://pypi.python.org/pypi/pysiology/)
 [![Documentation Status](https://readthedocs.org/projects/pysiology/badge/?version=latest)](http://pysiology.readthedocs.io/en/latest/?badge=latest)
+[![DOI](https://zenodo.org/badge/109267664.svg)](https://zenodo.org/badge/latestdoi/109267664)
+
+
 
 ## Introduction
 PySiology is a Python package used to analyze Physyological signals.
