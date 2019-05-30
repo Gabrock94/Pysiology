@@ -61,7 +61,7 @@ for event in events:
 ```
 ### Cite
 If you use PySiology, please cite:
-> Gabrieli G., Azhari A., Esposito G. (in press), PySiology: a Python Package for Physiological Feature Extraction, Neural Approaches to Dynamics of Signal Exchanges, Smart Innovation, Systems and Technologies.\\
+> Gabrieli G., Azhari A., Esposito G. (in press), PySiology: a Python Package for Physiological Feature Extraction, Neural Approaches to Dynamics of Signal Exchanges, in  "Smart Innovation, Systems and Technologies".
 
 ### Requirements
 - Numpy
