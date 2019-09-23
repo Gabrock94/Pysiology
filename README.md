@@ -10,7 +10,7 @@
 
 
 ## Introduction
-PySiology is a Python package used to analyze Physyological signals.
+PySiology is a Python package used to analyze Physiological signals.
 With pysiology you can easily analyze:
 - Electromyographic signals
 - Electrocardiographic signals
