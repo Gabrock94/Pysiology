@@ -1,33 +1,24 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Electrodermal Activity analysis module &#8212; Pysiology 0.0.9 - Beta version documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.0.9 - Beta version',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Electromyography analysis module" href="electromiography.html" />
     <link rel="prev" title="Electrocardiography analysis module" href="heartrate.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -57,386 +48,334 @@
 <span id="electrodermal-activity-analysis-module"></span><h1>Electrodermal Activity analysis module<a class="headerlink" href="#module-electrodermalactivity" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="electrodermalactivity.GSRSCRFeaturesExtraction">
-<code class="descclassname">electrodermalactivity.</code><code class="descname">GSRSCRFeaturesExtraction</code><span class="sig-paren">(</span><em>filteredGSRSignal</em>, <em>samplerate</em>, <em>peak</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#GSRSCRFeaturesExtraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.GSRSCRFeaturesExtraction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electrodermalactivity.</code><code class="sig-name descname">GSRSCRFeaturesExtraction</code><span class="sig-paren">(</span><em class="sig-param">filteredGSRSignal</em>, <em class="sig-param">samplerate</em>, <em class="sig-param">peak</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#GSRSCRFeaturesExtraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.GSRSCRFeaturesExtraction" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions extract GSR SCR features: <a class="reference external" href="http://eda-explorer.media.mit.edu/static/SCR_withFeatures.png">http://eda-explorer.media.mit.edu/static/SCR_withFeatures.png</a></p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>rawGSRSignal: filtered GSR Signal as list</li>
-<li>samplerate: samplerate of the signak§</li>
-<li>peak: list of peaks [peakStart, max, peakend]</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>rawGSRSignal: filtered GSR Signal as list</p></li>
+<li><p>samplerate: samplerate of the signak§</p></li>
+<li><p>peak: list of peaks [peakStart, max, peakend]</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output:</dt>
-<dd><ul class="first last">
-<li>dict: {riseTime,Amplitude,EDAatApex,DecayTime (50%),SCRWidth (50%)}</li>
+<li><dl class="simple">
+<dt>Output:</dt><dd><ul>
+<li><p>dict: {riseTime,Amplitude,EDAatApex,DecayTime (50%),SCRWidth (50%)}</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawGSRSignal</strong> (<em>list</em>) – raw GSR Signal</li>
-<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the GSR signal in Hz</li>
-<li><strong>peak</strong> (<em>list</em>) – a list containing the peak onset, max and offset indexes (as returned by the function findPeakOnsetAndOffset)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawGSRSignal</strong> (<em>list</em>) – raw GSR Signal</p></li>
+<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the GSR signal in Hz</p></li>
+<li><p><strong>peak</strong> (<em>list</em>) – a list containing the peak onset, max and offset indexes (as returned by the function findPeakOnsetAndOffset)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a dictionary with the results of the extracted features</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dictionary with the results of the extracted features</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrodermalactivity.analyzeGSR">
-<code class="descclassname">electrodermalactivity.</code><code class="descname">analyzeGSR</code><span class="sig-paren">(</span><em>rawGSRSignal</em>, <em>samplerate</em>, <em>preprocessing=True</em>, <em>lowpass=1</em>, <em>highpass=0.05</em>, <em>phasic_seconds=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#analyzeGSR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.analyzeGSR" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electrodermalactivity.</code><code class="sig-name descname">analyzeGSR</code><span class="sig-paren">(</span><em class="sig-param">rawGSRSignal</em>, <em class="sig-param">samplerate</em>, <em class="sig-param">preprocessing=True</em>, <em class="sig-param">lowpass=1</em>, <em class="sig-param">highpass=0.05</em>, <em class="sig-param">phasic_seconds=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#analyzeGSR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.analyzeGSR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Entry point for gsr analysis.
 Signal is filtered and downsampled, then a phasic filter is applied</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input:</dt>
-<dd><ul class="first last">
-<li>rawGSRSignal = gsr signal as list</li>
-<li>samplerate = samplerate of the signal</li>
-<li>preprocessing = wether to perform or not a preprocessing of the signal</li>
-<li>lowpass = cutoff for lowpass filter</li>
-<li>highpass = cutoff for highpass filter</li>
+<li><dl class="simple">
+<dt>Input:</dt><dd><ul>
+<li><p>rawGSRSignal = gsr signal as list</p></li>
+<li><p>samplerate = samplerate of the signal</p></li>
+<li><p>preprocessing = wether to perform or not a preprocessing of the signal</p></li>
+<li><p>lowpass = cutoff for lowpass filter</p></li>
+<li><p>highpass = cutoff for highpass filter</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>dictionary with all the results</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>dictionary with all the results</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawGSRSignal</strong> (<em>list</em>) – raw GSR Signal</li>
-<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the GSR signal in Hz</li>
-<li><strong>preprocessing</strong> (<em>true</em>) – wether to perform or not an automatic preprocessing of the signal</li>
-<li><strong>lowpass</strong> (<em>float</em>) – cutoff frequency for the lowpass filter</li>
-<li><strong>highpass</strong> (<em>float</em>) – cutoff frequency for the highpass filter</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawGSRSignal</strong> (<em>list</em>) – raw GSR Signal</p></li>
+<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the GSR signal in Hz</p></li>
+<li><p><strong>preprocessing</strong> (<em>true</em>) – wether to perform or not an automatic preprocessing of the signal</p></li>
+<li><p><strong>lowpass</strong> (<em>float</em>) – cutoff frequency for the lowpass filter</p></li>
+<li><p><strong>highpass</strong> (<em>float</em>) – cutoff frequency for the highpass filter</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a dictionary with the results of the automatic GSR analysis</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dictionary with the results of the automatic GSR analysis</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrodermalactivity.butter_highpass">
-<code class="descclassname">electrodermalactivity.</code><code class="descname">butter_highpass</code><span class="sig-paren">(</span><em>cutoff</em>, <em>fs</em>, <em>order=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#butter_highpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.butter_highpass" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electrodermalactivity.</code><code class="sig-name descname">butter_highpass</code><span class="sig-paren">(</span><em class="sig-param">cutoff</em>, <em class="sig-param">fs</em>, <em class="sig-param">order=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#butter_highpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.butter_highpass" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions generates a higpass butter filter</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
-<li><strong>cutoff</strong> – cutoff frequency</li>
-<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
-<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</p></li>
+<li><p><strong>cutoff</strong> – cutoff frequency</p></li>
+<li><p><strong>fs</strong> (<em>float</em>) – samplerate of the signal</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – order of the Butter Filter</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">butter highpass filter</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>butter highpass filter</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrodermalactivity.butter_highpass_filter">
-<code class="descclassname">electrodermalactivity.</code><code class="descname">butter_highpass_filter</code><span class="sig-paren">(</span><em>data</em>, <em>cutoff</em>, <em>fs</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#butter_highpass_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.butter_highpass_filter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electrodermalactivity.</code><code class="sig-name descname">butter_highpass_filter</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">cutoff</em>, <em class="sig-param">fs</em>, <em class="sig-param">order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#butter_highpass_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.butter_highpass_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions apply a butter highpass filter to a signal</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>list</em>) – ECG signal</li>
-<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
-<li><strong>cutoff</strong> – cutoff frequency</li>
-<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
-<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>list</em>) – ECG signal</p></li>
+<li><p><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</p></li>
+<li><p><strong>cutoff</strong> – cutoff frequency</p></li>
+<li><p><strong>fs</strong> (<em>float</em>) – samplerate of the signal</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – order of the Butter Filter</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">highpass filtered ECG signal</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>highpass filtered ECG signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrodermalactivity.butter_lowpass">
-<code class="descclassname">electrodermalactivity.</code><code class="descname">butter_lowpass</code><span class="sig-paren">(</span><em>cutoff</em>, <em>fs</em>, <em>order=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#butter_lowpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.butter_lowpass" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electrodermalactivity.</code><code class="sig-name descname">butter_lowpass</code><span class="sig-paren">(</span><em class="sig-param">cutoff</em>, <em class="sig-param">fs</em>, <em class="sig-param">order=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#butter_lowpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.butter_lowpass" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions generates a lowpass butter filter</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
-<li><strong>cutoff</strong> – cutoff frequency</li>
-<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
-<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</p></li>
+<li><p><strong>cutoff</strong> – cutoff frequency</p></li>
+<li><p><strong>fs</strong> (<em>float</em>) – samplerate of the signal</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – order of the Butter Filter</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">butter lowpass filter</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>butter lowpass filter</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrodermalactivity.butter_lowpass_filter">
-<code class="descclassname">electrodermalactivity.</code><code class="descname">butter_lowpass_filter</code><span class="sig-paren">(</span><em>data</em>, <em>cutoff</em>, <em>fs</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#butter_lowpass_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.butter_lowpass_filter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electrodermalactivity.</code><code class="sig-name descname">butter_lowpass_filter</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">cutoff</em>, <em class="sig-param">fs</em>, <em class="sig-param">order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#butter_lowpass_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.butter_lowpass_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions apply a butter lowpass filter to a signal</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>list</em>) – ECG signal</li>
-<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
-<li><strong>cutoff</strong> – cutoff frequency</li>
-<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
-<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>list</em>) – ECG signal</p></li>
+<li><p><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</p></li>
+<li><p><strong>cutoff</strong> – cutoff frequency</p></li>
+<li><p><strong>fs</strong> (<em>float</em>) – samplerate of the signal</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – order of the Butter Filter</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">lowpass filtered ECG signal</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>lowpass filtered ECG signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrodermalactivity.findPeakOnsetAndOffset">
-<code class="descclassname">electrodermalactivity.</code><code class="descname">findPeakOnsetAndOffset</code><span class="sig-paren">(</span><em>rawGSRSignal</em>, <em>onset=0.01</em>, <em>offset=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#findPeakOnsetAndOffset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.findPeakOnsetAndOffset" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electrodermalactivity.</code><code class="sig-name descname">findPeakOnsetAndOffset</code><span class="sig-paren">(</span><em class="sig-param">rawGSRSignal</em>, <em class="sig-param">onset=0.01</em>, <em class="sig-param">offset=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#findPeakOnsetAndOffset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.findPeakOnsetAndOffset" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions finds the peaks of a GSR signal</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input:</dt>
-<dd><ul class="first last">
-<li>rawGSRSignal = GSR signal as list</li>
-<li>onset = onset for Peak Detection (uS)</li>
-<li>offset = offset for Peak Detection (uS)</li>
+<li><dl class="simple">
+<dt>Input:</dt><dd><ul>
+<li><p>rawGSRSignal = GSR signal as list</p></li>
+<li><p>onset = onset for Peak Detection (uS)</p></li>
+<li><p>offset = offset for Peak Detection (uS)</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>multi dimensional list, [onsetIndex,maxIndex,offsetIndex] x nPeaks</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>multi dimensional list, [onsetIndex,maxIndex,offsetIndex] x nPeaks</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawGSRSignal</strong> (<em>list</em>) – GSR Signal to analyze</li>
-<li><strong>onset</strong> (<em>float</em>) – onset value for peak detection (in uS)</li>
-<li><strong>offset</strong> (<em>float</em>) – onset value for peak detection (in uS)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawGSRSignal</strong> (<em>list</em>) – GSR Signal to analyze</p></li>
+<li><p><strong>onset</strong> (<em>float</em>) – onset value for peak detection (in uS)</p></li>
+<li><p><strong>offset</strong> (<em>float</em>) – onset value for peak detection (in uS)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list of the peaks in the signal</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of the peaks in the signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrodermalactivity.getPhasicAndTonic">
-<code class="descclassname">electrodermalactivity.</code><code class="descname">getPhasicAndTonic</code><span class="sig-paren">(</span><em>rawGSRSignal</em>, <em>samplerate</em>, <em>seconds=4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#getPhasicAndTonic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.getPhasicAndTonic" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electrodermalactivity.</code><code class="sig-name descname">getPhasicAndTonic</code><span class="sig-paren">(</span><em class="sig-param">rawGSRSignal</em>, <em class="sig-param">samplerate</em>, <em class="sig-param">seconds=4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#getPhasicAndTonic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.getPhasicAndTonic" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function returns the phasic and tonic components of a singnal.</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>rawGSRSignal = gsr signal as list</li>
-<li>samplerate = samplerate of the signal</li>
-<li>seconds = number of seconds before and after each timepoint to use in order to compute the filtered value</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>rawGSRSignal = gsr signal as list</p></li>
+<li><p>samplerate = samplerate of the signal</p></li>
+<li><p>seconds = number of seconds before and after each timepoint to use in order to compute the filtered value</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output:</dt>
-<dd><ul class="first last">
-<li>List containing the phasic and tonic components</li>
+<li><dl class="simple">
+<dt>Output:</dt><dd><ul>
+<li><p>List containing the phasic and tonic components</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawGSRSignal</strong> (<em>list</em>) – raw GSR Signal</li>
-<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the GSR signal in Hz</li>
-<li><strong>seconds</strong> – seconds to use to apply the phasic filter</li>
-<li><strong>seconds</strong> – int</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawGSRSignal</strong> (<em>list</em>) – raw GSR Signal</p></li>
+<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the GSR signal in Hz</p></li>
+<li><p><strong>seconds</strong> – seconds to use to apply the phasic filter</p></li>
+<li><p><strong>seconds</strong> – int</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">phasic and tonic signals</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>phasic and tonic signals</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrodermalactivity.phasicGSRFilter">
-<code class="descclassname">electrodermalactivity.</code><code class="descname">phasicGSRFilter</code><span class="sig-paren">(</span><em>rawGSRSignal</em>, <em>samplerate</em>, <em>seconds=4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#phasicGSRFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.phasicGSRFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electrodermalactivity.</code><code class="sig-name descname">phasicGSRFilter</code><span class="sig-paren">(</span><em class="sig-param">rawGSRSignal</em>, <em class="sig-param">samplerate</em>, <em class="sig-param">seconds=4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#phasicGSRFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.phasicGSRFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply a phasic filter to the signal, with +- X seconds from each sample. Default is 4 seconds</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input:</dt>
-<dd><ul class="first last">
-<li>rawGSRSignal = gsr signal as list</li>
-<li>samplerate = samplerate of the signal</li>
-<li>seconds = number of seconds before and after each timepoint to use in order to compute the filtered value</li>
+<li><dl class="simple">
+<dt>Input:</dt><dd><ul>
+<li><p>rawGSRSignal = gsr signal as list</p></li>
+<li><p>samplerate = samplerate of the signal</p></li>
+<li><p>seconds = number of seconds before and after each timepoint to use in order to compute the filtered value</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output:</dt>
-<dd><ul class="first last">
-<li>phasic signal</li>
+<li><dl class="simple">
+<dt>Output:</dt><dd><ul>
+<li><p>phasic signal</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawGSRSignal</strong> (<em>list</em>) – raw GSR Signal</li>
-<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the GSR signal in Hz</li>
-<li><strong>seconds</strong> – seconds to use to apply the phasic filter</li>
-<li><strong>seconds</strong> – int</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawGSRSignal</strong> (<em>list</em>) – raw GSR Signal</p></li>
+<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the GSR signal in Hz</p></li>
+<li><p><strong>seconds</strong> – seconds to use to apply the phasic filter</p></li>
+<li><p><strong>seconds</strong> – int</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">filtered signal</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>filtered signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrodermalactivity.tonicGSRFilter">
-<code class="descclassname">electrodermalactivity.</code><code class="descname">tonicGSRFilter</code><span class="sig-paren">(</span><em>rawGSRSignal</em>, <em>samplerate</em>, <em>seconds=4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#tonicGSRFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.tonicGSRFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electrodermalactivity.</code><code class="sig-name descname">tonicGSRFilter</code><span class="sig-paren">(</span><em class="sig-param">rawGSRSignal</em>, <em class="sig-param">samplerate</em>, <em class="sig-param">seconds=4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrodermalactivity.html#tonicGSRFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrodermalactivity.tonicGSRFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply a modified filter to the signal, with +- X seconds from each sample, in order to extract the tonic component. Default is 4 seconds</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input:</dt>
-<dd><ul class="first last">
-<li>rawGSRSignal = gsr signal as list</li>
-<li>samplerate = samplerate of the signal</li>
-<li>seconds = number of seconds before and after each timepoint to use in order to compute the filtered value</li>
+<li><dl class="simple">
+<dt>Input:</dt><dd><ul>
+<li><p>rawGSRSignal = gsr signal as list</p></li>
+<li><p>samplerate = samplerate of the signal</p></li>
+<li><p>seconds = number of seconds before and after each timepoint to use in order to compute the filtered value</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output:</dt>
-<dd><ul class="first last">
-<li>tonic signal</li>
+<li><dl class="simple">
+<dt>Output:</dt><dd><ul>
+<li><p>tonic signal</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawGSRSignal</strong> (<em>list</em>) – raw GSR Signal</li>
-<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the GSR signal in Hz</li>
-<li><strong>seconds</strong> – seconds to use to apply the phasic filter</li>
-<li><strong>seconds</strong> – int</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawGSRSignal</strong> (<em>list</em>) – raw GSR Signal</p></li>
+<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the GSR signal in Hz</p></li>
+<li><p><strong>seconds</strong> – seconds to use to apply the phasic filter</p></li>
+<li><p><strong>seconds</strong> – int</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">filtered signal</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>filtered signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -461,13 +400,13 @@ Signal is filtered and downsampled, then a phasic filter is applied</p>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -495,7 +434,7 @@ Signal is filtered and downsampled, then a phasic filter is applied</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Giulio Gabrieli.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>

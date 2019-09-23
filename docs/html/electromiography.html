@@ -1,33 +1,24 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Electromyography analysis module &#8212; Pysiology 0.0.9 - Beta version documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.0.9 - Beta version',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tutorials" href="tutorial.html" />
     <link rel="prev" title="Electrodermal Activity analysis module" href="electrodermalactivity.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -57,26 +48,24 @@
 <span id="electromyography-analysis-module"></span><h1>Electromyography analysis module<a class="headerlink" href="#module-electromyography" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="electromyography.analyzeEMG">
-<code class="descclassname">electromyography.</code><code class="descname">analyzeEMG</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>samplerate</em>, <em>preprocessing=True</em>, <em>lowpass=50</em>, <em>highpass=20</em>, <em>threshold=0.01</em>, <em>nseg=3</em>, <em>phasic_seconds=4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#analyzeEMG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.analyzeEMG" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">analyzeEMG</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em>, <em class="sig-param">samplerate</em>, <em class="sig-param">preprocessing=True</em>, <em class="sig-param">lowpass=50</em>, <em class="sig-param">highpass=20</em>, <em class="sig-param">threshold=0.01</em>, <em class="sig-param">nseg=3</em>, <em class="sig-param">phasic_seconds=4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#analyzeEMG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.analyzeEMG" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions acts as entrypoint for the EMG Analysis.</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input:</dt>
-<dd><ul class="first last">
-<li>rawEMGSignal = raw signal as list</li>
-<li>samplerate = samplerate of the signal</li>
-<li>lowpass = lowpass cutoff in Hz</li>
-<li>highpass = highpass cutoff in Hz</li>
-<li>threshold for the evaluation of ZC,MYOP,WAMP,SSC</li>
-<li>nseg = number of segments for MAVSLPk, MHW,MTW</li>
+<li><dl class="simple">
+<dt>Input:</dt><dd><ul>
+<li><p>rawEMGSignal = raw signal as list</p></li>
+<li><p>samplerate = samplerate of the signal</p></li>
+<li><p>lowpass = lowpass cutoff in Hz</p></li>
+<li><p>highpass = highpass cutoff in Hz</p></li>
+<li><p>threshold for the evaluation of ZC,MYOP,WAMP,SSC</p></li>
+<li><p>nseg = number of segments for MAVSLPk, MHW,MTW</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output:</dt>
-<dd><ul class="first last">
-<li>results dictionary</li>
+<li><dl class="simple">
+<dt>Output:</dt><dd><ul>
+<li><p>results dictionary</p></li>
 </ul>
 </dd>
 </dl>
@@ -86,446 +75,398 @@
 
 <dl class="function">
 <dt id="electromyography.butter_highpass">
-<code class="descclassname">electromyography.</code><code class="descname">butter_highpass</code><span class="sig-paren">(</span><em>cutoff</em>, <em>fs</em>, <em>order=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#butter_highpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.butter_highpass" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">butter_highpass</code><span class="sig-paren">(</span><em class="sig-param">cutoff</em>, <em class="sig-param">fs</em>, <em class="sig-param">order=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#butter_highpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.butter_highpass" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions generates a higpass butter filter</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
-<li><strong>cutoff</strong> – cutoff frequency</li>
-<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
-<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</p></li>
+<li><p><strong>cutoff</strong> – cutoff frequency</p></li>
+<li><p><strong>fs</strong> (<em>float</em>) – samplerate of the signal</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – order of the Butter Filter</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">butter highpass filter</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>butter highpass filter</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.butter_highpass_filter">
-<code class="descclassname">electromyography.</code><code class="descname">butter_highpass_filter</code><span class="sig-paren">(</span><em>data</em>, <em>cutoff</em>, <em>fs</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#butter_highpass_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.butter_highpass_filter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">butter_highpass_filter</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">cutoff</em>, <em class="sig-param">fs</em>, <em class="sig-param">order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#butter_highpass_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.butter_highpass_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions apply a butter highpass filter to a signal</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>list</em>) – ECG signal</li>
-<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
-<li><strong>cutoff</strong> – cutoff frequency</li>
-<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
-<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>list</em>) – ECG signal</p></li>
+<li><p><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</p></li>
+<li><p><strong>cutoff</strong> – cutoff frequency</p></li>
+<li><p><strong>fs</strong> (<em>float</em>) – samplerate of the signal</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – order of the Butter Filter</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">highpass filtered ECG signal</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>highpass filtered ECG signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.butter_lowpass">
-<code class="descclassname">electromyography.</code><code class="descname">butter_lowpass</code><span class="sig-paren">(</span><em>cutoff</em>, <em>fs</em>, <em>order=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#butter_lowpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.butter_lowpass" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">butter_lowpass</code><span class="sig-paren">(</span><em class="sig-param">cutoff</em>, <em class="sig-param">fs</em>, <em class="sig-param">order=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#butter_lowpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.butter_lowpass" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions generates a lowpass butter filter</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
-<li><strong>cutoff</strong> – cutoff frequency</li>
-<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
-<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</p></li>
+<li><p><strong>cutoff</strong> – cutoff frequency</p></li>
+<li><p><strong>fs</strong> (<em>float</em>) – samplerate of the signal</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – order of the Butter Filter</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">butter lowpass filter</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>butter lowpass filter</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.butter_lowpass_filter">
-<code class="descclassname">electromyography.</code><code class="descname">butter_lowpass_filter</code><span class="sig-paren">(</span><em>data</em>, <em>cutoff</em>, <em>fs</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#butter_lowpass_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.butter_lowpass_filter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">butter_lowpass_filter</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">cutoff</em>, <em class="sig-param">fs</em>, <em class="sig-param">order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#butter_lowpass_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.butter_lowpass_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions apply a butter lowpass filter to a signal</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>list</em>) – ECG signal</li>
-<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
-<li><strong>cutoff</strong> – cutoff frequency</li>
-<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
-<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>list</em>) – ECG signal</p></li>
+<li><p><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</p></li>
+<li><p><strong>cutoff</strong> – cutoff frequency</p></li>
+<li><p><strong>fs</strong> (<em>float</em>) – samplerate of the signal</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – order of the Butter Filter</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">lowpass filtered ECG signal</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>lowpass filtered ECG signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getAAC">
-<code class="descclassname">electromyography.</code><code class="descname">getAAC</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getAAC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getAAC" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getAAC</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getAAC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getAAC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the Average amplitude change.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">AAC</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AAC</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Signal as list</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Signal as list</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>Average amplitude change of the signal</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>Average amplitude change of the signal</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Average Amplitude Change of the signal</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Average Amplitude Change of the signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getAFB">
-<code class="descclassname">electromyography.</code><code class="descname">getAFB</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>samplerate</em>, <em>windowSize=32</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getAFB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getAFB" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getAFB</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em>, <em class="sig-param">samplerate</em>, <em class="sig-param">windowSize=32</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getAFB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getAFB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the amplitude at first Burst.</p>
 <p>Reference: Du, S., &amp; Vuskovic, M. (2004, November). Temporal vs. spectral approach to feature extraction from prehensile EMG signals. In Information Reuse and Integration, 2004. IRI 2004. Proceedings of the 2004 IEEE International Conference on (pp. 344-350). IEEE.</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>rawEMGSignal as list</li>
-<li>samplerate of the signal in Hz (sample / s)</li>
-<li>windowSize = window size in ms</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>rawEMGSignal as list</p></li>
+<li><p>samplerate of the signal in Hz (sample / s)</p></li>
+<li><p>windowSize = window size in ms</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>amplitude at first burst</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>amplitude at first burst</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</li>
-<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal int Hz</li>
-<li><strong>windowSize</strong> – window size in ms to use for the analysis</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p></li>
+<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal int Hz</p></li>
+<li><p><strong>windowSize</strong> – window size in ms to use for the analysis</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Amplitute ad first Burst</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Amplitute ad first Burst</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getDASDV">
-<code class="descclassname">electromyography.</code><code class="descname">getDASDV</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getDASDV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getDASDV" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getDASDV</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getDASDV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getDASDV" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the standard deviation value of the the wavelength.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DASDV</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span>    
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DASDV</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span>    
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Signal</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Signal</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output:</dt>
-<dd><ul class="first last">
-<li>DASDV</li>
+<li><dl class="simple">
+<dt>Output:</dt><dd><ul>
+<li><p>DASDV</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">standard deviation value of the the wavelength</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>standard deviation value of the the wavelength</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getFR">
-<code class="descclassname">electromyography.</code><code class="descname">getFR</code><span class="sig-paren">(</span><em>rawEMGPowerSpectrum</em>, <em>frequencies</em>, <em>llc=30</em>, <em>ulc=250</em>, <em>lhc=250</em>, <em>uhc=500</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getFR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getFR" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getFR</code><span class="sig-paren">(</span><em class="sig-param">rawEMGPowerSpectrum</em>, <em class="sig-param">frequencies</em>, <em class="sig-param">llc=30</em>, <em class="sig-param">ulc=250</em>, <em class="sig-param">lhc=250</em>, <em class="sig-param">uhc=500</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getFR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getFR" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions evaluate the frequency ratio of the power spectrum.</p>
 <p>Cut-off value can be decidec experimentally or from the MNF Feature See: Oskoei, M.A., Hu, H. (2006). GA-based feature subset selection for myoelectric classification.</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input:</dt>
-<dd><ul class="first last">
-<li>raw EMG power spectrum as list,</li>
-<li>frequencies as list,</li>
-<li>llc = lower low cutoff</li>
-<li>ulc = upper low cutoff</li>
-<li>lhc = lower high cutoff</li>
-<li>uhc = upper high cutoff</li>
+<li><dl class="simple">
+<dt>Input:</dt><dd><ul>
+<li><p>raw EMG power spectrum as list,</p></li>
+<li><p>frequencies as list,</p></li>
+<li><p>llc = lower low cutoff</p></li>
+<li><p>ulc = upper low cutoff</p></li>
+<li><p>lhc = lower high cutoff</p></li>
+<li><p>uhc = upper high cutoff</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output:</dt>
-<dd><ul class="first last">
-<li>Frequency Ratio</li>
+<li><dl class="simple">
+<dt>Output:</dt><dd><ul>
+<li><p>Frequency Ratio</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</li>
-<li><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</li>
-<li><strong>llc</strong> (<em>float</em>) – lower cutoff frequency for the low frequency components</li>
-<li><strong>ulc</strong> (<em>float</em>) – upper cutoff frequency for the low frequency components</li>
-<li><strong>lhc</strong> (<em>float</em>) – lower cutoff frequency for the high frequency components</li>
-<li><strong>uhc</strong> (<em>float</em>) – upper cutoff frequency for the high frequency components</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</p></li>
+<li><p><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</p></li>
+<li><p><strong>llc</strong> (<em>float</em>) – lower cutoff frequency for the low frequency components</p></li>
+<li><p><strong>ulc</strong> (<em>float</em>) – upper cutoff frequency for the low frequency components</p></li>
+<li><p><strong>lhc</strong> (<em>float</em>) – lower cutoff frequency for the high frequency components</p></li>
+<li><p><strong>uhc</strong> (<em>float</em>) – upper cutoff frequency for the high frequency components</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">frequencies ratio of the EMG power spectrum</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>frequencies ratio of the EMG power spectrum</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getHIST">
-<code class="descclassname">electromyography.</code><code class="descname">getHIST</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>nseg=9</em>, <em>threshold=50</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getHIST"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getHIST" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getHIST</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em>, <em class="sig-param">nseg=9</em>, <em class="sig-param">threshold=50</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getHIST"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getHIST" title="Permalink to this definition">¶</a></dt>
 <dd><p>Histograms is an extension version of ZC and WAMP features.</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input:</dt>
-<dd><ul class="first last">
-<li>raw EMG Signal as list</li>
-<li>nseg = number of segment to analyze</li>
-<li>threshold = threshold to use to avoid DC fluctuations</li>
+<li><dl class="simple">
+<dt>Input:</dt><dd><ul>
+<li><p>raw EMG Signal as list</p></li>
+<li><p>nseg = number of segment to analyze</p></li>
+<li><p>threshold = threshold to use to avoid DC fluctuations</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output:</dt>
-<dd><ul class="first last">
-<li>get zc/wamp for each segment</li>
+<li><dl class="simple">
+<dt>Output:</dt><dd><ul>
+<li><p>get zc/wamp for each segment</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</li>
-<li><strong>nseg</strong> (<em>int</em>) – number of segments to analyze</li>
-<li><strong>threshold</strong> (<em>int</em>) – value to sum / substract to the zero when evaluating the crossing.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p></li>
+<li><p><strong>nseg</strong> (<em>int</em>) – number of segments to analyze</p></li>
+<li><p><strong>threshold</strong> (<em>int</em>) – value to sum / substract to the zero when evaluating the crossing.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Willison amplitude</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Willison amplitude</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getIEMG">
-<code class="descclassname">electromyography.</code><code class="descname">getIEMG</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getIEMG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getIEMG" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getIEMG</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getIEMG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getIEMG" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function compute the sum of absolute values of EMG signal Amplitude.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">IEMG</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IEMG</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Signal as list</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Signal as list</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>integrated EMG</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>integrated EMG</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the IEMG of the EMG Signal</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the IEMG of the EMG Signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getLOG">
-<code class="descclassname">electromyography.</code><code class="descname">getLOG</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getLOG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getLOG" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getLOG</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getLOG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getLOG" title="Permalink to this definition">¶</a></dt>
 <dd><p>LOG is a feature that provides an estimate of the muscle contraction force.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LOG</span> <span class="o">=</span> <span class="n">e</span><span class="o">^</span><span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LOG</span> <span class="o">=</span> <span class="n">e</span><span class="o">^</span><span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Signal</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Signal</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>Output = * LOG</li>
+<li><p>Output = * LOG</p></li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">LOG feature of the EMG Signal</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>LOG feature of the EMG Signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getMAV">
-<code class="descclassname">electromyography.</code><code class="descname">getMAV</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMAV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMAV" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getMAV</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMAV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMAV" title="Permalink to this definition">¶</a></dt>
 <dd><p>Thif functions compute the  average of EMG signal Amplitude.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MAV</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MAV</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Signal as list</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Signal as list</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>Mean Absolute Value</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>Mean Absolute Value</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the MAV of the EMG Signal</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the MAV of the EMG Signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getMAV1">
-<code class="descclassname">electromyography.</code><code class="descname">getMAV1</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMAV1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMAV1" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getMAV1</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMAV1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMAV1" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functoin evaluate Average of EMG signal Amplitude, using the modified version n°.1.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">IEMG</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">wi</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IEMG</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">wi</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 <span class="n">wi</span> <span class="o">=</span> <span class="p">{</span>
       <span class="mi">1</span> <span class="k">if</span> <span class="mf">0.25</span><span class="n">N</span> <span class="o">&lt;=</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mf">0.75</span><span class="n">N</span><span class="p">,</span>
       <span class="mf">0.5</span> <span class="n">otherwise</span>
@@ -533,42 +474,39 @@
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Signal as list</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Signal as list</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>Mean Absolute Value</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>Mean Absolute Value</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the MAV (modified version n. 1)  of the EMG Signal</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the MAV (modified version n. 1)  of the EMG Signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getMAV2">
-<code class="descclassname">electromyography.</code><code class="descname">getMAV2</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMAV2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMAV2" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getMAV2</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMAV2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMAV2" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functoin evaluate Average of EMG signal Amplitude, using the modified version n°.2.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">IEMG</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">wi</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IEMG</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">wi</span><span class="o">|</span><span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 <span class="n">wi</span> <span class="o">=</span> <span class="p">{</span>
       <span class="mi">1</span> <span class="k">if</span> <span class="mf">0.25</span><span class="n">N</span> <span class="o">&lt;=</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mf">0.75</span><span class="n">N</span><span class="p">,</span>
       <span class="mi">4</span><span class="n">i</span><span class="o">/</span><span class="n">N</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mf">0.25</span><span class="n">N</span>
@@ -577,229 +515,202 @@
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Signal as list</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Signal as list</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>Mean Absolute Value</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>Mean Absolute Value</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the MAV (modified version n. 2)  of the EMG Signal</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the MAV (modified version n. 2)  of the EMG Signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getMAVSLPk">
-<code class="descclassname">electromyography.</code><code class="descname">getMAVSLPk</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>nseg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMAVSLPk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMAVSLPk" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getMAVSLPk</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em>, <em class="sig-param">nseg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMAVSLPk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMAVSLPk" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mean Absolute value slope is a modified versions of MAV feature.</p>
 <p>The MAVs of adiacent segments are determinated.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MAVSLPk</span> <span class="o">=</span> <span class="n">MAV</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">MAV</span><span class="p">[</span><span class="n">k</span><span class="p">];</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="o">..</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MAVSLPk</span> <span class="o">=</span> <span class="n">MAV</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">MAV</span><span class="p">[</span><span class="n">k</span><span class="p">];</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="o">..</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG signal as list</li>
-<li>nseg = number of segments to evaluate</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG signal as list</p></li>
+<li><p>nseg = number of segments to evaluate</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>list of MAVs</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>list of MAVs</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</li>
-<li><strong>nseg</strong> (<em>int</em>) – number of segments to evaluate</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p></li>
+<li><p><strong>nseg</strong> (<em>int</em>) – number of segments to evaluate</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Mean absolute slope value</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Mean absolute slope value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getMDF">
-<code class="descclassname">electromyography.</code><code class="descname">getMDF</code><span class="sig-paren">(</span><em>rawEMGPowerSpectrum</em>, <em>frequencies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMDF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMDF" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getMDF</code><span class="sig-paren">(</span><em class="sig-param">rawEMGPowerSpectrum</em>, <em class="sig-param">frequencies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMDF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMDF" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain the Median Frequency of the PSD.</p>
 <p>MDF is a frequency at which the spectrum is divided into two regions with equal amplitude, in other words, MDF is half of TTP feature</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Power Spectrum</li>
-<li>frequencies</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Power Spectrum</p></li>
+<li><p>frequencies</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>Median Frequency  (Hz)</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>Median Frequency  (Hz)</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</li>
-<li><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</p></li>
+<li><p><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">median frequency of the EMG power spectrum</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>median frequency of the EMG power spectrum</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getMNF">
-<code class="descclassname">electromyography.</code><code class="descname">getMNF</code><span class="sig-paren">(</span><em>rawEMGPowerSpectrum</em>, <em>frequencies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMNF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMNF" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getMNF</code><span class="sig-paren">(</span><em class="sig-param">rawEMGPowerSpectrum</em>, <em class="sig-param">frequencies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMNF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMNF" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain the mean frequency of the EMG signal, evaluated as the sum of 
 product of the EMG power spectrum and the frequency divided by total sum of the spectrum intensity:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MNF</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fPj</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Pj</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-&gt;</span> <span class="n">M</span> 
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MNF</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fPj</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Pj</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-&gt;</span> <span class="n">M</span> 
 <span class="n">M</span> <span class="o">=</span> <span class="n">length</span> <span class="n">of</span> <span class="n">the</span> <span class="n">frequency</span> <span class="nb">bin</span>
 <span class="n">Pj</span> <span class="o">=</span> <span class="n">power</span> <span class="n">at</span> <span class="n">freqeuncy</span> <span class="nb">bin</span> <span class="n">j</span>
 <span class="n">fJ</span> <span class="o">=</span> <span class="n">frequency</span> <span class="n">of</span> <span class="n">the</span> <span class="n">spectrum</span> <span class="n">at</span> <span class="n">frequency</span> <span class="nb">bin</span> <span class="n">j</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>rawEMGPowerSpectrum: PSD as list</li>
-<li>frequencies: frequencies of the PSD spectrum as list</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>rawEMGPowerSpectrum: PSD as list</p></li>
+<li><p>frequencies: frequencies of the PSD spectrum as list</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output:</dt>
-<dd><ul class="first last">
-<li>Mean Frequency of the PSD</li>
+<li><dl class="simple">
+<dt>Output:</dt><dd><ul>
+<li><p>Mean Frequency of the PSD</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</li>
-<li><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</p></li>
+<li><p><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">mean frequency of the EMG power spectrum</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>mean frequency of the EMG power spectrum</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getMNP">
-<code class="descclassname">electromyography.</code><code class="descname">getMNP</code><span class="sig-paren">(</span><em>rawEMGPowerSpectrum</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMNP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMNP" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getMNP</code><span class="sig-paren">(</span><em class="sig-param">rawEMGPowerSpectrum</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMNP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMNP" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions evaluate the mean power of the spectrum.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Mean</span> <span class="n">Power</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Pj</span><span class="p">)</span> <span class="o">/</span> <span class="n">M</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">M</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span> <span class="n">of</span> <span class="n">the</span> <span class="n">spectrum</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Mean</span> <span class="n">Power</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Pj</span><span class="p">)</span> <span class="o">/</span> <span class="n">M</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">M</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span> <span class="n">of</span> <span class="n">the</span> <span class="n">spectrum</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>EMG power spectrum</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>EMG power spectrum</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>mean power</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>mean power</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</li>
-<li><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</p></li>
+<li><p><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">mean power of the EMG power spectrum</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>mean power of the EMG power spectrum</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getMYOP">
-<code class="descclassname">electromyography.</code><code class="descname">getMYOP</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMYOP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMYOP" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getMYOP</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em>, <em class="sig-param">threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getMYOP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getMYOP" title="Permalink to this definition">¶</a></dt>
 <dd><p>The myopulse percentage rate (MYOP) is an average value of myopulse output.
 It is defined as one absolute value of the EMG signal exceed a pre-defined thershold value.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MYOP</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MYOP</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">f</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
         <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">threshold</span>
         <span class="mi">0</span> <span class="n">otherwise</span>
@@ -807,221 +718,195 @@ It is defined as one absolute value of the EMG signal exceed a pre-defined thers
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input:</dt>
-<dd><ul class="first last">
-<li>rawEMGSignal = EMG signal as list</li>
-<li>threshold = threshold to avoid fluctuations caused by noise and low voltage fluctuations</li>
+<li><dl class="simple">
+<dt>Input:</dt><dd><ul>
+<li><p>rawEMGSignal = EMG signal as list</p></li>
+<li><p>threshold = threshold to avoid fluctuations caused by noise and low voltage fluctuations</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output:</dt>
-<dd><ul class="first last">
-<li>Myopulse percentage rate</li>
+<li><dl class="simple">
+<dt>Output:</dt><dd><ul>
+<li><p>Myopulse percentage rate</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</li>
-<li><strong>threshold</strong> (<em>int</em>) – value to sum / substract to the zero when evaluating the crossing.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p></li>
+<li><p><strong>threshold</strong> (<em>int</em>) – value to sum / substract to the zero when evaluating the crossing.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Myopulse percentage rate of the signal</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Myopulse percentage rate of the signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getPSR">
-<code class="descclassname">electromyography.</code><code class="descname">getPSR</code><span class="sig-paren">(</span><em>rawEMGPowerSpectrum</em>, <em>frequencies</em>, <em>n=20</em>, <em>fmin=10</em>, <em>fmax=500</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getPSR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getPSR" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getPSR</code><span class="sig-paren">(</span><em class="sig-param">rawEMGPowerSpectrum</em>, <em class="sig-param">frequencies</em>, <em class="sig-param">n=20</em>, <em class="sig-param">fmin=10</em>, <em class="sig-param">fmax=500</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getPSR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getPSR" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function computes the Power Spectrum Ratio of the signal, defined as:
 Ratio between the energy P0 which is nearby the maximum value of the EMG power spectrum and the energy P which is the whole energy of the EMG power spectrum</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input:</dt>
-<dd><ul class="first last">
-<li>EMG power spectrum</li>
-<li>frequencies as list</li>
-<li>n = range around f0 to evaluate P0</li>
-<li>fmin = min frequency</li>
-<li>fmax = max frequency</li>
+<li><dl class="simple">
+<dt>Input:</dt><dd><ul>
+<li><p>EMG power spectrum</p></li>
+<li><p>frequencies as list</p></li>
+<li><p>n = range around f0 to evaluate P0</p></li>
+<li><p>fmin = min frequency</p></li>
+<li><p>fmax = max frequency</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</li>
-<li><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</li>
-<li><strong>n</strong> (<em>int</em>) – range of frequencies around f0 to evaluate</li>
-<li><strong>fmin</strong> (<em>int</em>) – min frequency to evaluate</li>
-<li><strong>fmax</strong> (<em>int</em>) – lmaximum frequency to evaluate</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</p></li>
+<li><p><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – range of frequencies around f0 to evaluate</p></li>
+<li><p><strong>fmin</strong> (<em>int</em>) – min frequency to evaluate</p></li>
+<li><p><strong>fmax</strong> (<em>int</em>) – lmaximum frequency to evaluate</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Power spectrum ratio of the EMG power spectrum</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Power spectrum ratio of the EMG power spectrum</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getPeakFrequency">
-<code class="descclassname">electromyography.</code><code class="descname">getPeakFrequency</code><span class="sig-paren">(</span><em>rawEMGPowerSpectrum</em>, <em>frequencies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getPeakFrequency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getPeakFrequency" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getPeakFrequency</code><span class="sig-paren">(</span><em class="sig-param">rawEMGPowerSpectrum</em>, <em class="sig-param">frequencies</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getPeakFrequency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getPeakFrequency" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain the frequency at which the maximum peak occur</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input:    </dt>
-<dd><ul class="first last">
-<li>raw EMG Power Spectrum as list</li>
-<li>frequencies as list</li>
+<li><dl class="simple">
+<dt>Input:    </dt><dd><ul>
+<li><p>raw EMG Power Spectrum as list</p></li>
+<li><p>frequencies as list</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output:</dt>
-<dd><ul class="first last">
-<li>frequency in Hz</li>
+<li><dl class="simple">
+<dt>Output:</dt><dd><ul>
+<li><p>frequency in Hz</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</li>
-<li><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</p></li>
+<li><p><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">peakfrequency of the EMG Power spectrum</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>peakfrequency of the EMG Power spectrum</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getRMS">
-<code class="descclassname">electromyography.</code><code class="descname">getRMS</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getRMS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getRMS" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getRMS</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getRMS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getRMS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the root mean square of a signal.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">RMS</span> <span class="o">=</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RMS</span> <span class="o">=</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Signal as list</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Signal as list</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>Root mean square of the signal</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>Root mean square of the signal</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Root mean square of the EMG signal</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Root mean square of the EMG signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getSM">
-<code class="descclassname">electromyography.</code><code class="descname">getSM</code><span class="sig-paren">(</span><em>rawEMGPowerSpectrum</em>, <em>frequencies</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getSM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getSM" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getSM</code><span class="sig-paren">(</span><em class="sig-param">rawEMGPowerSpectrum</em>, <em class="sig-param">frequencies</em>, <em class="sig-param">order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getSM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getSM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the spectral moment of a spectrum:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SM</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fj</span><span class="o">*</span><span class="p">(</span><span class="n">Pj</span><span class="o">**</span><span class="n">order</span><span class="p">)),</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">M</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SM</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fj</span><span class="o">*</span><span class="p">(</span><span class="n">Pj</span><span class="o">**</span><span class="n">order</span><span class="p">)),</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">M</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Power Spectrum</li>
-<li>frequencies as list</li>
-<li>order (int)</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Power Spectrum</p></li>
+<li><p>frequencies as list</p></li>
+<li><p>order (int)</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>SM of order = order</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>SM of order = order</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</li>
-<li><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</li>
-<li><strong>order</strong> (<em>int</em>) – order to the moment</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</p></li>
+<li><p><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – order to the moment</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Spectral moment of order X of the EMG power spectrum</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Spectral moment of order X of the EMG power spectrum</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getSSC">
-<code class="descclassname">electromyography.</code><code class="descname">getSSC</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getSSC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getSSC" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getSSC</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em>, <em class="sig-param">threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getSSC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getSSC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of times the slope of the EMG signal changes sign.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SSC</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">f</span><span class="p">(</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="n">X</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])))</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">--&gt;</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SSC</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">f</span><span class="p">(</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="n">X</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])))</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">--&gt;</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span>
 
 <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">){</span>
     <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">threshold</span>
@@ -1030,262 +915,232 @@ Ratio between the energy P0 which is nearby the maximum value of the EMG power s
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Signal</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Signal</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>number of Slope Changes</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>number of Slope Changes</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</li>
-<li><strong>threshold</strong> (<em>int</em>) – value to sum / substract to the zero when evaluating the crossing.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p></li>
+<li><p><strong>threshold</strong> (<em>int</em>) – value to sum / substract to the zero when evaluating the crossing.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Number of slope’s sign changes</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of slope’s sign changes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getSSI">
-<code class="descclassname">electromyography.</code><code class="descname">getSSI</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getSSI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getSSI" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getSSI</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getSSI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getSSI" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function compute the summation of square values of the EMG signal.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SSI</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SSI</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Signal as list</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Signal as list</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>Simple Square Integral</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>Simple Square Integral</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SSI of the signal</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>SSI of the signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getTM">
-<code class="descclassname">electromyography.</code><code class="descname">getTM</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getTM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getTM" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getTM</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em>, <em class="sig-param">order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getTM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getTM" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function compute the Temporal Moment of order X of the EMG signal.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">TM</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="n">order</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TM</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="n">order</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Signal as list</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Signal as list</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>TM of order = order</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>TM of order = order</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</li>
-<li><strong>order</strong> (<em>int</em>) – order the the TM function</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – order the the TM function</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Temporal Moment of order X of the EMG signal</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Temporal Moment of order X of the EMG signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getTTP">
-<code class="descclassname">electromyography.</code><code class="descname">getTTP</code><span class="sig-paren">(</span><em>rawEMGPowerSpectrum</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getTTP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getTTP" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getTTP</code><span class="sig-paren">(</span><em class="sig-param">rawEMGPowerSpectrum</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getTTP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getTTP" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions evaluate the aggregate of the EMG power spectrum (aka Zero Spectral Moment)</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Power Spectrum</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Power Spectrum</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>Total Power</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>Total Power</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</li>
-<li><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGPowerSpectrum</strong> (<em>list</em>) – power spectrum of the EMG signal</p></li>
+<li><p><strong>frequencies</strong> (<em>list</em>) – frequencies of the PSD</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">total power of the EMG power spectrum</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>total power of the EMG power spectrum</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getVAR">
-<code class="descclassname">electromyography.</code><code class="descname">getVAR</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getVAR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getVAR" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getVAR</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getVAR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getVAR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Summation of average square values of the deviation of a variable.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Signal as list</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Signal as list</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>Summation of the average square values</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>Summation of the average square values</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the VAR of the EMG Signal</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the VAR of the EMG Signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getVCF">
-<code class="descclassname">electromyography.</code><code class="descname">getVCF</code><span class="sig-paren">(</span><em>SM0</em>, <em>SM1</em>, <em>SM2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getVCF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getVCF" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getVCF</code><span class="sig-paren">(</span><em class="sig-param">SM0</em>, <em class="sig-param">SM1</em>, <em class="sig-param">SM2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getVCF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getVCF" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function evaluate the variance of the central freuency of the PSD.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">VCF</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">SM0</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">Pj</span><span class="o">*</span><span class="p">(</span><span class="n">fj</span> <span class="o">-</span> <span class="n">fc</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span><span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">M</span><span class="p">,</span> <span class="o">=</span> <span class="n">SM2</span> <span class="o">/</span> <span class="n">SM0</span> <span class="o">-</span> <span class="p">(</span><span class="n">SM1</span> <span class="o">/</span><span class="n">SM0</span><span class="p">)</span> <span class="o">**</span><span class="mi">2</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VCF</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">SM0</span><span class="p">)</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">Pj</span><span class="o">*</span><span class="p">(</span><span class="n">fj</span> <span class="o">-</span> <span class="n">fc</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span><span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">M</span><span class="p">,</span> <span class="o">=</span> <span class="n">SM2</span> <span class="o">/</span> <span class="n">SM0</span> <span class="o">-</span> <span class="p">(</span><span class="n">SM1</span> <span class="o">/</span><span class="n">SM0</span><span class="p">)</span> <span class="o">**</span><span class="mi">2</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input:</dt>
-<dd><ul class="first last">
-<li>SM0: spectral moment of order 0</li>
-<li>SM1: spectral moment of order 1</li>
-<li>SM2: spectral moment of order 0</li>
+<li><dl class="simple">
+<dt>Input:</dt><dd><ul>
+<li><p>SM0: spectral moment of order 0</p></li>
+<li><p>SM1: spectral moment of order 1</p></li>
+<li><p>SM2: spectral moment of order 0</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>Variance of Central frequency of the Power spectrum</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>Variance of Central frequency of the Power spectrum</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>SM0</strong> (<em>float</em>) – Spectral moment of order 0</li>
-<li><strong>SM1</strong> (<em>float</em>) – Spectral moment of order 1</li>
-<li><strong>SM2</strong> (<em>float</em>) – Spectral moment of order 2</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>SM0</strong> (<em>float</em>) – Spectral moment of order 0</p></li>
+<li><p><strong>SM1</strong> (<em>float</em>) – Spectral moment of order 1</p></li>
+<li><p><strong>SM2</strong> (<em>float</em>) – Spectral moment of order 2</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Variance of central frequency</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Variance of central frequency</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getWAMP">
-<code class="descclassname">electromyography.</code><code class="descname">getWAMP</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getWAMP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getWAMP" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getWAMP</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em>, <em class="sig-param">threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getWAMP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getWAMP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wilson or Willison amplitude is a measure of frequency information.
 It is a number of time resulting from difference between the EMG signal of two adjoining segments, that exceed a threshold.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WAMP</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span> <span class="n">f</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">|</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WAMP</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span> <span class="n">f</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">|</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span>
 <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">){</span>
     <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">threshold</span>
     <span class="mi">0</span> <span class="n">otherwise</span>
@@ -1293,88 +1148,79 @@ It is a number of time resulting from difference between the EMG signal of two a
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input:</dt>
-<dd><ul class="first last">
-<li>rawEMGSignal = EMG signal as list</li>
-<li>threshold = threshold to avoid fluctuations caused by noise and low voltage fluctuations</li>
+<li><dl class="simple">
+<dt>Input:</dt><dd><ul>
+<li><p>rawEMGSignal = EMG signal as list</p></li>
+<li><p>threshold = threshold to avoid fluctuations caused by noise and low voltage fluctuations</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output:</dt>
-<dd><ul class="first last">
-<li>Wilson Amplitude value</li>
+<li><dl class="simple">
+<dt>Output:</dt><dd><ul>
+<li><p>Wilson Amplitude value</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</li>
-<li><strong>threshold</strong> (<em>int</em>) – value to sum / substract to the zero when evaluating the crossing.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p></li>
+<li><p><strong>threshold</strong> (<em>int</em>) – value to sum / substract to the zero when evaluating the crossing.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Willison amplitude</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Willison amplitude</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getWL">
-<code class="descclassname">electromyography.</code><code class="descname">getWL</code><span class="sig-paren">(</span><em>rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getWL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getWL" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getWL</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getWL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getWL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the waveform length of the signal, a measure of complexity of the EMG Signal.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WL</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WL</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">xi</span><span class="o">|</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input: </dt>
-<dd><ul class="first last">
-<li>raw EMG Signal as list</li>
+<li><dl class="simple">
+<dt>Input: </dt><dd><ul>
+<li><p>raw EMG Signal as list</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output: </dt>
-<dd><ul class="first last">
-<li>wavelength of the signal</li>
+<li><dl class="simple">
+<dt>Output: </dt><dd><ul>
+<li><p>wavelength of the signal</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Waveform length of the signal</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Waveform length of the signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.getZC">
-<code class="descclassname">electromyography.</code><code class="descname">getZC</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getZC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getZC" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">getZC</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em>, <em class="sig-param">threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#getZC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.getZC" title="Permalink to this definition">¶</a></dt>
 <dd><p>How many times does the signal crosses the 0 (+-threshold).:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ZC</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">sgn</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="n">X</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="n">intersecated</span> <span class="o">|</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">|</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ZC</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">sgn</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="n">X</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="n">intersecated</span> <span class="o">|</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">|</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">--&gt;</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span>
 <span class="n">sign</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
             <span class="mi">1</span><span class="p">,</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">threshold</span>
             <span class="mi">0</span><span class="p">,</span> <span class="n">otherwise</span>
@@ -1382,85 +1228,73 @@ It is a number of time resulting from difference between the EMG signal of two a
 </pre></div>
 </div>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input:</dt>
-<dd><ul class="first last">
-<li>rawEMGSignal = EMG signal as list</li>
-<li>threshold = threshold to use in order to avoid fluctuations caused by noise and low voltage fluctuations</li>
+<li><dl class="simple">
+<dt>Input:</dt><dd><ul>
+<li><p>rawEMGSignal = EMG signal as list</p></li>
+<li><p>threshold = threshold to use in order to avoid fluctuations caused by noise and low voltage fluctuations</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output:</dt>
-<dd><ul class="first last">
-<li>ZC index</li>
+<li><dl class="simple">
+<dt>Output:</dt><dd><ul>
+<li><p>ZC index</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</li>
-<li><strong>threshold</strong> (<em>int</em>) – value to sum / substract to the zero when evaluating the crossing.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p></li>
+<li><p><strong>threshold</strong> (<em>int</em>) – value to sum / substract to the zero when evaluating the crossing.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Number of times the signal crosses the 0 (+- threshold)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of times the signal crosses the 0 (+- threshold)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="electromyography.phasicFilter">
-<code class="descclassname">electromyography.</code><code class="descname">phasicFilter</code><span class="sig-paren">(</span><em>rawEMGSignal</em>, <em>samplerate</em>, <em>seconds=4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#phasicFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.phasicFilter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">electromyography.</code><code class="sig-name descname">phasicFilter</code><span class="sig-paren">(</span><em class="sig-param">rawEMGSignal</em>, <em class="sig-param">samplerate</em>, <em class="sig-param">seconds=4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electromyography.html#phasicFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electromyography.phasicFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply a phasic filter to the signal, with +-4 seconds from each sample</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Input:</dt>
-<dd><ul class="first last">
-<li>rawEMGSignal = emg signal as list</li>
-<li>samplerate = samplerate of the signal</li>
+<li><dl class="simple">
+<dt>Input:</dt><dd><ul>
+<li><p>rawEMGSignal = emg signal as list</p></li>
+<li><p>samplerate = samplerate of the signal</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Output:</dt>
-<dd><ul class="first last">
-<li>phasic filtered signal</li>
+<li><dl class="simple">
+<dt>Output:</dt><dd><ul>
+<li><p>phasic filtered signal</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</li>
-<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawEMGSignal</strong> (<em>list</em>) – the raw EMG signal</p></li>
+<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the phasic filtered signal</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the phasic filtered signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -1485,13 +1319,13 @@ It is a number of time resulting from difference between the EMG signal of two a
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1519,7 +1353,7 @@ It is a number of time resulting from difference between the EMG signal of two a
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Giulio Gabrieli.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>

@@ -1,13 +1,10 @@
 from setuptools import setup
 import os
 
-datadir = os.path.join("share","data")
-datafiles = [(d,[os.path.join(d,f) for f in files]) for d, folders, files in os.walk(datadir)]
-
 setup(name='pysiology',
-    version='0.0.9.3',
+    version='0.0.9.4',
     description='Physiological signal processing in Python',
-    long_description="A simple python package for physiological signal processing (ECG,EMG,GSR). Tutorial and documentation can be found on the Github Repository or at pysiology.rtfd.io.",
+    long_description="A simple python package for physiological signal processing (ECG,EMG,GSR). Tutorial and documentation can be found on the Github Repository or at pysiology.rtfd.io. If you use this package in your work, please cite: Gabrieli G., Azhari A., Esposito G. (2020) PySiology: A Python Package for Physiological Feature Extraction. In: Esposito A., Faundez-Zanuy M., Morabito F., Pasero E. (eds) Neural Approaches to Dynamics of Signal Exchanges. Smart Innovation, Systems and Technologies, vol 151. Springer, Singapore",
     url='https://github.com/Gabrock94/Pysiology',
     download_url='https://github.com/Gabrock94/Pysiology/archive/0.0.7.tar.gz',
     author='Giulio Gabrieli',
@@ -40,7 +37,26 @@ setup(name='pysiology',
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+
+        #Operating Systems
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: Unix',
+        'Operating System :: Linux',
+        
+        #Topic
+        'Topic :: Signal Processing',
+        'Topic :: Physiology',
+        'Topic :: Psychology :: Neuroscience',
+
+        #Intended Audience
+        'Intended Audience :: Physiologists',
+        'Intended Audience :: Psychologists :: Neuroscientists',
+        'Intended Audience :: Data Scientists',
+        'Intended Audience :: Cool people',
+        'Intended Audience :: Researchers',
     ],
     zip_safe=False,
     include_package_data=True,
-    data_files = datafiles)
+    package_data = {'share/data': ['convertedECG.pkl', 'convertedEDA.pkl', 'convertedEMG.pkl']}
+)

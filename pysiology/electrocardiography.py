@@ -306,7 +306,7 @@ def butter_highpass_filter(data, cutoff, fs, order):
     return(y)
     
 #http://www.paulvangent.com/2016/03/15/analyzing-a-discrete-heart-rate-signal-using-python-part-1/
-def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, lowpass=2.5, min_dist = 500, ibi=True,bpm=True,sdnn = True,sdsd = True, rmssd = True,pnn50 = True, pnn20 = True, pnn50pnn20 = True, freqAnalysis = True, freqAnalysisFiltered = True):
+def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, lowpass=2.5, min_dist = 500, peakThresh = 0.3, PeakTreshAbs = False, ibi=True,bpm=True,sdnn = True,sdsd = True, rmssd = True,pnn50 = True, pnn20 = True, pnn50pnn20 = True, freqAnalysis = True, freqAnalysisFiltered = True):
     """ This is a simple entrypoint for ECG analysis. 
     
         You can use this function as model for your analysis or to extrapolate several features from an ECG signal.
@@ -325,6 +325,10 @@ def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, low
         :type lowpass: boolean
         :param min_dist: minimum distance between peaks in ms. Used for peak detection
         :type min_dist: int
+        :param peakThresh: Normalized threshold. Only the peaks with amplitude higher than the threshold will be detected by the peak detection utils
+        :type peakThresh: float
+        :param PeakTreshAbs:  If True, the peakThresh value will be interpreted as an absolute value, instead of a normalized threshold.
+        :type PeakTreshAbs: boolean
         :param ibi: whether or not to perform the IBI analysis
         :type ibi: boolean
         :param bpm: whether or not to perform the BPM analysis
