@@ -30,6 +30,16 @@ python setup.py install
 ## Documentation
 You can check the full documentation here: https://gabrock94.github.io/Pysiology/html/index.html
 
+## WARNING
+Sample data are not downloaded when using Pip. Please download the samples manually from the repository (https://github.com/Gabrock94/Pysiology/tree/master/share/data) and load them using 
+```python
+import pickle
+
+with open("path/to/sample/data.pkl",'rb') as f:
+          data = pickle.load(f)
+```
+
+
 ## Example
 ```python
 import matplotlib.pyplot as plt #used for visualization purposes in this tutorial.
