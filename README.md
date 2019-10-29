@@ -28,7 +28,7 @@ python setup.py install
 
 
 ## Documentation
-You can check the full documentation here: https://gabrock94.github.io/Pysiology/html/index.html
+You can check the full documentation here: https://pysiology.rtfd.io 
 
 ## WARNING
 Sample data are not downloaded when using Pip. Please download the samples manually from the repository (https://github.com/Gabrock94/Pysiology/tree/master/share/data) and load them using 
