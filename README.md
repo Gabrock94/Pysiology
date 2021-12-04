@@ -1,6 +1,5 @@
 # PySiology
 ![GitHub release](https://img.shields.io/github/release/Gabrock94/Pysiology.svg)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/99c9874993d5417981bafcc963c32909)](https://app.codacy.com/app/Gabrock94/Pysiology?utm_source=github.com&utm_medium=referral&utm_content=Gabrock94/Pysiology&utm_campaign=Badge_Grade_Dashboard)
 [![PyPI](https://img.shields.io/pypi/v/pysiology.svg)](https://badge.fury.io/py/pysiology)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/pysiology.svg)](https://pypi.python.org/pypi/pysiology/)
 [![PyPI status](https://img.shields.io/pypi/status/pysiology.svg)](https://pypi.python.org/pypi/pysiology/)
