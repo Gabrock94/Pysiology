@@ -146,9 +146,12 @@ def getPNN50(peaks,samplerate):
     for i in range(1,len(delta)):
         differences.append(delta[i] - delta[i-1])
         
-    NN50 = [x for x in differences if x > 50]
-    pNN50 = float(len(NN50)) / float(len(differences))
-    return(pNN50)
+    if(len(differences)!=0):
+        NN50 = [x for x in differences if x > 50]
+        pNN50 = float(len(NN50)) / float(len(differences))
+        return(pNN50)
+    else:
+        return(np.nan)
     
 def getPNN20(peaks,samplerate):
     """ This functions evaluate pNN20, the proportion of differences greater than 20ms.
@@ -171,10 +174,13 @@ def getPNN20(peaks,samplerate):
     differences = [] 
     for i in range(1,len(delta)):
         differences.append(delta[i] - delta[i-1])
-        
-    NN20 = [x for x in differences if x > 20]
-    pNN20 = float(len(NN20)) / float(len(differences))
-    return(pNN20)
+    
+    if(len(differences)!=0):  
+        NN20 = [x for x in differences if x > 20]
+        pNN20 = float(len(NN20)) / float(len(differences))
+        return(pNN20)
+    else:
+        return(np.nan)
 
 def getPSD(rawECGSignal, samplerate):
     frequencies, psd = scipy.signal.periodogram(rawECGSignal, fs=samplerate, scaling="spectrum")
