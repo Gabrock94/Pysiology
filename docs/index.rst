@@ -5,7 +5,7 @@
 
 Pysiology - Physiological analysis made easy
 ==============================================
-Version: 0.0.9.4
+Version: 0.0.9.6
 
 `Github <https://github.com/Gabrock94/Pysiology>`_
 `Pypi <https://pypi.org/project/pysiology/>`_

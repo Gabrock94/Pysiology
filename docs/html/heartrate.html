@@ -1,9 +1,11 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Electrocardiography analysis module &#8212; Pysiology 0.0.9 - Beta version documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -48,318 +50,370 @@
 <span id="electrocardiography-analysis-module"></span><h1>Electrocardiography analysis module<a class="headerlink" href="#module-electrocardiography" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="electrocardiography.analyzeECG">
-<code class="sig-prename descclassname">electrocardiography.</code><code class="sig-name descname">analyzeECG</code><span class="sig-paren">(</span><em class="sig-param">rawECGSignal</em>, <em class="sig-param">samplerate</em>, <em class="sig-param">preprocessing=True</em>, <em class="sig-param">highpass=0.5</em>, <em class="sig-param">lowpass=2.5</em>, <em class="sig-param">min_dist=500</em>, <em class="sig-param">peakThresh=0.3</em>, <em class="sig-param">PeakTreshAbs=False</em>, <em class="sig-param">ibi=True</em>, <em class="sig-param">bpm=True</em>, <em class="sig-param">sdnn=True</em>, <em class="sig-param">sdsd=True</em>, <em class="sig-param">rmssd=True</em>, <em class="sig-param">pnn50=True</em>, <em class="sig-param">pnn20=True</em>, <em class="sig-param">pnn50pnn20=True</em>, <em class="sig-param">freqAnalysis=True</em>, <em class="sig-param">freqAnalysisFiltered=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#analyzeECG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.analyzeECG" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">electrocardiography.</code><code class="descname">analyzeECG</code><span class="sig-paren">(</span><em>rawECGSignal</em>, <em>samplerate</em>, <em>preprocessing=True</em>, <em>highpass=0.5</em>, <em>lowpass=2.5</em>, <em>min_dist=500</em>, <em>peakThresh=0.3</em>, <em>PeakTreshAbs=False</em>, <em>ibi=True</em>, <em>bpm=True</em>, <em>sdnn=True</em>, <em>sdsd=True</em>, <em>rmssd=True</em>, <em>pnn50=True</em>, <em>pnn20=True</em>, <em>pnn50pnn20=True</em>, <em>freqAnalysis=True</em>, <em>freqAnalysisFiltered=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#analyzeECG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.analyzeECG" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a simple entrypoint for ECG analysis.</p>
 <p>You can use this function as model for your analysis or to extrapolate several features from an ECG signal.</p>
 <p>You can specify which features to evaluate or to exclude, as well as cutoff for frequencies and filter.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>list</em>) – ECG signal</p></li>
-<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</p></li>
-<li><p><strong>preprocessing</strong> (<em>boolean</em>) – whether to perform a simple preprocessing of the signal automatically</p></li>
-<li><p><strong>highpass</strong> (<em>boolean</em>) – cutoff frequency for the high pass filter</p></li>
-<li><p><strong>lowpass</strong> (<em>boolean</em>) – cutoff frequency for the low pass filter</p></li>
-<li><p><strong>min_dist</strong> (<em>int</em>) – minimum distance between peaks in ms. Used for peak detection</p></li>
-<li><p><strong>peakThresh</strong> (<em>float</em>) – Normalized threshold. Only the peaks with amplitude higher than the threshold will be detected by the peak detection utils</p></li>
-<li><p><strong>PeakTreshAbs</strong> (<em>boolean</em>) – If True, the peakThresh value will be interpreted as an absolute value, instead of a normalized threshold.</p></li>
-<li><p><strong>ibi</strong> (<em>boolean</em>) – whether or not to perform the IBI analysis</p></li>
-<li><p><strong>bpm</strong> (<em>boolean</em>) – whether or not to perform the BPM analysis</p></li>
-<li><p><strong>sdnn</strong> (<em>boolean</em>) – whether or not to perform the sdnn analysis</p></li>
-<li><p><strong>sdsd</strong> (<em>boolean</em>) – whether or not to perform the sdsd analysis</p></li>
-<li><p><strong>rmssd</strong> (<em>boolean</em>) – whether or not to perform the rmssd analysis</p></li>
-<li><p><strong>pnn50</strong> (<em>boolean</em>) – whether or not to perform the pNN50 analysis</p></li>
-<li><p><strong>pnn20</strong> (<em>boolean</em>) – whether or not to perform the pNN20 analysis</p></li>
-<li><p><strong>pnn50pnn20</strong> (<em>boolean</em>) – whether or not to perform the pNN50 on pNN20 ratio analysis</p></li>
-<li><p><strong>freqAnalysis</strong> (<em>boolean</em>) – whether or not to perform a frequency analysis analysis</p></li>
-<li><p><strong>freqAnalysisFiltered</strong> (<em>boolean</em>) – whether or not to perform a frequency analysis automatically filtering the signal</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>list</em>) – ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
+<li><strong>preprocessing</strong> (<em>boolean</em>) – whether to perform a simple preprocessing of the signal automatically</li>
+<li><strong>highpass</strong> (<em>boolean</em>) – cutoff frequency for the high pass filter</li>
+<li><strong>lowpass</strong> (<em>boolean</em>) – cutoff frequency for the low pass filter</li>
+<li><strong>min_dist</strong> (<em>int</em>) – minimum distance between peaks in ms. Used for peak detection</li>
+<li><strong>peakThresh</strong> (<em>float</em>) – Normalized threshold. Only the peaks with amplitude higher than the threshold will be detected by the peak detection utils</li>
+<li><strong>PeakTreshAbs</strong> (<em>boolean</em>) – If True, the peakThresh value will be interpreted as an absolute value, instead of a normalized threshold.</li>
+<li><strong>ibi</strong> (<em>boolean</em>) – whether or not to perform the IBI analysis</li>
+<li><strong>bpm</strong> (<em>boolean</em>) – whether or not to perform the BPM analysis</li>
+<li><strong>sdnn</strong> (<em>boolean</em>) – whether or not to perform the sdnn analysis</li>
+<li><strong>sdsd</strong> (<em>boolean</em>) – whether or not to perform the sdsd analysis</li>
+<li><strong>rmssd</strong> (<em>boolean</em>) – whether or not to perform the rmssd analysis</li>
+<li><strong>pnn50</strong> (<em>boolean</em>) – whether or not to perform the pNN50 analysis</li>
+<li><strong>pnn20</strong> (<em>boolean</em>) – whether or not to perform the pNN20 analysis</li>
+<li><strong>pnn50pnn20</strong> (<em>boolean</em>) – whether or not to perform the pNN50 on pNN20 ratio analysis</li>
+<li><strong>freqAnalysis</strong> (<em>boolean</em>) – whether or not to perform a frequency analysis analysis</li>
+<li><strong>freqAnalysisFiltered</strong> (<em>boolean</em>) – whether or not to perform a frequency analysis automatically filtering the signal</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a dictionary containing the results of the ECG analysis</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a dictionary containing the results of the ECG analysis</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrocardiography.butter_highpass">
-<code class="sig-prename descclassname">electrocardiography.</code><code class="sig-name descname">butter_highpass</code><span class="sig-paren">(</span><em class="sig-param">cutoff</em>, <em class="sig-param">fs</em>, <em class="sig-param">order=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#butter_highpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.butter_highpass" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">electrocardiography.</code><code class="descname">butter_highpass</code><span class="sig-paren">(</span><em>cutoff</em>, <em>fs</em>, <em>order=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#butter_highpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.butter_highpass" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions generates a higpass butter filter</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</p></li>
-<li><p><strong>cutoff</strong> – cutoff frequency</p></li>
-<li><p><strong>fs</strong> (<em>float</em>) – samplerate of the signal</p></li>
-<li><p><strong>order</strong> (<em>int</em>) – order of the Butter Filter</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
+<li><strong>cutoff</strong> – cutoff frequency</li>
+<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
+<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>butter highpass filter</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">butter highpass filter</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrocardiography.butter_highpass_filter">
-<code class="sig-prename descclassname">electrocardiography.</code><code class="sig-name descname">butter_highpass_filter</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">cutoff</em>, <em class="sig-param">fs</em>, <em class="sig-param">order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#butter_highpass_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.butter_highpass_filter" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">electrocardiography.</code><code class="descname">butter_highpass_filter</code><span class="sig-paren">(</span><em>data</em>, <em>cutoff</em>, <em>fs</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#butter_highpass_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.butter_highpass_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions apply a butter highpass filter to a signal</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>list</em>) – ECG signal</p></li>
-<li><p><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</p></li>
-<li><p><strong>cutoff</strong> – cutoff frequency</p></li>
-<li><p><strong>fs</strong> (<em>float</em>) – samplerate of the signal</p></li>
-<li><p><strong>order</strong> (<em>int</em>) – order of the Butter Filter</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>list</em>) – ECG signal</li>
+<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
+<li><strong>cutoff</strong> – cutoff frequency</li>
+<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
+<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>highpass filtered ECG signal</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">highpass filtered ECG signal</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrocardiography.butter_lowpass">
-<code class="sig-prename descclassname">electrocardiography.</code><code class="sig-name descname">butter_lowpass</code><span class="sig-paren">(</span><em class="sig-param">cutoff</em>, <em class="sig-param">fs</em>, <em class="sig-param">order=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#butter_lowpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.butter_lowpass" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">electrocardiography.</code><code class="descname">butter_lowpass</code><span class="sig-paren">(</span><em>cutoff</em>, <em>fs</em>, <em>order=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#butter_lowpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.butter_lowpass" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions generates a lowpass butter filter</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</p></li>
-<li><p><strong>cutoff</strong> – cutoff frequency</p></li>
-<li><p><strong>fs</strong> (<em>float</em>) – samplerate of the signal</p></li>
-<li><p><strong>order</strong> (<em>int</em>) – order of the Butter Filter</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
+<li><strong>cutoff</strong> – cutoff frequency</li>
+<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
+<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>butter lowpass filter</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">butter lowpass filter</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrocardiography.butter_lowpass_filter">
-<code class="sig-prename descclassname">electrocardiography.</code><code class="sig-name descname">butter_lowpass_filter</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">cutoff</em>, <em class="sig-param">fs</em>, <em class="sig-param">order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#butter_lowpass_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.butter_lowpass_filter" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">electrocardiography.</code><code class="descname">butter_lowpass_filter</code><span class="sig-paren">(</span><em>data</em>, <em>cutoff</em>, <em>fs</em>, <em>order</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#butter_lowpass_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.butter_lowpass_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions apply a butter lowpass filter to a signal</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>list</em>) – ECG signal</p></li>
-<li><p><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</p></li>
-<li><p><strong>cutoff</strong> – cutoff frequency</p></li>
-<li><p><strong>fs</strong> (<em>float</em>) – samplerate of the signal</p></li>
-<li><p><strong>order</strong> (<em>int</em>) – order of the Butter Filter</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>list</em>) – ECG signal</li>
+<li><strong>cutoff</strong> (<em>float</em>) – cutoff frequency</li>
+<li><strong>cutoff</strong> – cutoff frequency</li>
+<li><strong>fs</strong> (<em>float</em>) – samplerate of the signal</li>
+<li><strong>order</strong> (<em>int</em>) – order of the Butter Filter</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>lowpass filtered ECG signal</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">lowpass filtered ECG signal</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrocardiography.getBPM">
-<code class="sig-prename descclassname">electrocardiography.</code><code class="sig-name descname">getBPM</code><span class="sig-paren">(</span><em class="sig-param">npeaks</em>, <em class="sig-param">nsample</em>, <em class="sig-param">samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getBPM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getBPM" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">electrocardiography.</code><code class="descname">getBPM</code><span class="sig-paren">(</span><em>npeaks</em>, <em>nsample</em>, <em>samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getBPM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getBPM" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function returns the BPM of a discrete heart signal.</p>
 <p>Input: number of peaks of the ECG signal,number of samples, samplerate of the signal</p>
 <p>Output: BPM</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>npeak</strong> (<em>int</em>) – number of peaks of the ECG signal</p></li>
-<li><p><strong>nsample</strong> (<em>int</em>) – number of samples of the ECG signal</p></li>
-<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>npeak</strong> (<em>int</em>) – number of peaks of the ECG signal</li>
+<li><strong>nsample</strong> (<em>int</em>) – number of samples of the ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>BPM of the ECG signal</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BPM of the ECG signal</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrocardiography.getFrequencies">
-<code class="sig-prename descclassname">electrocardiography.</code><code class="sig-name descname">getFrequencies</code><span class="sig-paren">(</span><em class="sig-param">rawECGSignal</em>, <em class="sig-param">samplerate</em>, <em class="sig-param">llc=0.04</em>, <em class="sig-param">ulc=0.15</em>, <em class="sig-param">lhc=0.15</em>, <em class="sig-param">uhc=0.4</em>, <em class="sig-param">lvlc=0.0033</em>, <em class="sig-param">hvlc=0.04</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getFrequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getFrequencies" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">electrocardiography.</code><code class="descname">getFrequencies</code><span class="sig-paren">(</span><em>rawECGSignal</em>, <em>samplerate</em>, <em>llc=0.04</em>, <em>ulc=0.15</em>, <em>lhc=0.15</em>, <em>uhc=0.4</em>, <em>lvlc=0.0033</em>, <em>hvlc=0.04</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getFrequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getFrequencies" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions returns the sum of the PSD of low Frequencies, high frequencies and very low frequencies.</p>
 <p>Default Values have been adapted from: Blood, J. D., Wu, J., Chaplin, T. M., Hommer, R., Vazquez, L., Rutherford, H. J., … &amp; Crowley, M. J. (2015). The variable heart: high frequency and very low frequency correlates of depressive symptoms in children and adolescents. Journal of affective disorders, 186, 119-126.</p>
 <p>It returns a dictionary with the values for high, low and very low frequencies</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>rawECGSignal</strong> (<em>list</em>) – raw ECG signal</p></li>
-<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the ECG signal</p></li>
-<li><p><strong>llc</strong> (<em>float</em>) – lower cutoff of low frequencies</p></li>
-<li><p><strong>ulc</strong> (<em>float</em>) – upper cutoff of low frequencies</p></li>
-<li><p><strong>lhc</strong> (<em>float</em>) – lower cutoff of high frequencies</p></li>
-<li><p><strong>uhc</strong> (<em>float</em>) – high cutoff of high frequencies</p></li>
-<li><p><strong>lvlc</strong> (<em>float</em>) – lower cutoff of very low frequencies</p></li>
-<li><p><strong>uvlc</strong> (<em>float</em>) – upper cutoff of very low frequencies</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rawECGSignal</strong> (<em>list</em>) – raw ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the ECG signal</li>
+<li><strong>llc</strong> (<em>float</em>) – lower cutoff of low frequencies</li>
+<li><strong>ulc</strong> (<em>float</em>) – upper cutoff of low frequencies</li>
+<li><strong>lhc</strong> (<em>float</em>) – lower cutoff of high frequencies</li>
+<li><strong>uhc</strong> (<em>float</em>) – high cutoff of high frequencies</li>
+<li><strong>lvlc</strong> (<em>float</em>) – lower cutoff of very low frequencies</li>
+<li><strong>uvlc</strong> (<em>float</em>) – upper cutoff of very low frequencies</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a dictionary containing the results of the frequency analysis</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dictionary</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a dictionary containing the results of the frequency analysis</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrocardiography.getIBI">
-<code class="sig-prename descclassname">electrocardiography.</code><code class="sig-name descname">getIBI</code><span class="sig-paren">(</span><em class="sig-param">peaks</em>, <em class="sig-param">samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getIBI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getIBI" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">electrocardiography.</code><code class="descname">getIBI</code><span class="sig-paren">(</span><em>peaks</em>, <em>samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getIBI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getIBI" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function returns the IBI of a discrete heart signal.</p>
 <p>Input: peaks and samplerate of the ECG signal</p>
 <p>Output: IBI in ms</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>peaks</strong> (<em>list</em>) – list of peaks of the ECG signal</p></li>
-<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>peaks</strong> (<em>list</em>) – list of peaks of the ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the mean IBI of the ECG signal</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>IBI (in ms) as float value</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the mean IBI of the ECG signal</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">IBI (in ms) as float value</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrocardiography.getPNN20">
-<code class="sig-prename descclassname">electrocardiography.</code><code class="sig-name descname">getPNN20</code><span class="sig-paren">(</span><em class="sig-param">peaks</em>, <em class="sig-param">samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getPNN20"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getPNN20" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">electrocardiography.</code><code class="descname">getPNN20</code><span class="sig-paren">(</span><em>peaks</em>, <em>samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getPNN20"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getPNN20" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions evaluate pNN20, the proportion of differences greater than 20ms.</p>
 <p>Input: peaks of the ECG signal,samplerate of the signal</p>
 <p>Output: proportion of number of pairs of successive peaks that diffear by more than 20ms</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</p></li>
-<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the pNN20 of the ECG signal</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the pNN20 of the ECG signal</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrocardiography.getPNN50">
-<code class="sig-prename descclassname">electrocardiography.</code><code class="sig-name descname">getPNN50</code><span class="sig-paren">(</span><em class="sig-param">peaks</em>, <em class="sig-param">samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getPNN50"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getPNN50" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">electrocardiography.</code><code class="descname">getPNN50</code><span class="sig-paren">(</span><em>peaks</em>, <em>samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getPNN50"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getPNN50" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions evaluate pNN50, the proportion of differences greater than 50ms.</p>
 <p>Input: peaks of the ECG signal,samplerate of the signal</p>
 <p>Output: proportion of number of pairs of successive peaks that diffear by more than 50ms</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</p></li>
-<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the pNN50 of the ECG signal</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the pNN50 of the ECG signal</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrocardiography.getRMSSD">
-<code class="sig-prename descclassname">electrocardiography.</code><code class="sig-name descname">getRMSSD</code><span class="sig-paren">(</span><em class="sig-param">peaks</em>, <em class="sig-param">samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getRMSSD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getRMSSD" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">electrocardiography.</code><code class="descname">getRMSSD</code><span class="sig-paren">(</span><em>peaks</em>, <em>samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getRMSSD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getRMSSD" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions evaluate the root mean square of successive differences between adjacent R-R intervals.</p>
 <p>RMSSD = sqrt((1 / (N - 1)) * sum(i=1 –&gt; N)(RRdiff i - mean(RRdiff))**2)</p>
 <p>Input: peaks of the ECG signal,samplerate of the signal.</p>
 <p>Output: the root mean square of successive differences between adjacent R-R intervals.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</p></li>
-<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the RMSSD of the ECG signal</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the RMSSD of the ECG signal</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrocardiography.getSDNN">
-<code class="sig-prename descclassname">electrocardiography.</code><code class="sig-name descname">getSDNN</code><span class="sig-paren">(</span><em class="sig-param">peaks</em>, <em class="sig-param">samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getSDNN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getSDNN" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">electrocardiography.</code><code class="descname">getSDNN</code><span class="sig-paren">(</span><em>peaks</em>, <em>samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getSDNN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getSDNN" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions evaluate the standard deviation of intervals between heartbeats.
 It is often calculated over 24h period, or over short peridos of 5 mins.</p>
 <p>SDNN reflects all the cyclic components responsible for variability in the period of recording, therefore it represents total variability</p>
 <p>SDNN = sqrt((1/N-1) * sum(i=1 –&gt; N)(rri - rrmean)^2)</p>
 <p>Input: peaks of the ECG signal,samplerate of the signal</p>
 <p>Output: standard deviations of Intervals between heartbeats.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</p></li>
-<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the SDNN of the ECG signal</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the SDNN of the ECG signal</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="electrocardiography.getSDSD">
-<code class="sig-prename descclassname">electrocardiography.</code><code class="sig-name descname">getSDSD</code><span class="sig-paren">(</span><em class="sig-param">peaks</em>, <em class="sig-param">samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getSDSD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getSDSD" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">electrocardiography.</code><code class="descname">getSDSD</code><span class="sig-paren">(</span><em>peaks</em>, <em>samplerate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/electrocardiography.html#getSDSD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#electrocardiography.getSDSD" title="Permalink to this definition">¶</a></dt>
 <dd><p>This functions evaluate the the standard deviation of successive differences between adjacent R-R intervals.</p>
 <p>SDSD: sqrt((1 / (N - 1)) * sum(i=1 –&gt; N)(RR i - mean(RR))**2)</p>
 <p>Input: peaks of the ECG signal,samplerate of the signal</p>
 <p>Output: the standard deviation of successive differences between adjacent R-R intervals</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</p></li>
-<li><p><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>peaks</strong> (<em>list</em>) – list of peaks in the ECG signal</li>
+<li><strong>samplerate</strong> (<em>int</em>) – samplerate of the signal in Hz</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the SDSD of the ECG signal</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the SDSD of the ECG signal</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -384,11 +438,13 @@ It is often calculated over 24h period, or over short peridos of 5 mins.</p>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -418,7 +474,7 @@ It is often calculated over 24h period, or over short peridos of 5 mins.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Giulio Gabrieli.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>
