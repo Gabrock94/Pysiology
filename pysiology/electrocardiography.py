@@ -312,7 +312,7 @@ def butter_highpass_filter(data, cutoff, fs, order):
     return(y)
     
 #http://www.paulvangent.com/2016/03/15/analyzing-a-discrete-heart-rate-signal-using-python-part-1/
-def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, lowpass=2.5, min_dist = 500, peakThresh = 0.3, PeakTreshAbs = False, ibi=True,bpm=True,sdnn = True,sdsd = True, rmssd = True,pnn50 = True, pnn20 = True, pnn50pnn20 = True, freqAnalysis = True, freqAnalysisFiltered = True):
+def analyzeECG(rawECGSignal,samplerate,preprocessing = True, highpass = 0.5, lowpass=25, min_dist = 500, peakThresh = 0.3, PeakTreshAbs = False, ibi=True,bpm=True,sdnn = True,sdsd = True, rmssd = True,pnn50 = True, pnn20 = True, pnn50pnn20 = True, freqAnalysis = True, freqAnalysisFiltered = True):
     """ This is a simple entrypoint for ECG analysis. 
     
         You can use this function as model for your analysis or to extrapolate several features from an ECG signal.
