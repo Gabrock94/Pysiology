@@ -26,6 +26,12 @@ or downloading / cloning the repository and, from the root folder of the project
 python setup.py install
 ```
 
+### Updating the package
+To update the package via pip, you can use:
+```bash
+pip install --user --upgrade pysiology
+```
+
 
 ## Documentation
 You can check the full documentation here: https://pysiology.rtfd.io 
