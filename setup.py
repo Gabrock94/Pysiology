@@ -2,7 +2,7 @@ from setuptools import setup
 import os
 
 setup(name='pysiology',
-    version='0.0.9.6',
+    version='0.0.9.7',
     description='Physiological signal processing in Python',
     long_description="A simple python package for physiological signal processing (ECG,EMG,GSR). Tutorial and documentation can be found on the Github Repository or at pysiology.rtfd.io. If you use this package in your work, please cite: Gabrieli G., Azhari A., Esposito G. (2020) PySiology: A Python Package for Physiological Feature Extraction. In: Esposito A., Faundez-Zanuy M., Morabito F., Pasero E. (eds) Neural Approaches to Dynamics of Signal Exchanges. Smart Innovation, Systems and Technologies, vol 151. Springer, Singapore. https://doi.org/10.1007/978-981-13-8950-4_35",
     url='https://github.com/Gabrock94/Pysiology',
@@ -15,7 +15,8 @@ setup(name='pysiology',
         'numpy',
         'peakutils',
         'scipy',
-        'matplotlib'
+        'matplotlib',
+        'itertools'
     ],
     keywords = ["ECG","EMG","EDA","GSR","Physiology","Signal Processing"],
     classifiers = [ 
