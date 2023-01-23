@@ -4,6 +4,7 @@
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/pysiology.svg)](https://pypi.python.org/pypi/pysiology/)
 [![PyPI status](https://img.shields.io/pypi/status/pysiology.svg)](https://pypi.python.org/pypi/pysiology/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/pysiology.svg?label=PyPI%20downloads)](https://pypi.python.org/pypi/pysiology/)
+[![Downloads](https://static.pepy.tech/badge/pysiology)](https://pepy.tech/project/pysiology)
 [![Documentation Status](https://readthedocs.org/projects/pysiology/badge/?version=latest)](http://pysiology.readthedocs.io/en/latest/?badge=latest)
 [![DOI](https://zenodo.org/badge/109267664.svg)](https://zenodo.org/badge/latestdoi/109267664)
 
