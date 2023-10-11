@@ -76,18 +76,30 @@ for event in events:
     results[event[0]]["GSR"] = pysiology.electrodermalactivity.analyzeGSR(GSR[startSample:endSample],sr) #analyze the GSR signal
 
 ```
-### Cite
+## Cite
 If you use PySiology, please cite:
 > Gabrieli G., Azhari A., Esposito G. (2020) PySiology: A Python Package for Physiological Feature Extraction. In: Esposito A., Faundez-Zanuy M., Morabito F., Pasero E. (eds) Neural Approaches to Dynamics of Signal Exchanges. Smart Innovation, Systems and Technologies, vol 151. Springer, Singapore
 
-### Requirements
+## Requirements
 - Numpy
 - Scipy
 - Peakutils
 - Matplotlib
 
 ## Contacts
-Feel free to contact me for questions, suggestions or to give me advice as well at: giulio001@e.ntu.edu.sg
+Feel free to contact me for questions, suggestions or to give me advice as well at: giulio.gabrieli@iit.it
+
+## Scientific Publications that used pysiology
+- Wiercinski, T., & Zawadzka, T. (2023). Short Paper: Late Fusion Approach for Multimodal Emotion Recognition Based on Convolutional and Graph Neural Networks.
+- Gabrieli, G., Bornstein, M. H., Setoh, P., & Esposito, G. (2023). Machine learning estimation of users’ implicit and explicit aesthetic judgments of web-pages. Behaviour & Information Technology, 42(4), 392-402.- Hsu, S. M., Chen, S. H., &
+- Momota, M. M. R., Morshed, B. I., Ferdous, T., & Fujiwara, T. (2023). Fabrication and Characterization of Inkjet Printed Flexible Dry ECG Electrodes. IEEE Sensors Journal, 23(7), 7917-7928.
+- Warner, J., Gault, R., & McAllister, J. (2022, July). Optimised EMG pipeline for gesture classification. In 2022 44th Annual International Conference of the IEEE Engineering in Medicine & Biology Society (EMBC) (pp. 3628-3631). IEEE.
+- Momota, M. M. R., & Morshed, B. I. (2022). ML algorithms to estimate data reliability metric of ECG from inter-patient data for trustable AI-based cardiac monitors. Smart Health, 26, 100350.
+- Chan, S. H. M., Qiu, L., Esposito, G., Mai, K. P., Tam, K. P., & Cui, J. (2021). Nature in virtual reality improves mood and reduces stress: evidence from young adults and senior citizens. Virtual reality, 1-16.
+- Chan, S. H. M., Qiu, L., Esposito, G., & Mai, K. P. (2021). Vertical greenery buffers against stress: Evidence from psychophysiological responses in virtual reality. Landscape and Urban Planning, 213, 104127.
+- Huang, T. R. (2021). Personal Resilience Can Be Well Estimated from Heart Rate Variability and Paralinguistic Features during Human–Robot Conversations. Sensors, 21(17), 5844.
+- Aqajari, S. A. H., Naeini, E. K., Mehrabadi, M. A., Labbaf, S., Rahmani, A. M., & Dutt, N. (2020). Gsr analysis for stress: Development and validation of an open source tool for noisy naturalistic gsr data. arXiv preprint arXiv:2005.01834.
+- Bizzego, A., Azhari, A., Campostrini, N., Truzzi, A., Ng, L. Y., Gabrieli, G., ... & Esposito, G. (2019). Strangers, friends, and lovers show different physiological synchrony in different emotional states. Behavioral Sciences, 10(1), 11.
 
 ## Coffee?
 <a href='https://ko-fi.com/B0B3K45F' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
