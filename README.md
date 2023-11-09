@@ -90,7 +90,7 @@ If you use PySiology, please cite:
 Feel free to contact me for questions, suggestions or to give me advice as well at: giulio.gabrieli@iit.it
 
 ## Scientific Publications that used pysiology
--Krivich, E., Mottus, M., & Bauters, M. (2023). Comparing Psychophysiological Responses to Vicarious Pain Experience Elicited by Videos Featuring either Humans or Avatars. In Proceedings of the 26th International Academic Mindtrek Conference.
+- Krivich, E., Mottus, M., & Bauters, M. (2023). Comparing Psychophysiological Responses to Vicarious Pain Experience Elicited by Videos Featuring either Humans or Avatars. In Proceedings of the 26th International Academic Mindtrek Conference.
 - Wiercinski, T., & Zawadzka, T. (2023). Short Paper: Late Fusion Approach for Multimodal Emotion Recognition Based on Convolutional and Graph Neural Networks.
 - Gabrieli, G., Bornstein, M. H., Setoh, P., & Esposito, G. (2023). Machine learning estimation of users’ implicit and explicit aesthetic judgments of web-pages. Behaviour & Information Technology, 42(4), 392-402.- Hsu, S. M., Chen, S. H., &
 - Momota, M. M. R., Morshed, B. I., Ferdous, T., & Fujiwara, T. (2023). Fabrication and Characterization of Inkjet Printed Flexible Dry ECG Electrodes. IEEE Sensors Journal, 23(7), 7917-7928.
