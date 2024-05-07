@@ -281,7 +281,7 @@ def getDASDV(rawEMGSignal):
     temp = []    
     for i in range(0,N-1):
         temp.append((rawEMGSignal[i+1] - rawEMGSignal[i])**2)
-    DASDV = (1 / (N - 1)) * sum(temp)
+    DASDV = math.sqrt((1 / (N - 1)) * sum(temp))
     return(DASDV)
 
 def getAFB(rawEMGSignal,samplerate, windowSize=32):
