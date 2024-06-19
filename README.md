@@ -90,6 +90,7 @@ If you use PySiology, please cite:
 Feel free to contact me for questions, suggestions or to give me advice as well at: giulio.gabrieli@iit.it
 
 ## Scientific Publications that used pysiology
+- Jain, A., & Kumar, R. (2024, May). Machine Learning based Anxiety Detection using Physiological Signals and Context Features. In 2024 2nd International Conference on Advancement in Computation & Computer Technologies (InCACCT) (pp. 116-121). IEEE.
 - Krivich, E., Mottus, M., & Bauters, M. (2023). Comparing Psychophysiological Responses to Vicarious Pain Experience Elicited by Videos Featuring either Humans or Avatars. In Proceedings of the 26th International Academic Mindtrek Conference.
 - Wiercinski, T., & Zawadzka, T. (2023). Short Paper: Late Fusion Approach for Multimodal Emotion Recognition Based on Convolutional and Graph Neural Networks.
 - Gabrieli, G., Bornstein, M. H., Setoh, P., & Esposito, G. (2023). Machine learning estimation of users’ implicit and explicit aesthetic judgments of web-pages. Behaviour & Information Technology, 42(4), 392-402.- Hsu, S. M., Chen, S. H., &
@@ -101,6 +102,6 @@ Feel free to contact me for questions, suggestions or to give me advice as well 
 - Huang, T. R. (2021). Personal Resilience Can Be Well Estimated from Heart Rate Variability and Paralinguistic Features during Human–Robot Conversations. Sensors, 21(17), 5844.
 - Aqajari, S. A. H., Naeini, E. K., Mehrabadi, M. A., Labbaf, S., Rahmani, A. M., & Dutt, N. (2020). Gsr analysis for stress: Development and validation of an open source tool for noisy naturalistic gsr data. arXiv preprint arXiv:2005.01834.
 - Bizzego, A., Azhari, A., Campostrini, N., Truzzi, A., Ng, L. Y., Gabrieli, G., ... & Esposito, G. (2019). Strangers, friends, and lovers show different physiological synchrony in different emotional states. Behavioral Sciences, 10(1), 11.
-- 
+
 ## Coffee?
 <a href='https://ko-fi.com/B0B3K45F' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
