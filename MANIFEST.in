@@ -1,2 +1,2 @@
-include share/data/*
 include README.md
+recursive-include pysiology/data *.pkl

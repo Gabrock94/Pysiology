@@ -796,10 +796,11 @@ def phasicFilter(rawEMGSignal,samplerate, seconds=4):
     return(phasicSignal)
     
 def getPSD(rawEMGSignal, samplerate):
-    frequencies, psd = welch(rawEMGSignal, fs=samplerate,
-               window='hanning',   # apply a Hanning window before taking the DFT
+    frequencies, psd = welch(np.array(rawEMGSignal), fs=samplerate,
+               window='hann',   # apply a Hanning window before taking the DFT
                nperseg=256,        # compute periodograms of 256-long segments of x
-               detrend='constant',scaling="spectrum") # detrend x by subtracting the mean
+               detrend='constant',
+               scaling="spectrum") # detrend x by subtracting the mean
     return([psd,frequencies])  
     
     

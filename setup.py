@@ -2,7 +2,7 @@ from setuptools import setup
 import os
 
 setup(name='pysiology',
-    version='0.0.9.7',
+    version='0.0.9.71',
     description='Physiological signal processing in Python',
     long_description="A simple python package for physiological signal processing (ECG,EMG,GSR). Tutorial and documentation can be found on the Github Repository or at pysiology.rtfd.io. If you use this package in your work, please cite: Gabrieli G., Azhari A., Esposito G. (2020) PySiology: A Python Package for Physiological Feature Extraction. In: Esposito A., Faundez-Zanuy M., Morabito F., Pasero E. (eds) Neural Approaches to Dynamics of Signal Exchanges. Smart Innovation, Systems and Technologies, vol 151. Springer, Singapore. https://doi.org/10.1007/978-981-13-8950-4_35",
     url='https://github.com/Gabrock94/Pysiology',
@@ -10,13 +10,13 @@ setup(name='pysiology',
     author='Giulio Gabrieli',
     author_email='gack94@gmail.com',
     license='GPL-3.0',
-    packages=['pysiology'],      
+    python_requires='>=3.5',      
     install_requires=[
         'numpy',
         'peakutils',
         'scipy',
         'matplotlib',
-        'itertools'
+        'setuptools',
     ],
     keywords = ["ECG","EMG","EDA","GSR","Physiology","Signal Processing"],
     classifiers = [ 
@@ -38,6 +38,17 @@ setup(name='pysiology',
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',    
+        'Programming Language :: Python :: 3.8',    
+        'Programming Language :: Python :: 3.9',    
+        'Programming Language :: Python :: 3.10',    
+        'Programming Language :: Python :: 3.11',    
+        'Programming Language :: Python :: 3.12',    
+        'Programming Language :: Python :: 3.13',    
+        'Programming Language :: Python :: 3.14',    
+        
 
         #Operating Systems
         'Operating System :: MacOS :: MacOS X',
@@ -55,6 +66,9 @@ setup(name='pysiology',
 
     ],
     zip_safe=False,
+    packages=['pysiology'],
     include_package_data=True,
-    package_data = {'share/data': ['convertedECG.pkl', 'convertedEDA.pkl', 'convertedEMG.pkl']}
+    package_data={
+        'pysiology': ['data/*.pkl'],
+    },
 )

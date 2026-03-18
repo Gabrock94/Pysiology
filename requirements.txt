@@ -2,3 +2,4 @@ numpy
 peakutils
 scipy
 matplotlib
+setuptools

@@ -20,13 +20,13 @@ sys.path.insert(0, os.path.abspath('../pysiology/'))
 # -- Project information -----------------------------------------------------
 
 project = 'Pysiology'
-copyright = '2018, Giulio Gabrieli'
+copyright = '2026, Giulio Gabrieli'
 author = 'Giulio Gabrieli'
 
 # The short X.Y version
-version = '0.0.9'
+version = '0.0.9.7'
 # The full version, including alpha/beta/rc tags
-release = '0.0.9 - Beta version'
+release = '0.0.9.71 - Beta version'
 
 
 # -- General configuration ---------------------------------------------------
