@@ -4,7 +4,7 @@ from . import electrodermalactivity
 from . import sampledata
 from . import utils
 
-__version__ = '0.0.9.7' #Version Control
+__version__ = '0.0.9.72' #Version Control
 #Last edited Nov 8 2022
 
 print("Thank you for using Pysiology. If you use it in your work, please cite:")
