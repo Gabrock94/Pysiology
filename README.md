@@ -33,19 +33,8 @@ To update the package via pip, you can use:
 pip install --user --upgrade pysiology
 ```
 
-
 ## Documentation
 You can check the full documentation here: https://pysiology.rtfd.io 
-
-## WARNING
-Sample data are not downloaded when using Pip. Please download the samples manually from the repository (https://github.com/Gabrock94/Pysiology/tree/master/share/data) and load them using 
-```python
-import pickle
-
-with open("path/to/sample/data.pkl",'rb') as f:
-          data = pickle.load(f)
-```
-
 
 ## Example
 ```python
@@ -85,9 +74,10 @@ If you use PySiology, please cite:
 - Scipy
 - Peakutils
 - Matplotlib
+- setuptools
 
 ## Contacts
-Feel free to contact me for questions, suggestions or to give me advice as well at: giulio.gabrieli@iit.it
+Feel free to contact me for questions, suggestions or to give me advice as well at: giulio.gabrieli@tudublin.ie
 
 ## Scientific Publications that used pysiology
 - Jain, A., & Kumar, R. (2024, May). Machine Learning based Anxiety Detection using Physiological Signals and Context Features. In 2024 2nd International Conference on Advancement in Computation & Computer Technologies (InCACCT) (pp. 116-121). IEEE.
