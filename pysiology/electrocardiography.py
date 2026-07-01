@@ -183,6 +183,24 @@ def getPNN20(peaks,samplerate):
         return(np.nan)
 
 def getPSD(rawECGSignal, samplerate):
+    """ This function computes the power spectral density (PSD) of the ECG signal using the periodogram method.
+    
+        The periodogram is a simple spectral density estimation technique that computes the 
+        Fourier transform of the signal and returns the power at each frequency.
+        
+        * Input:
+            * rawECGSignal: raw ECG signal as a list or array
+            * samplerate: samplerate of the signal in Hz
+        * Output:
+            * List containing [PSD values, corresponding frequencies]
+        
+        :param rawECGSignal: the raw ECG signal
+        :type rawECGSignal: list or array
+        :param samplerate: samplerate of the signal in Hz
+        :type samplerate: int
+        :return: list containing power spectral density values and their corresponding frequencies
+        :rtype: list
+    """
     frequencies, psd = scipy.signal.periodogram(rawECGSignal, fs=samplerate, scaling="spectrum")
     return([psd,frequencies]) 
     

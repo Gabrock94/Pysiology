@@ -796,6 +796,25 @@ def phasicFilter(rawEMGSignal,samplerate, seconds=4):
     return(phasicSignal)
     
 def getPSD(rawEMGSignal, samplerate):
+    """ This function computes the power spectral density (PSD) of the EMG signal using Welch's method.
+    
+        Welch's method applies a Hanning window to 256-sample segments of the signal,
+        computes the periodogram for each segment, and averages the results to produce
+        a smooth PSD estimate. The signal is detrended by subtracting the mean before processing.
+        
+        * Input:
+            * rawEMGSignal: raw EMG signal as a list or array
+            * samplerate: samplerate of the signal in Hz
+        * Output:
+            * List containing [PSD values, corresponding frequencies]
+        
+        :param rawEMGSignal: the raw EMG signal
+        :type rawEMGSignal: list or array
+        :param samplerate: samplerate of the signal in Hz
+        :type samplerate: int
+        :return: list containing power spectral density values and their corresponding frequencies
+        :rtype: list
+    """
     frequencies, psd = welch(np.array(rawEMGSignal), fs=samplerate,
                window='hann',   # apply a Hanning window before taking the DFT
                nperseg=256,        # compute periodograms of 256-long segments of x
