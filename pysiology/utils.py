@@ -82,14 +82,17 @@ def leandriCC(signals, samplerate, windowsWidth, nAverages=None, tmin = 0, tmax 
         tmax = signalsLenght/samplerate
         
     #loop for each window and pair of signals
+    window_starts = []
     for w in range(tminSample, min(signalsLenght, tmaxSample), windowsWidthSample):
+        window_starts.append(w)
         thiswindow = []
         for pair in itertools.permutations(signals, 2):
            thiswindow.append(stats.pearsonr(pair[0][w:w+windowsWidthSample], pair[1][w:w+windowsWidthSample])[0])
         avg.append([np.mean(thiswindow)]*windowsWidthSample)
         median.append([np.median(thiswindow)]*windowsWidthSample)
     
-    times = np.linspace(tmin, tmax, int((tmax-tmin) * samplerate))
+    # Generate times based on actual windows and their sample indices
+    times = np.array([i / samplerate for i in range(tminSample, tminSample + len(window_starts) * windowsWidthSample)])
     return([times, np.array(avg).flatten(), np.array(median).flatten()])
 
 
