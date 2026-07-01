@@ -3,3 +3,4 @@ peakutils
 scipy
 matplotlib
 setuptools
+pandas

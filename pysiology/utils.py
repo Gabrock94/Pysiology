@@ -3,7 +3,7 @@
 """
 Created on Tue Nov  8 13:10:17 2022
 
-this modules contains different utilities that cab be used for analysis. 
+this modules contains different utilities that cab be used for analysis.
 
 @author: giulio
 """
@@ -12,6 +12,7 @@ from scipy import stats
 import numpy as np
 import matplotlib.pyplot as plt
 import itertools
+import pandas as pd
 
 def leandriCC(signals, samplerate, windowsWidth, nAverages=None, tmin = 0, tmax = None):
     
@@ -90,6 +91,16 @@ def leandriCC(signals, samplerate, windowsWidth, nAverages=None, tmin = 0, tmax 
     
     times = np.linspace(tmin, tmax, int((tmax-tmin) * samplerate))
     return([times, np.array(avg).flatten(), np.array(median).flatten()])
+
+
+def dict_to_dataframe(results_dict, sep='_'):
+    """
+    Converts the EMG dictionary into a single-row DataFrame.
+    Nested dictionary keys are combined using underscores (e.g., 'TimeDomain_IEMG').
+    """
+    # json_normalize flattens nested dicts automatically
+    df = pd.json_normalize(results_dict, sep='_')
+    return df
 
 
 ###############################################################################

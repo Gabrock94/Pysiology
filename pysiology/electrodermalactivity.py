@@ -116,7 +116,7 @@ def findPeakOnsetAndOffset(rawGSRSignal,onset=0.01,offset=0):
             * onset = onset for Peak Detection (uS)
             * offset = offset for Peak Detection (uS)
         * Output: 
-            * multi dimensional list, \[onsetIndex,maxIndex,offsetIndex\] x nPeaks
+            * multi dimensional list, [onsetIndex,maxIndex,offsetIndex] x nPeaks
             
         :param rawGSRSignal: GSR Signal to analyze
         :type rawGSRSignal: list
